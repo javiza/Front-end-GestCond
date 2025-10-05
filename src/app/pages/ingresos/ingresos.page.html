@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Ingresos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar color="primary">
+    <ion-segment [(ngModel)]="activeSegment" (ionChange)="segmentChanged($event)" scrollable>
+      <ion-segment-button value="home">Home</ion-segment-button>
+      <ion-segment-button value="ingresos">Ingresos</ion-segment-button>
+      <ion-segment-button value="movimientos">Movimientos</ion-segment-button>
+      <ion-segment-button value="inventarios">Inventarios</ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ 
+ <div class="center-content">
+
+ 
+ </div>
+   
+  
+</ion-content>

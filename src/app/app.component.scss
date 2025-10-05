@@ -1,0 +1,42 @@
+/* Asegura que ion-app ocupe todo el alto */
+ion-app, ion-content, ion-router-outlet {
+  height: 100%;
+}
+
+/* Contenedor de contenido para que no quede bajo header/footer */
+ion-content {
+  --padding-top: 0; /* Si quieres padding extra arriba */
+  --padding-bottom: 0; /* Ajustar si hay footer */
+}
+
+/* Evita scroll doble y asegura que ion-content se ajuste */
+ion-content > .inner-scroll {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Footer siempre pegado al final */
+ion-footer {
+  ion-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+/* Opcional: estilos para el menú segmentado global */
+ion-segment {
+  --background: #ffffff;
+  --indicator-color: #007bff; /* Color indicador azul */
+  --color: #38393a;           /* Color de los botones no activos */
+}
+
+ion-segment-button {
+  color: #38393a;
+  &.segment-button-activated {
+    color: #007bff; /* Azul al seleccionar */
+  }
+}

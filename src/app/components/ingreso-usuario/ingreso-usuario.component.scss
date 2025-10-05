@@ -1,0 +1,23 @@
+/* layout dos columnas */
+.container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.formulario {
+  flex: 1; /* 50% */
+}
+
+.lista {
+  flex: 1; /* 50% */
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Opcional: responsive en móviles (apilar) */
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+  }
+}

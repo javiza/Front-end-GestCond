@@ -1,0 +1,54 @@
+.form-container {
+  //background-color: #2e2e2e; // gris oscuro
+//   padding: 20px;
+  border-radius: 10px;
+//   margin: 20px; // separación externa
+}
+
+.titulo {
+  text-align: center;
+  color: rgb(43, 42, 42);
+}
+
+.subtitulo {
+  text-align: center;
+  color: #7e7d7d; // gris claro
+  margin-bottom: 20px;
+}
+
+.custom-item {
+  margin-bottom: 20px; // más separación entre campos
+}
+
+ion-label {
+  color: #007bff !important; // azul para el texto del label
+}
+ion-input {
+  color: #38393a !important; // azul para el texto del input
+}
+ion-item.custom-item {
+  ion-icon {
+    font-size: 20px;
+    color: #007bff; // azul
+    cursor: pointer;
+  }
+}
+.divider-gradient {
+  height: 1px; /* más elegante que 1px */
+  width: 100%;
+  margin: 10px 0;
+  background: linear-gradient(to right, transparent, #ccc, transparent);
+}
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centra verticalmente */
+  align-items: center;     /* centra horizontalmente */
+  height: 100%;
+  overflow: hidden;        /* evita scroll */
+}
+
+
+
+
+
