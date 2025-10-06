@@ -8,8 +8,8 @@
       <ion-item>
         <ion-label position="floating">Nombre Usuario</ion-label>
         <ion-input
-          [(ngModel)]="nombre_usuario"
-          name="nombre_usuario"
+          [(ngModel)]="nombre"
+          name="nombre"
           required
         ></ion-input>
       </ion-item>
@@ -54,6 +54,7 @@
             >Administrador</ion-select-option
           >
           <ion-select-option value="usuario">Usuario</ion-select-option>
+          <ion-select-option value="locatario">Locatario</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -70,7 +71,7 @@
     <ion-list *ngIf="usuarios.length > 0">
       <ion-item *ngFor="let usuario of usuarios">
         <ion-label>
-          <h2>{{ usuario.nombre_usuario }}</h2>
+          <h2>{{ usuario.nombre}}</h2>
           <p>
             Rut: {{ usuario.rut }} | Email: {{ usuario.email }} | Rol:
             {{ usuario.rol }} | Fecha:

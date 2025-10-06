@@ -6,19 +6,19 @@ import { environment } from 'src/environments/environment';
 
 export interface Usuario {
   id: number;
-  nombre_usuario: string;
+  nombre: string;
   rut: string;                // agregar rut
   email: string;
   password: string;
-  rol: 'administrador' | 'usuario';   
+  rol: 'administrador' | 'usuario' | 'locatario'; // agregar locatario
   fecha_creacion?: string;  
 }
 export interface CreateUsuario {
-  nombre_usuario: string;
+  nombre: string;
   rut: string;
   email: string;
   password: string;
-  rol: 'administrador' | 'usuario';
+  rol: 'administrador' | 'usuario' | 'locatario';
 }
 
 

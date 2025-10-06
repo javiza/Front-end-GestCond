@@ -56,11 +56,11 @@ export class IngresoUsuarioComponent implements OnInit {
 
   // formulario
   id: number | null = null;
-  nombre_usuario = '';
+  nombre = '';
   rut = '';
   email = '';
   password = '';
-  rol: 'administrador' | 'usuario' = 'usuario';
+  rol: 'administrador' | 'usuario' | 'locatario' = 'usuario';
   showPassword = false;
 
   constructor(private usuariosService: UsuariosService) {
@@ -98,7 +98,7 @@ export class IngresoUsuarioComponent implements OnInit {
 
     // DTO para crear/actualizar
     const payload: CreateUsuario = {
-      nombre_usuario: this.nombre_usuario,
+      nombre: this.nombre,
       email: this.email,
       rol: this.rol,
       rut: this.rut.replace(/\./g, ''),
@@ -139,7 +139,7 @@ export class IngresoUsuarioComponent implements OnInit {
 
   editarUsuario(usuario: Usuario) {
     this.id = usuario.id;
-    this.nombre_usuario = usuario.nombre_usuario;
+    this.nombre = usuario.nombre;
     this.email = usuario.email;
     this.rol = usuario.rol;
     this.rut = usuario.rut;
@@ -147,7 +147,7 @@ export class IngresoUsuarioComponent implements OnInit {
   }
 
   eliminarUsuario(usuario: Usuario) {
-    if (!confirm(`¿Seguro que deseas eliminar a ${usuario.nombre_usuario}?`)) {
+    if (!confirm(`¿Seguro que deseas eliminar a ${usuario.nombre}?`)) {
       return;
     }
     this.usuariosService.remove(usuario.id).subscribe({
@@ -158,7 +158,7 @@ export class IngresoUsuarioComponent implements OnInit {
 
   limpiarFormulario() {
     this.id = null;
-    this.nombre_usuario = '';
+    this.nombre = '';
     this.rut = '';
     this.email = '';
     this.password = '';
