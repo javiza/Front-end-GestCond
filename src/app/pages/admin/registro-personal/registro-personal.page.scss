@@ -1,0 +1,36 @@
+.form-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* Cada card (formulario) */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* Si quieres estilo un poco más compacto */
+app-casa-form,
+app-locatario-form {
+  display: block;
+  width: 100%;
+}
+
+/* Evita que IonContent interno cree doble scroll */
+ion-content {
+  --overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .form-container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

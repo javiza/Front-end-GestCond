@@ -1,23 +1,56 @@
-/* layout dos columnas */
 .container {
   display: flex;
-  gap: 20px;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  background: #fff;
+  
+  border-radius: 12px;
 }
 
-.formulario {
-  flex: 1; /* 50% */
+// .formulario,
+// .lista {
+//   background: #fff;
+//   padding: 1.5rem;
+//   border-radius: 12px;
+// }
+
+.col-title {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--ion-color-primary);
+  margin-bottom: 1rem;
 }
 
-.lista {
-  flex: 1; /* 50% */
-  max-height: 80vh;
-  overflow-y: auto;
+ion-item {
+  --background: transparent;
+  margin-bottom: 12px;
+  border-radius: 8px;
 }
 
-/* Opcional: responsive en móviles (apilar) */
-@media (max-width: 767px) {
+ion-button {
+  margin-top: 12px;
+}
+
+ion-icon {
+  cursor: pointer;
+}
+
+.no-data {
+  text-align: center;
+  color: #888;
+  margin-top: 1rem;
+}
+
+@media (min-width: 1024px) {
   .container {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .formulario,
+  .lista {
+    width: 48%;
   }
 }

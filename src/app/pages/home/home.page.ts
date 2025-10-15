@@ -13,6 +13,7 @@ import { InicioSesionComponent } from '../../components/inicio-sesion/inicio-ses
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { settingsOutline } from 'ionicons/icons';
+import { InfoBannerComponent } from "src/app/components/info-banner/info-banner.component";
 
 @Component({
   selector: 'app-home',
@@ -27,8 +28,8 @@ import { settingsOutline } from 'ionicons/icons';
     IonContent,
     InicioSesionComponent,
     IonFooter,
-    
-    ],
+    InfoBannerComponent
+],
 })
 export class HomePage {
   constructor() {

@@ -1,0 +1,123 @@
+<!-- Contenedor principal -->
+<div class="locatario-wrapper">
+  <!-- Columna izquierda: formulario -->
+  <div class="formulario">
+    <h3 class="col-title">Registro de Locatarios</h3>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input formControlName="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">RUT</ion-label>
+        <ion-input
+          formControlName="rut"
+          (ionInput)="onRutInput($event)"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" formControlName="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          required
+        ></ion-input>
+        <ion-icon
+          slot="end"
+          [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+          (click)="togglePasswordVisibility()"
+        ></ion-icon>
+      </ion-item>
+
+      <!-- 🏠 Selector de Casa -->
+      <ion-item>
+        <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
+        <ion-label position="stacked">Casa</ion-label>
+        <ion-select
+          formControlName="id_casa"
+          interface="popover"
+          placeholder="Selecciona una casa"
+          (ionChange)="onCasaChange($event)"
+        >
+          <ion-select-option *ngFor="let c of casas" [value]="c.id">
+            {{ c.numero }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Dirección (solo lectura) -->
+      <ion-item *ngIf="direccionCasaSeleccionada">
+        <ion-icon name="location-outline" slot="start" color="medium"></ion-icon>
+        <ion-label position="stacked">Dirección</ion-label>
+        <ion-input [value]="direccionCasaSeleccionada" readonly></ion-input>
+      </ion-item>
+
+      <!-- Botones -->
+      <ion-button expand="block" type="submit" color="primary">
+        {{ editMode ? "Actualizar" : "Registrar" }}
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="medium"
+        (click)="resetForm()"
+        *ngIf="editMode"
+      >
+        Cancelar edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- Columna derecha: lista -->
+  <div class="lista">
+    <h3 class="col-title">Lista de Locatarios</h3>
+
+    <ion-list *ngIf="paginatedLocatarios.length > 0; else noLocatarios">
+      <ion-item *ngFor="let l of paginatedLocatarios">
+        <ion-label>
+          <h2>{{ l.nombre }} ({{ l.rut }})</h2>
+          <p>
+            {{ l.email }}
+            <br />
+            <span *ngIf="l.casa">
+              🏠 Casa Nº {{ l.casa.numero }} — {{ l.casa.direccion }}
+            </span>
+          </p>
+        </ion-label>
+        <ion-button fill="clear" (click)="editar(l)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="eliminar(l.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noLocatarios>
+      <p class="no-data">No hay locatarios registrados.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div class="paginacion" *ngIf="totalPages > 1">
+      <ion-button fill="outline" [disabled]="currentPage === 1" (click)="prevPage()">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Siguiente
+      </ion-button>
+    </div>
+  </div>
+</div>
+
+<!-- Espacio inferior -->
+<div style="height: 40px"></div>

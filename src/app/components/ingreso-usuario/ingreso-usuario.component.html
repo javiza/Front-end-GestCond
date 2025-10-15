@@ -1,28 +1,23 @@
-<h2>Gestión de usuarios</h2>
-
-<!-- contenedor en dos columnas -->
+<!-- Contenedor principal -->
 <div class="container">
-  <!-- Columna izquierda: formulario -->
+  <!-- Columna izquierda -->
   <div class="formulario">
+    <h3 class="col-title">Registro de Usuarios (Administradores o Guardias)</h3>
+
     <form (ngSubmit)="ingresarUsuario()">
       <ion-item>
-        <ion-label position="floating">Nombre Usuario</ion-label>
-        <ion-input
-          [(ngModel)]="nombre"
-          name="nombre"
-          required
-        ></ion-input>
+        <ion-label position="floating">Nombre de Usuario</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Rut</ion-label>
+        <ion-label position="floating">RUT</ion-label>
         <ion-input
           [(ngModel)]="rut"
           name="rut"
           required
           (ionInput)="onRutInput($event)"
-        >
-        </ion-input>
+        ></ion-input>
       </ion-item>
 
       <ion-item>
@@ -37,62 +32,76 @@
           [(ngModel)]="password"
           name="password"
           required
-        >
-        </ion-input>
+        ></ion-input>
         <ion-icon
           slot="end"
           [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
           (click)="togglePasswordVisibility()"
-        >
-        </ion-icon>
+        ></ion-icon>
       </ion-item>
 
       <ion-item>
         <ion-label>Rol</ion-label>
         <ion-select [(ngModel)]="rol" name="rol" interface="popover" required>
-          <ion-select-option value="administrador"
-            >Administrador</ion-select-option
-          >
-          <ion-select-option value="usuario">Usuario</ion-select-option>
-          <ion-select-option value="locatario">Locatario</ion-select-option>
+          <ion-select-option value="administrador">Administrador</ion-select-option>
+          <ion-select-option value="guardia">Guardia</ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-button expand="block" type="submit" color="primary">
-        {{ id ? "Actualizar" : "Ingresar" }}
+        {{ id ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="medium"
+        *ngIf="id"
+        (click)="cancelarEdicion()"
+      >
+        Cancelar edición
       </ion-button>
     </form>
   </div>
 
-  <!-- Columna derecha: lista -->
+  <!-- Columna derecha -->
   <div class="lista">
-    <h3>Lista de usuarios</h3>
+    <h3 class="col-title">Lista de Usuarios</h3>
 
-    <ion-list *ngIf="usuarios.length > 0">
-      <ion-item *ngFor="let usuario of usuarios">
+    <ion-list *ngIf="paginatedUsuarios.length > 0; else noUsuarios">
+      <ion-item *ngFor="let usuario of paginatedUsuarios">
         <ion-label>
-          <h2>{{ usuario.nombre}}</h2>
+          <h2>{{ usuario.nombre }}</h2>
           <p>
-            Rut: {{ usuario.rut }} | Email: {{ usuario.email }} | Rol:
-            {{ usuario.rol }} | Fecha:
-            {{ usuario.fecha_creacion | date : "short" }}
+            RUT: {{ usuario.rut }} <br />
+            Email: {{ usuario.email }} <br />
+            Rol: {{ usuario.rol }} <br />
+            Fecha: {{ usuario.fecha_creacion | date : 'short' }}
           </p>
         </ion-label>
         <ion-button fill="clear" (click)="editarUsuario(usuario)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
-        <ion-button
-          fill="clear"
-          color="danger"
-          (click)="eliminarUsuario(usuario)"
-        >
+        <ion-button fill="clear" color="danger" (click)="eliminarUsuario(usuario)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>
 
-    <p *ngIf="usuarios.length === 0">No hay usuarios registrados.</p>
+    <ng-template #noUsuarios>
+      <p class="no-data">No hay usuarios registrados.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div class="paginacion" *ngIf="totalPages > 1">
+      <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Siguiente
+      </ion-button>
+    </div>
   </div>
 </div>
 
-<div style="height: 50px"></div>
+<div style="height: 40px"></div>

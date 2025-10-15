@@ -1,0 +1,44 @@
+.banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* 🔹 Antes 40px, ahora más compacto */
+  flex-wrap: wrap;
+  padding: 20px 10px; /* 🔹 Menos separación vertical */
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.image-content img {
+  width: 420px; /* 🔹 Leve ajuste para proporcionalidad */
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-content {
+  max-width: 450px;
+  text-align: left;
+  color: #444;
+  line-height: 1.5;
+}
+
+.text-content h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.text-content p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.separator {
+  width: 85%;
+  margin: 15px auto 0;
+  border: none;
+  border-top: 1.2px solid #bdbdbd;
+}

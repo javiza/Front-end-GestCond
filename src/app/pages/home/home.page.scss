@@ -55,4 +55,22 @@ app-inicio-sesion {
     align-items: flex-start;
     padding-top: 40px;
   }
+  
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.login-container {
+  margin-top: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

@@ -7,6 +7,10 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { authInterceptor } from './app/interceptors/auth.interceptor';
+import { addIcons } from 'ionicons';
+import { createOutline, trashOutline, eyeOutline, eyeOffOutline } from 'ionicons/icons';
+
+addIcons({ createOutline, trashOutline, eyeOutline, eyeOffOutline });
 
 // Activar modo producción si corresponde
 if (environment.production) {

@@ -1,0 +1,60 @@
+<div class="dashboard-container">
+  <!-- VISITAS -->
+  <div class="card">
+    <h3>Visitas con mayor estadía en la fecha:</h3>
+    <div *ngIf="visitas.length; else noVisitas">
+      <div *ngFor="let v of visitas">
+        <p><strong>Nombre:</strong> {{ v.nombre }}</p>
+        <p><strong>RUT:</strong> {{ v.rut }}</p>
+        <p><strong>Fecha ingreso:</strong> {{ v.fecha_hora_ingreso | date:'short' }}</p>
+        <p><strong>Fecha salida:</strong> {{ v.fecha_hora_salida | date:'short' }}</p>
+        <p><strong>Tiempo permanencia:</strong> {{ v.minutos_permanencia }} min</p>
+        <hr>
+      </div>
+    </div>
+    <ng-template #noVisitas><p>No hay registros de visitas.</p></ng-template>
+  </div>
+
+  <!-- GUARDIAS -->
+  <div class="card">
+    <h3>Guardia con mayor actividad en mes de:</h3>
+    <input type="number" [(ngModel)]="mesSeleccionado" min="1" max="12" placeholder="Mes (1-12)" />
+    <button (click)="cargarDatos()">Buscar</button>
+
+    <div *ngIf="guardias.length; else noGuardias">
+      <div *ngFor="let g of guardias">
+        <p><strong>Nombre:</strong> {{ g.nombre_guardia }}</p>
+        <p><strong>RUT:</strong> {{ g.rut_guardia }}</p>
+        <p><strong>Rondas:</strong> {{ g.rondas_totales }}</p>
+        <p><strong>Total de turnos:</strong> {{ g.jornadas_estimadas }}</p>
+        <hr>
+      </div>
+    </div>
+    <ng-template #noGuardias><p>No hay registros para el mes.</p></ng-template>
+  </div>
+
+  <!-- DELIVERY -->
+  <div class="card">
+    <h3>Detección de deliverys con mayor tiempo de permanencias:</h3>
+    <div *ngIf="deliverys.length; else noDelivery">
+      <div *ngFor="let d of deliverys">
+        <p><strong>Nombre:</strong> {{ d.nombre }}</p>
+        <p><strong>RUT:</strong> {{ d.rut }}</p>
+        <p><strong>Empresa:</strong> {{ d.empresa }}</p>
+        <p><strong>Patente:</strong> {{ d.patente }}</p>
+        <p><strong>Tipo vehículo:</strong> {{ d.tipo_vehiculo }}</p>
+        <p><strong>Fecha ingreso:</strong> {{ d.fecha_hora_ingreso | date:'short' }}</p>
+        <p><strong>Fecha salida:</strong> {{ d.fecha_hora_salida | date:'short' }}</p>
+        <p><strong>Tiempo permanencia:</strong> {{ d.minutos_permanencia }} min</p>
+        <hr>
+      </div>
+    </div>
+    <ng-template #noDelivery><p>No hay deliverys excedidos.</p></ng-template>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="chart-card">
+    <h3>Días de mayor flujo:</h3>
+    <canvas id="flujoChart"></canvas>
+  </div>
+</div>

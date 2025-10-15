@@ -10,7 +10,7 @@ import {
   IonSpinner,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -78,7 +78,7 @@ export class InicioSesionComponent implements OnInit {
     this.resetForm();
 
     if (res.user.rol === 'administrador') {
-      this.router.navigate(['/administrador'], { replaceUrl: true });
+      this.router.navigate(['/registros-locatarios'], { replaceUrl: true });
     } else if (res.user.rol === 'usuario') {
       this.router.navigate(['/ingresos'], { replaceUrl: true });
     } else {

@@ -53,6 +53,11 @@ import {
 })
 export class IngresoUsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
+  paginatedUsuarios: Usuario[] = [];
+
+  // 🔹 Configuración de paginación
+  pageSize = 3; // máximo 3 por página
+  currentPage = 1;
 
   // formulario
   id: number | null = null;
@@ -69,49 +74,65 @@ export class IngresoUsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.cargarUsuarios();
-
-    // log para revisar quién está logueado
-    const user = localStorage.getItem('user');
-    console.log('USUARIO ACTUAL:', user ? JSON.parse(user) : 'No hay sesión');
-
-    const token = localStorage.getItem('token');
-    console.log(
-      'TOKEN ACTUAL:',
-      token ? token.substring(0, 30) + '...' : 'No hay token'
-    );
   }
 
   cargarUsuarios() {
     this.usuariosService.findAll().subscribe({
-      next: (data) => (this.usuarios = data),
+      next: (data) => {
+        this.usuarios = data;
+        this.actualizarPaginacion();
+      },
       error: (err) => console.error('Error al cargar usuarios:', err),
     });
   }
+
+  // 🔹 Actualiza la lista visible
+  actualizarPaginacion() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.paginatedUsuarios = this.usuarios.slice(start, end);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.actualizarPaginacion();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.actualizarPaginacion();
+    }
+  }
+
+  get totalPages() {
+    return Math.ceil(this.usuarios.length / this.pageSize);
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
+
   ingresarUsuario() {
     if (!this.validarRut(this.rut)) {
       alert('RUT inválido. Verifica el formato.');
       return;
     }
 
-    // DTO para crear/actualizar
     const payload: CreateUsuario = {
       nombre: this.nombre,
       email: this.email,
       rol: this.rol,
       rut: this.rut.replace(/\./g, ''),
-      password: this.password, // requerido en creación
+      password: this.password,
     };
 
     if (this.id) {
-      // Actualizar usuario
+      // 🔹 Actualizar usuario
       const updatePayload = { ...payload };
-      if (!this.password) {
-        // Si no se cambia password, lo quitamos
-        delete (updatePayload as any).password;
-      }
+      if (!this.password) delete (updatePayload as any).password;
 
       this.usuariosService.update(this.id, updatePayload).subscribe({
         next: () => {
@@ -121,7 +142,7 @@ export class IngresoUsuarioComponent implements OnInit {
         error: (err) => console.error('Error al actualizar usuario:', err),
       });
     } else {
-      // Crear usuario → requiere password
+      // 🔹 Crear usuario
       if (!this.password) {
         alert('Debes ingresar una contraseña para el nuevo usuario.');
         return;
@@ -137,19 +158,23 @@ export class IngresoUsuarioComponent implements OnInit {
     }
   }
 
+  cancelarEdicion() {
+    if (confirm('¿Deseas cancelar la edición actual?')) {
+      this.limpiarFormulario();
+    }
+  }
+
   editarUsuario(usuario: Usuario) {
     this.id = usuario.id;
     this.nombre = usuario.nombre;
     this.email = usuario.email;
     this.rol = usuario.rol;
     this.rut = usuario.rut;
-    this.password = ''; // no mostrar contraseña en edición
+    this.password = '';
   }
 
   eliminarUsuario(usuario: Usuario) {
-    if (!confirm(`¿Seguro que deseas eliminar a ${usuario.nombre}?`)) {
-      return;
-    }
+    if (!confirm(`¿Seguro que deseas eliminar a ${usuario.nombre}?`)) return;
     this.usuariosService.remove(usuario.id).subscribe({
       next: () => this.cargarUsuarios(),
       error: (err) => console.error('Error al eliminar usuario:', err),
@@ -166,32 +191,21 @@ export class IngresoUsuarioComponent implements OnInit {
   }
 
   validarRut(rut: string): boolean {
-    if (!rut) {
-      return false;
-    }
-
-    // limpiar rut (quitar puntos y guion)
+    if (!rut) return false;
     const rutLimpio = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
-
-    // separar cuerpo y dv
     const cuerpo = rutLimpio.slice(0, -1);
     let dv = rutLimpio.slice(-1);
+    if (!/^\d+$/.test(cuerpo)) return false;
 
-    if (!/^\d+$/.test(cuerpo)) {
-      return false;
-    }
-
-    // calcular dv esperado
     let suma = 0;
     let multiplo = 2;
-
     for (let i = cuerpo.length - 1; i >= 0; i--) {
       suma += parseInt(cuerpo.charAt(i), 10) * multiplo;
       multiplo = multiplo < 7 ? multiplo + 1 : 2;
     }
 
     const dvEsperado = 11 - (suma % 11);
-    let dvFinal =
+    const dvFinal =
       dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
 
     return dv === dvFinal;
@@ -203,14 +217,10 @@ export class IngresoUsuarioComponent implements OnInit {
   }
 
   formatearRut(rut: string): string {
-    if (!rut) {
-      return '';
-    }
-
+    if (!rut) return '';
     let limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
     let cuerpo = limpio.slice(0, -1);
     let dv = limpio.slice(-1);
-
     cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return cuerpo + '-' + dv;
   }

@@ -1,42 +1,52 @@
-/* Asegura que ion-app ocupe todo el alto */
-ion-app, ion-content, ion-router-outlet {
-  height: 100%;
+/* ===== ESTRUCTURA BASE ===== */
+ion-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
 }
 
-/* Contenedor de contenido para que no quede bajo header/footer */
-ion-content {
-  --padding-top: 0; /* Si quieres padding extra arriba */
-  --padding-bottom: 0; /* Ajustar si hay footer */
-}
-
-/* Evita scroll doble y asegura que ion-content se ajuste */
-ion-content > .inner-scroll {
-  height: 100%;
+ion-router-outlet {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-/* Footer siempre pegado al final */
-ion-footer {
-  ion-toolbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 12px;
-  }
+/* ===== CONTENIDO ===== */
+ion-content {
+  --padding-top: 0;
+  --padding-bottom: 80px; /* 🔹 espacio para el footer */
+  min-height: calc(100vh - 70px);
 }
 
-/* Opcional: estilos para el menú segmentado global */
-ion-segment {
-  --background: #ffffff;
-  --indicator-color: #007bff; /* Color indicador azul */
-  --color: #38393a;           /* Color de los botones no activos */
+/* ===== FOOTER STICKY ===== */
+ion-footer.sticky-footer {
+  position: fixed; /* 🔹 se mantiene visible */
+  bottom: 0;
+  left: 250px; /* 🔹 ajusta al sidebar en escritorio */
+  right: 0;
+  height: 60px;
+  background: var(--ion-color-primary);
+  color: white;
+  z-index: 1000;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
 }
 
-ion-segment-button {
-  color: #38393a;
-  &.segment-button-activated {
-    color: #007bff; /* Azul al seleccionar */
+ion-footer.sticky-footer ion-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  font-size: 12px;
+  line-height: 1.4;
+  background: transparent; /* usamos el fondo del footer */
+}
+
+/* ===== AJUSTE EN MODO MÓVIL ===== */
+@media (max-width: 768px) {
+  ion-footer.sticky-footer {
+    left: 0; /* ocupa todo el ancho */
+    height: 70px;
   }
 }

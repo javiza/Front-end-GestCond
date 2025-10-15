@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- Botón hamburguesa (solo visible en móvil) -->
+  <ion-buttons slot="start" class="menu-button">
+  <ion-button (click)="toggleMenu()" class="menu-toggle-button">
+    <ion-icon name="menu-outline"></ion-icon>
+  </ion-button>
+</ion-buttons>
+
+
+    <ion-title class="center-title">{{ title }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <!-- Sidebar -->
+    <div class="sidebar" [class.open]="isMenuOpen">
+
+      <h2>Condominio<br>Los Alerces</h2>
+      <div class="sidebar-divider"></div>
+      <ul>
+        <li (click)="navigate('registros-locatarios')" [class.active]="activeItem === 'registros-locatarios'">Registros Locatarios</li>
+        <li (click)="navigate('registro-personal')" [class.active]="activeItem === 'registro-personal'">Registro Personal</li>
+        <li (click)="navigate('observaciones')" [class.active]="activeItem === 'observaciones'">Observaciones</li>
+        <li (click)="navigate('informaciones')" [class.active]="activeItem === 'informaciones'">Informaciones</li>
+        <li (click)="navigate('registros')" [class.active]="activeItem === 'registros'">Registros</li>
+      </ul>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content" (click)="closeMenuOnMobile()">
+      <div class="center-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</ion-content>

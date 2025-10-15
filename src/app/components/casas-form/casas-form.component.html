@@ -1,0 +1,70 @@
+<!-- Contenedor principal en dos columnas -->
+<div class="container">
+  <!-- Columna izquierda: formulario -->
+  <div class="formulario">
+    <h3 class="col-title">Registro de Casas</h3>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <ion-item>
+        <ion-label position="floating">Número de Casa</ion-label>
+        <ion-input formControlName="numero" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input formControlName="direccion" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="primary">
+        {{ editMode ? 'Actualizar Casa' : 'Registrar Casa' }}
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="medium"
+        *ngIf="editMode"
+        (click)="resetForm()"
+      >
+        Cancelar Edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- Columna derecha: lista -->
+  <div class="lista">
+    <h3 class="col-title">Listado de Casas</h3>
+
+    <ion-list *ngIf="paginatedCasas.length > 0; else noData">
+      <ion-item *ngFor="let c of paginatedCasas">
+        <ion-label>
+          <h2>Casa {{ c.numero }}</h2>
+          <p>{{ c.direccion }}</p>
+        </ion-label>
+        <ion-button fill="clear" (click)="editar(c)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="eliminar(c.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noData>
+      <p class="no-data">No hay casas registradas.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div class="paginacion" *ngIf="totalPages > 1">
+      <ion-button fill="outline" [disabled]="currentPage === 1" (click)="prevPage()">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        Siguiente
+      </ion-button>
+    </div>
+  </div>
+</div>
+
+<!-- Espacio inferior -->
+<div style="height: 40px"></div>
