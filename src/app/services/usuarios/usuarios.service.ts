@@ -10,7 +10,7 @@ export interface Usuario {
   rut: string;                // agregar rut
   email: string;
   password: string;
-  rol: 'administrador' | 'usuario' | 'locatario'; // agregar locatario
+  rol: 'administrador' | 'guardia' | 'locatario'; // agregar locatario
   fecha_creacion?: string;  
 }
 export interface CreateUsuario {
@@ -18,10 +18,8 @@ export interface CreateUsuario {
   rut: string;
   email: string;
   password: string;
-  rol: 'administrador' | 'usuario' | 'locatario';
+  rol: 'administrador' | 'guardia' | 'locatario';
 }
-
-
 
 @Injectable({
   providedIn: 'root'

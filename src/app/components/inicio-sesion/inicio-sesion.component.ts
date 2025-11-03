@@ -78,9 +78,11 @@ export class InicioSesionComponent implements OnInit {
     this.resetForm();
 
     if (res.user.rol === 'administrador') {
-      this.router.navigate(['/registros-locatarios'], { replaceUrl: true });
-    } else if (res.user.rol === 'usuario') {
-      this.router.navigate(['/ingresos'], { replaceUrl: true });
+      this.router.navigate(['/gestion-locatarios'], { replaceUrl: true });
+    } else if (res.user.rol === 'guardia') {
+      this.router.navigate(['/registros-guardia'], { replaceUrl: true });
+    } else if (res.user.rol === 'locatario') {
+      this.router.navigate(['/pwa'], { replaceUrl: true });
     } else {
       this.router.navigate(['/home'], { replaceUrl: true });
     }

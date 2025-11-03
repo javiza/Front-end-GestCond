@@ -7,6 +7,7 @@ export interface EmpresaContratista {
   id: number;
   nombre_encargado: string;
   nombre_empresa: string;
+  rut: string;
   rubro: string;
   telefono: string;
   email: string;
@@ -15,6 +16,7 @@ export interface EmpresaContratista {
 export interface CreateEmpresaContratista {
   nombre_encargado: string;
   nombre_empresa: string;
+  rut: string;
   rubro: string;
   telefono: string;
   email: string;

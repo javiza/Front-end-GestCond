@@ -8,13 +8,13 @@ import { NavController } from '@ionic/angular';
 import { RegistrarEmpresasComponent } from 'src/app/components/administrador/registrar-empresas/registrar-empresas.component';
 import { RegistrarPersonalComponent } from 'src/app/components/administrador/registrar-personal/registrar-personal.component';
 @Component({
-  selector: 'app-registro-personal',
+  selector: 'app-registros-guardia',
   standalone: true,
   imports: [IonicModule, CommonModule, RegistrarEmpresasComponent, RegistrarPersonalComponent],
-  templateUrl: './registro-personal.page.html',
-  styleUrls: ['./registro-personal.page.scss'],
+  templateUrl: './registros-guardia.page.html',
+  styleUrls: ['./registros-guardia.page.scss'],
 })
-export class RegistroPersonalPage {
+export class RegistrosGuardiaPage {
   @Input() mostrarSoloLista = false;
 
   openMenu: string | null = null;

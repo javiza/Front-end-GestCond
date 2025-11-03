@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 interface CustomJwtPayload {
   sub: string;
   email: string;
-  rol: 'administrador' | 'usuario';
+  rol: 'administrador' | 'guardia' | 'locatario';
 }
 
 @Injectable({
@@ -25,7 +25,7 @@ export class RoleGuard implements CanActivate {
     }
 
     try {
-      // 👇 Ahora sí, usamos la función directamente
+      
       const decoded = jwtDecode<CustomJwtPayload>(token);
 
       if (!expectedRoles.includes(decoded.rol)) {

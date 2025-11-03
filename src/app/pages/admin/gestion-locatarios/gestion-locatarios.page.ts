@@ -4,17 +4,20 @@ import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
+import { IngresoUsuarioComponent } from 'src/app/components/administrador/ingreso-usuario/ingreso-usuario.component';
+import { IngresoCasasComponent } from 'src/app/components/administrador/ingreso-casas/ingreso-casas.component';
+import { IngresoResidentesComponent } from 'src/app/components/administrador/ingreso-residentes/ingreso-residentes.component';
+import { IngresoVehiculosComponent } from 'src/app/components/administrador/ingreso-vehiculos/ingreso-vehiculos.component';
 import { NavController } from '@ionic/angular';
-import { RegistrarEmpresasComponent } from 'src/app/components/administrador/registrar-empresas/registrar-empresas.component';
-import { RegistrarPersonalComponent } from 'src/app/components/administrador/registrar-personal/registrar-personal.component';
+
 @Component({
-  selector: 'app-registro-personal',
+  selector: 'app-gestion-locatarios',
   standalone: true,
-  imports: [IonicModule, CommonModule, RegistrarEmpresasComponent, RegistrarPersonalComponent],
-  templateUrl: './registro-personal.page.html',
-  styleUrls: ['./registro-personal.page.scss'],
+  imports: [IonicModule, CommonModule, IngresoUsuarioComponent, IngresoCasasComponent, IngresoResidentesComponent, IngresoVehiculosComponent],
+  templateUrl: './gestion-locatarios.page.html',
+  styleUrls: ['./gestion-locatarios.page.scss'],
 })
-export class RegistroPersonalPage {
+export class GestionLocatariosPage {
   @Input() mostrarSoloLista = false;
 
   openMenu: string | null = null;
@@ -35,9 +38,10 @@ export class RegistroPersonalPage {
     setTimeout(() => {
       let targetId = '';
 
-      if (seccion === 'listarPersonal') targetId = 'tablaPersonal';
-      if (seccion === 'listarEmpresas') targetId = 'tablaEmpresas';
-     
+      if (seccion === 'listarUsuarios') targetId = 'tablaUsuarios';
+      if (seccion === 'listarCasas') targetId = 'tablaCasas';
+      if (seccion === 'listarResidentes') targetId = 'tablaResidentes';
+      if (seccion === 'listarVehiculos') targetId = 'tablaVehiculos';
       if (targetId) {
         const target = document.getElementById(targetId);
         if (target) {

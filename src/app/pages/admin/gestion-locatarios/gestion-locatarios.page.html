@@ -1,0 +1,144 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Registros</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+        <!-- GESTIÓN USUARIOS -->
+        <li>
+          <button (click)="toggleMenu('usuarios')" class="menu-item">
+            Gestión Usuarios
+          </button>
+
+          <ul *ngIf="openMenu === 'usuarios'" class="submenu">
+            <li (click)="mostrarSeccion('registrarUsuarios')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarUsuarios')">
+              Listar usuarios
+            </li>
+          </ul>
+        </li>
+
+        <!-- GESTIÓN CASAS -->
+        <li>
+          <button (click)="toggleMenu('casas')" class="menu-item">
+            Gestión Casas
+          </button>
+          <ul *ngIf="openMenu === 'casas'" class="submenu">
+            <li (click)="mostrarSeccion('registrarCasa')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarCasas')">
+              Listar casas
+            </li>
+          </ul>
+        </li>
+ <!-- GESTIÓN Residentes -->
+        <li>
+          <button (click)="toggleMenu('residentes')" class="menu-item">
+            Gestión Residentes
+          </button>
+          <ul *ngIf="openMenu === 'residentes'" class="submenu">
+            <li (click)="mostrarSeccion('registrarResidente')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarResidentes')">
+              Listar residentes
+            </li>
+          </ul>
+        </li>
+        <!-- GESTIÓN Vehiculos -->
+        <li>
+          <button (click)="toggleMenu('vehiculos')" class="menu-item">
+            Gestión Vehículos
+          </button>
+          <ul *ngIf="openMenu === 'vehiculos'" class="submenu">
+            <li (click)="mostrarSeccion('registrarVehiculo')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarVehiculos')">
+              Listar vehículos
+            </li>
+          </ul>
+        </li>
+
+        <!-- OTRAS OPCIONES -->
+        <li><button (click)="irA('registro-personal')" class="menu-item">Registro Personal</button></li>
+        <li><button (click)="irA('observaciones')" class="menu-item">Observaciones</button></li>
+        <li><button (click)="irA('informaciones')" class="menu-item">Informaciones</button></li>
+        <li><button (click)="irA('registros')" class="menu-item">Registros</button></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido">
+      <ng-container [ngSwitch]="seccionActiva">
+
+        <!-- Usuarios -->
+        <div *ngSwitchCase="'registrarUsuarios'">
+          <app-ingreso-usuario></app-ingreso-usuario>
+        </div>
+
+        <div *ngSwitchCase="'listarUsuarios'">
+          <app-ingreso-usuario></app-ingreso-usuario>
+        </div>
+
+        <!--  CASAS -->
+        <div *ngSwitchCase="'registrarCasa'">
+          <app-ingreso-casas></app-ingreso-casas>
+        </div>
+
+        <div *ngSwitchCase="'listarCasas'">
+          <app-ingreso-casas></app-ingreso-casas>
+        </div>
+           <!--  RESIDENTES -->
+        <div *ngSwitchCase="'registrarResidente'">
+          <app-ingreso-residentes></app-ingreso-residentes>
+        </div>
+
+        <div *ngSwitchCase="'listarResidentes'">
+          <app-ingreso-residentes></app-ingreso-residentes>
+        </div>
+            <!-- Vehiculos -->
+        <div *ngSwitchCase="'registrarVehiculo'">
+          <app-ingreso-vehiculos></app-ingreso-vehiculos>
+        </div>
+
+        <div *ngSwitchCase="'listarVehiculos'">
+          <app-ingreso-vehiculos></app-ingreso-vehiculos>
+        </div>
+
+        <!-- DEFAULT -->
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+
+      </ng-container>
+    </section>
+  </div>
+</ion-content>

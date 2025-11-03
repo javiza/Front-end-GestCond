@@ -1,0 +1,92 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center">
+  <!-- FORMULARIO -->
+  <div class="formulario w-full max-w-lg">
+    <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center w-full block">
+      Registro de Casas
+    </h3>
+
+    <form (ngSubmit)="ingresarCasa()" class="flex flex-col gap-3">
+      <ion-item>
+        <ion-label position="floating">Dirección</ion-label>
+        <ion-input [(ngModel)]="direccion" name="direccion" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Número</ion-label>
+        <ion-input [(ngModel)]="numero" name="numero" required></ion-input>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="primary">
+        {{ id ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        color="medium"
+        *ngIf="id"
+        (click)="cancelarEdicion()"
+      >
+        Cancelar edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- TABLA DE CASAS -->
+  <div id="tablaCasas" class="lista w-full flex flex-col items-center mt-8">
+    <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
+      Lista de Casas
+    </h3>
+
+    <div
+      *ngIf="paginatedCasas.length > 0; else noCasas"
+      class="w-full max-w-4xl overflow-x-auto"
+    >
+      <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+        <thead class="bg-[#001b87] text-white">
+          <tr>
+            <th class="py-2 px-3 border border-gray-400">Número</th>
+            <th class="py-2 px-3 border border-gray-400">Dirección</th>
+            <th class="py-2 px-3 border border-gray-400">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let casa of paginatedCasas; let i = index"
+            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+            class="hover:bg-blue-50"
+          >
+            <td class="py-2 px-3 border border-gray-300">{{ casa.numero }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ casa.direccion }}</td>
+            <td class="py-2 px-3 border border-gray-300 text-center">
+              <ion-button fill="clear" size="small" (click)="editarCasa(casa)">
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" size="small" (click)="eliminarCasa(casa)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noCasas>
+      <p class="text-center text-gray-500 mt-4">No hay casas registradas.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
+      <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Siguiente
+      </ion-button>
+    </div>
+  </div>
+</div>
+
+<!-- Espacio final -->
+<div class="espaciador"></div>

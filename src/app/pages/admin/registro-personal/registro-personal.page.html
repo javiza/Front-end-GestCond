@@ -1,1 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Registros</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+
+   <!-- registrar empresas -->
+        <li>
+          <button (click)="toggleMenu('registrarEmpresas')" class="menu-item">
+            Registrar Empresas
+          </button>
+          <ul *ngIf="openMenu === 'registrarEmpresas'" class="submenu">
+            <li (click)="mostrarSeccion('registrarEmpresas')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarEmpresas')">
+              Listar empresas
+            </li>
+          </ul>
+        </li>
+
+        <!-- registrar personal -->
+        <li>
+          <button (click)="toggleMenu('registrarPersonal')" class="menu-item">
+            Registrar Personal
+          </button>
+
+          <ul *ngIf="openMenu === 'registrarPersonal'" class="submenu">
+            <li (click)="mostrarSeccion('registrarPersonal')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarPersonal')">
+              Listar Personal
+            </li>
+          </ul>
+        </li>
+
+
+        <!-- OTRAS OPCIONES -->
+        <li><button (click)="irA('gestion-locatarios')" class="menu-item">Gestion Locatarios</button></li>
+        <li><button (click)="irA('observaciones')" class="menu-item">Observaciones</button></li>
+        <li><button (click)="irA('informaciones')" class="menu-item">Informaciones</button></li>
+        <li><button (click)="irA('registros')" class="menu-item">Registros</button></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido">
+      <ng-container [ngSwitch]="seccionActiva">
+
+         <!-- EMPRESAS -->
+        <div *ngSwitchCase="'registrarEmpresas'">
+          <app-registrar-empresas></app-registrar-empresas>
+        </div>
+
+        <div *ngSwitchCase="'listarEmpresas'">
+          <app-registrar-empresas></app-registrar-empresas>
+        </div>
+
+        <!-- Personal -->
+        <div *ngSwitchCase="'registrarPersonal'">
+          <app-registrar-personal></app-registrar-personal>
+        </div>
+
+        <div *ngSwitchCase="'listarPersonal'">
+          <app-registrar-personal></app-registrar-personal>
+        </div>
+
+       
+        
+
+        <!-- DEFAULT -->
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+
+      </ng-container>
+    </section>
+  </div>
+</ion-content>
 

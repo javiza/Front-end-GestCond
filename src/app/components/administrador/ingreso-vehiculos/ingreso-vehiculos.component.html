@@ -1,0 +1,136 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center">
+  <!-- FORMULARIO -->
+  <div class="formulario w-full max-w-lg">
+    <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center w-full block">
+      Registro de Vehiculos
+    </h3>
+
+    <form (ngSubmit)="ingresarVehiculo()" class="flex flex-col gap-3">
+      <ion-item>
+        <ion-label position="floating">Nombre Dueño</ion-label>
+        <ion-input [(ngModel)]="nombre_dueno" name="nombre_dueno" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Patente</ion-label>
+        <ion-input [(ngModel)]="patente" name="patente" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Marca</ion-label>
+        <ion-input [(ngModel)]="marca" name="marca" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Modelo</ion-label>
+        <ion-input [(ngModel)]="modelo" name="modelo" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Color</ion-label>
+        <ion-input [(ngModel)]="color" name="color" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Tipo Vehículo</ion-label>
+        <ion-input [(ngModel)]="tipo_vehiculo" name="tipo_vehiculo" required></ion-input>
+      </ion-item>
+      <!-- 🏠 Selector de Casa -->
+      <ion-item>
+        <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
+        <ion-label position="stacked">Casa</ion-label>
+        <ion-select
+          [(ngModel)]="id_casa"
+          name="id_casa"
+          interface="popover"
+          placeholder="Selecciona una casa"
+          (ionChange)="onCasaChange($event)"
+        >
+          <ion-select-option *ngFor="let c of casas" [value]="c.id">
+            Nº {{ c.numero }} — {{ c.direccion }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Dirección (solo lectura, cambia al seleccionar casa) -->
+      <ion-item *ngIf="direccionCasaSeleccionada">
+        <ion-icon name="location-outline" slot="start" color="medium"></ion-icon>
+        <ion-label position="stacked">Dirección</ion-label>
+        <ion-input [value]="direccionCasaSeleccionada" readonly></ion-input>
+      </ion-item>
+
+      <!-- Botones -->
+      <ion-button expand="block" type="submit" color="primary">
+        {{ id ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+
+      <ion-button expand="block" color="medium" *ngIf="id" (click)="cancelarEdicion()">
+        Cancelar edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- TABLA DE vehiculos -->
+  <div id="tablaVehiculos" class="lista w-full flex flex-col items-center mt-8">
+    <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
+      Lista de Vehículos
+    </h3>
+
+    <div *ngIf="paginatedVehiculos.length > 0; else noVehiculos" class="w-full max-w-4xl overflow-x-auto">
+      <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+        <thead class="bg-[#001b87] text-white">
+          <tr>
+             <th class="py-2 px-3 border border-gray-400">Dueño</th>
+              <th class="py-2 px-3 border border-gray-400">Patente</th>
+              <th class="py-2 px-3 border border-gray-400">Marca</th>
+              <th class="py-2 px-3 border border-gray-400">Modelo</th>
+              <th class="py-2 px-3 border border-gray-400">Color</th>
+              <th class="py-2 px-3 border border-gray-400">Tipo</th>
+              <th class="py-2 px-3 border border-gray-400">Casa</th>
+              <th class="py-2 px-3 border border-gray-400">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let vehiculo of paginatedVehiculos; let i = index"
+            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+            class="hover:bg-blue-50"
+          >
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.nombre_dueno }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.patente }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.marca }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.modelo }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.color }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ vehiculo.tipo_vehiculo }}</td>
+            <td class="py-2 px-3 border border-gray-300">
+              🏠 Nº {{ vehiculo.casa?.numero || '-' }} — {{ vehiculo.casa?.direccion || 'Sin asignar' }}
+            </td>
+            <td class="py-2 px-3 border border-gray-300 text-center">
+              <ion-button fill="clear" size="small" (click)="editarVehiculo(vehiculo)">
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" size="small" (click)="eliminarVehiculo(vehiculo)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noVehiculos>
+      <p class="text-center text-gray-500 mt-4">No hay vehículos registrados.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
+      <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Siguiente
+      </ion-button>
+    </div>
+  </div>
+</div>
+
+<!-- Espacio final -->
+<div class="espaciador"></div>

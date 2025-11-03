@@ -9,7 +9,7 @@ export interface LoginResponse {
     id: number;
     nombre_usuario: string;
     email: string;
-    rol: 'administrador' | 'usuario' | 'locatario'; // agregar locatario
+    rol: 'administrador' | 'guardia' | 'locatario'; // agregar locatario
   };
 }
 

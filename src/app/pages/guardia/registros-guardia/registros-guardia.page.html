@@ -1,0 +1,121 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Registros</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+
+   <!-- registrar visitas -->
+        <li>
+          <button (click)="toggleMenu('registrarVisitas')" class="menu-item">
+            Registrar Visitas
+          </button>
+          <ul *ngIf="openMenu === 'registrarVisitas'" class="submenu">
+            <li (click)="mostrarSeccion('registrarVisitas')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarVisitas')">
+              Listar Visitas
+            </li>
+          </ul>
+        </li>
+
+        <!-- registrar turnos -->
+        <li>
+          <button (click)="toggleMenu('registrarTurnos')" class="menu-item">
+            Registrar Turnos
+          </button>
+
+          <ul *ngIf="openMenu === 'registrarTurnos'" class="submenu">
+            <li (click)="mostrarSeccion('registrarTurnos')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarTurnos')">
+              Listar Turnos
+            </li>
+          </ul>
+        </li>
+         <!-- registrar rondas -->
+        <li>
+          <button (click)="toggleMenu('registrarRondas')" class="menu-item">
+            Registrar Rondas
+          </button>
+
+          <ul *ngIf="openMenu === 'registrarRondas'" class="submenu">
+            <li (click)="mostrarSeccion('registrarRondas')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarRondas')">
+              Listar Rondas
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+        
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido">
+      <ng-container [ngSwitch]="seccionActiva">
+
+         <!--  VISITAS -->
+        <div *ngSwitchCase="'registrarVisitas'">
+          
+        </div>
+
+        <div *ngSwitchCase="'listarVisitas'">
+          
+        </div>
+
+        <!-- turnos-->
+        <div *ngSwitchCase="'registrarTurnos'">
+          
+        </div>
+
+        <div *ngSwitchCase="'listarTurnos'">
+         
+        </div>
+         <!-- rondas-->
+        <div *ngSwitchCase="'registrarTurnos'">
+          
+        </div>
+
+        <div *ngSwitchCase="'listarTurnos'">
+         
+        </div>
+       
+        
+
+        <!-- 🔸 DEFAULT -->
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+
+      </ng-container>
+    </section>
+  </div>
+</ion-content>
+
