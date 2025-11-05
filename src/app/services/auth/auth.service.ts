@@ -22,14 +22,14 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Login: obtiene el token y datos del usuario
+  // Login: obtiene el token y datos del usuario
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password });
   }
 
-  // ✅ Guarda la sesión con todos los campos, incluido id_guardia
+  // Guarda la sesión con todos los campos, incluido id_guardia
   saveSession(res: LoginResponse) {
-    console.log('✅ Sesión guardada:', res.user);
+    console.log('Sesión guardada:', res.user);
     localStorage.setItem('token', res.access_token);
     localStorage.setItem('user', JSON.stringify(res.user));
   }
@@ -68,13 +68,13 @@ export class AuthService {
     return user?.id ? Number(user.id) : 0;
   }
 
-  // ✅ Ahora devuelve el nombre real (campo nombre)
+  // Ahora devuelve el nombre real (campo nombre)
   getUserName(): string {
     const user = this.getUser();
     return user?.nombre || '';
   }
 
-  // ✅ NUEVO: obtener id_guardia directamente
+  // NUEVO: obtener id_guardia directamente
   getGuardiaId(): number | null {
     const user = this.getUser();
     return user?.id_guardia ?? null;
