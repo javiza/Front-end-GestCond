@@ -1,0 +1,105 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center">
+  <div class="formulario w-full max-w-lg">
+    <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center w-full block">
+      Registro de Guardias
+    </h3>
+
+    <form (ngSubmit)="ingresarGuardia()" class="flex flex-col gap-3">
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="nombre" name="nombre" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">RUT</ion-label>
+        <ion-input [(ngModel)]="rut" name="rut" (ionInput)="onRutInput($event)" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input [(ngModel)]="telefono" name="telefono"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Correo Electrónico</ion-label>
+        <ion-input [(ngModel)]="email" name="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Empresa Contratista</ion-label>
+        <ion-select [(ngModel)]="id_empresa_contratista" name="id_empresa_contratista" interface="popover">
+         <ion-select-option [value]="null">Sin empresa</ion-select-option>
+          <ion-select-option *ngFor="let e of empresas" [value]="e.id">
+            {{ e.nombre_empresa }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Activo</ion-label>
+        <ion-toggle [(ngModel)]="activo" name="activo"></ion-toggle>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" color="primary">
+        {{ id ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+
+      <ion-button expand="block" color="medium" *ngIf="id" (click)="cancelarEdicion()">
+        Cancelar edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- Tabla -->
+  <div id="tablaGuardias" class="lista w-full flex flex-col items-center mt-8">
+    <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
+      Lista de Guardias Registrados
+    </h3>
+
+    <div *ngIf="paginatedGuardias.length > 0; else noGuardias" class="w-full max-w-4xl overflow-x-auto">
+      <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+        <thead class="bg-[#001b87] text-white">
+          <tr>
+            <th>Nombre</th>
+            <th>RUT</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Empresa</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let g of paginatedGuardias; let i = index"
+              [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
+            <td>{{ g.nombre }}</td>
+            <td>{{ g.rut }}</td>
+            <td>{{ g.telefono || '-' }}</td>
+            <td>{{ g.email || '-' }}</td>
+            <td>{{ g.empresaContratista?.nombre_empresa || '-' }}</td>
+            <td>{{ g.activo ? 'Sí' : 'No' }}</td>
+            <td>
+              <ion-button fill="clear" size="small" (click)="editarGuardia(g)">
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" size="small" (click)="eliminarGuardia(g)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noGuardias>
+      <p class="text-center text-gray-500 mt-4">No hay registros de guardias.</p>
+    </ng-template>
+
+    <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
+      <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</ion-button>
+    </div>
+  </div>
+</div>
+<div class="espaciador"></div>

@@ -1,0 +1,46 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
+  <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center">
+    Autorización de Ingreso por Código QR
+  </h3>
+
+  <form (ngSubmit)="generarQR()" class="flex flex-col gap-3 w-full max-w-md">
+    <!-- Nombre de la visita -->
+    <ion-item>
+      <ion-label position="floating">Nombre de la persona o visita</ion-label>
+      <ion-input [(ngModel)]="nombre_visita" name="nombre_visita" required></ion-input>
+    </ion-item>
+
+    <!-- Motivo -->
+    <ion-item>
+      <ion-label position="floating">Motivo de la autorización</ion-label>
+      <ion-input [(ngModel)]="motivo" name="motivo"></ion-input>
+    </ion-item>
+
+    <!-- Botón generar -->
+    <ion-button expand="block" type="submit" [disabled]="cargando">
+      {{ cargando ? 'Generando...' : 'Autorizar Ingreso' }}
+    </ion-button>
+  </form>
+
+  <!-- Mensaje -->
+  <div *ngIf="mensaje" class="text-center text-sm text-gray-600 mt-2">
+    {{ mensaje }}
+  </div>
+
+  <!-- QR generado -->
+  <div *ngIf="qrCreado" class="mt-6 flex flex-col items-center">
+    <p class="text-[#001b87] font-semibold mb-2">Código QR generado:</p>
+
+    <img
+      [src]="qrImageUrl"
+      alt="Código QR"
+      class="border p-2 bg-gray-50 rounded-md w-52 h-52"
+    />
+
+    <div class="mt-2 text-sm text-gray-700 font-mono">{{ codigo_qr }}</div>
+
+    <ion-button *ngIf="mostrarNuevoBoton" color="medium" (click)="nuevaVisita()" class="mt-4">
+      Generar Nueva Visita
+    </ion-button>
+  </div>
+</div>

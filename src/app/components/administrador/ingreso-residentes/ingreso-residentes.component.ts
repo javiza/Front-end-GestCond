@@ -44,7 +44,7 @@ export class IngresoResidentesComponent implements OnInit {
   casas: Casa[] = [];
 
   // paginación
-  pageSize = 3;
+  pageSize = 10;
   currentPage = 1;
 
   // formulario

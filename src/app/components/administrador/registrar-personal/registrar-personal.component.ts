@@ -210,7 +210,8 @@ export class RegistrarPersonalComponent implements OnInit {
     this.nombre = p.nombre;
     this.rut = p.rut;
     this.cargo = p.cargo;
-    this.id_empresa_contratista = p.id_empresa_contratista ?? null;
+    this.id_empresa_contratista = p.empresa_contratista?.id ?? null;
+
     this.activo = p.activo;
   }
 

@@ -27,3 +27,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ion-toolbar,
+ion-title,
+
+
+ion-icon {
+  color: #030303 !important;
+  fill: #030303 !important;
+  
+}
+
+ion-title{
+    color: #faf3f3 !important;
+}
+/* --- Corrección de visibilidad para botones Ionic --- */
+ion-button {
+ 
+  --color: #121213 !important;      /* texto blanco */
+  --border-radius: 10px;
+  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+

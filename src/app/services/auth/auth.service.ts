@@ -1,15 +1,16 @@
-import { environment } from 'src/environments/environment';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 
 export interface LoginResponse {
   access_token: string;
   user: {
     id: number;
-    nombre_usuario: string;
+    id_guardia?: number | null; // 👈 AGREGADO
+    nombre: string;             // 👈 CAMBIADO de nombre_usuario → nombre
     email: string;
-    rol: 'administrador' | 'guardia' | 'locatario'; // agregar locatario
+    rol: 'administrador' | 'guardia' | 'locatario';
   };
 }
 
@@ -21,11 +22,14 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  // ✅ Login: obtiene el token y datos del usuario
   login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { email, password });
   }
 
+  // ✅ Guarda la sesión con todos los campos, incluido id_guardia
   saveSession(res: LoginResponse) {
+    console.log('✅ Sesión guardada:', res.user);
     localStorage.setItem('token', res.access_token);
     localStorage.setItem('user', JSON.stringify(res.user));
   }
@@ -49,7 +53,6 @@ export class AuthService {
   }
 
   getUserId(): number {
-    // Intenta obtener desde el token
     const token = this.getToken();
     if (token) {
       try {
@@ -61,9 +64,19 @@ export class AuthService {
         console.warn('Error al decodificar el token JWT:', e);
       }
     }
-
-    // Fallback: obtener desde el objeto user
     const user = this.getUser();
     return user?.id ? Number(user.id) : 0;
+  }
+
+  // ✅ Ahora devuelve el nombre real (campo nombre)
+  getUserName(): string {
+    const user = this.getUser();
+    return user?.nombre || '';
+  }
+
+  // ✅ NUEVO: obtener id_guardia directamente
+  getGuardiaId(): number | null {
+    const user = this.getUser();
+    return user?.id_guardia ?? null;
   }
 }

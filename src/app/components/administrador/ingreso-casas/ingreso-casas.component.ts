@@ -35,7 +35,7 @@ export class IngresoCasasComponent implements OnInit {
   casas: Casa[] = [];
   paginatedCasas: Casa[] = [];
 
-  pageSize = 3;
+  pageSize = 10;
   currentPage = 1;
 
   id: number | null = null;

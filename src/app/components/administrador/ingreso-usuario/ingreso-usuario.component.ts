@@ -55,7 +55,7 @@ export class IngresoUsuarioComponent implements OnInit {
   usuarios: Usuario[] = [];
   paginatedUsuarios: Usuario[] = [];
   // Configuración de paginación
-  pageSize = 3; // máximo 3 por página
+  pageSize = 10; // máximo 10 por página
   currentPage = 1;
 
   // formulario
@@ -129,7 +129,7 @@ export class IngresoUsuarioComponent implements OnInit {
     };
 
     if (this.id) {
-      // 🔹 Actualizar usuario
+      //  Actualizar usuario
       const updatePayload = { ...payload };
       if (!this.password) delete (updatePayload as any).password;
 
@@ -141,7 +141,7 @@ export class IngresoUsuarioComponent implements OnInit {
         error: (err) => console.error('Error al actualizar usuario:', err),
       });
     } else {
-      // 🔹 Crear usuario
+      //  Crear usuario
       if (!this.password) {
         alert('Debes ingresar una contraseña para el nuevo usuario.');
         return;

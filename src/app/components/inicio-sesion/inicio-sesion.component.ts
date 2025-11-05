@@ -82,7 +82,7 @@ export class InicioSesionComponent implements OnInit {
     } else if (res.user.rol === 'guardia') {
       this.router.navigate(['/registros-guardia'], { replaceUrl: true });
     } else if (res.user.rol === 'locatario') {
-      this.router.navigate(['/pwa'], { replaceUrl: true });
+      this.router.navigate(['/locatario'], { replaceUrl: true });
     } else {
       this.router.navigate(['/home'], { replaceUrl: true });
     }

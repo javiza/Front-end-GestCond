@@ -1,0 +1,71 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
+  <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center">
+    Registro de Visitas
+  </h3>
+
+  <form (ngSubmit)="registrarIngreso()" class="flex flex-col gap-3 w-full max-w-md">
+    <ion-item>
+      <ion-label position="floating">Nombre visitante</ion-label>
+      <ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">RUT visitante</ion-label>
+      <ion-input
+        [(ngModel)]="rut"
+        name="rut"
+        (ionInput)="onRutInput($event)"
+        placeholder="12345678-9"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Patente (opcional)</ion-label>
+      <ion-input [(ngModel)]="patente" name="patente"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Tipo de vehículo</ion-label>
+      <ion-select
+        [(ngModel)]="tipo_vehiculo"
+        name="tipo_vehiculo"
+        placeholder="Seleccione una opción"
+      >
+        <ion-select-option value="auto">Auto</ion-select-option>
+        <ion-select-option value="camioneta">Camioneta</ion-select-option>
+        <ion-select-option value="moto">Moto</ion-select-option>
+        <ion-select-option value="bicicleta">Bicicleta</ion-select-option>
+        <ion-select-option value="camion">Camión</ion-select-option>
+        <ion-select-option value="bus">Bus</ion-select-option>
+        <ion-select-option value="peatonal">Peatonal</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Autorizado por</ion-label>
+      <ion-input [(ngModel)]="autorizado_por" name="autorizado_por" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Lugar o destino</ion-label>
+      <ion-input [(ngModel)]="lugar_destino" name="lugar_destino" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Tipo de visita</ion-label>
+      <ion-select [(ngModel)]="tipo_visita" name="tipo_visita" required>
+        <ion-select-option value="visita">Visita</ion-select-option>
+        <ion-select-option value="delivery">Delivery</ion-select-option>
+        <ion-select-option value="trabajador">Trabajador</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" color="primary" [disabled]="cargando">
+      {{ cargando ? 'Registrando...' : 'Registrar Ingreso' }}
+    </ion-button>
+  </form>
+
+  <div *ngIf="mensaje" class="text-center text-sm text-gray-600 mt-2">
+    {{ mensaje }}
+  </div>
+</div>

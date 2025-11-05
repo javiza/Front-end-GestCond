@@ -46,7 +46,7 @@
   </div>
 
   <!-- Tabla -->
-  <div class="lista w-full flex flex-col items-center mt-8">
+  <div id="tablaPersonal" class="lista w-full flex flex-col items-center mt-8">
     <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
       Lista de Personal Interno
     </h3>
@@ -69,7 +69,10 @@
             <td>{{ p.nombre }}</td>
             <td>{{ p.rut }}</td>
             <td>{{ p.cargo }}</td>
-            <td>{{ p.id_empresa_contratista || '-' }}</td>
+            <td class="py-2 px-3 border border-gray-300">
+            {{ p.empresa_contratista?.nombre_empresa || '-' }}
+                                                  </td>
+
             <td>{{ p.activo ? 'Sí' : 'No' }}</td>
             <td>
               <ion-button fill="clear" size="small" (click)="editarPersonal(p)">

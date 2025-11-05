@@ -41,7 +41,7 @@ export class RegistrarEmpresasComponent implements OnInit {
   paginatedEmpresas: EmpresaContratista[] = [];
 
   // Paginación
-  pageSize = 3;
+  pageSize = 10;
   currentPage = 1;
 
   // Formulario

@@ -54,6 +54,24 @@
           </ul>
         </li>
 
+        <!-- registrar guardia -->
+        <li>
+          <button (click)="toggleMenu('registroGuardia')" class="menu-item">
+            Registrar Guardia
+          </button>
+
+          <ul *ngIf="openMenu === 'registroGuardia'" class="submenu">
+            <li (click)="mostrarSeccion('registroGuardia')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarGuardias')">
+              Listar Guardia
+            </li>
+          </ul>
+        </li>
+
 
         <!-- OTRAS OPCIONES -->
         <li><button (click)="irA('gestion-locatarios')" class="menu-item">Gestion Locatarios</button></li>
@@ -83,6 +101,14 @@
 
         <div *ngSwitchCase="'listarPersonal'">
           <app-registrar-personal></app-registrar-personal>
+        </div>
+         <!-- Guardia-->
+        <div *ngSwitchCase="'registroGuardia'">
+          <app-registro-guardia></app-registro-guardia>
+        </div>
+
+        <div *ngSwitchCase="'listarGuardias'">
+          <app-registro-guardia></app-registro-guardia>
         </div>
 
        

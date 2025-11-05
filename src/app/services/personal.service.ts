@@ -4,14 +4,21 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 //  interfaz EXACTA según backend (Swagger + entidad)
+export interface EmpresaContratista {
+  id: number;
+  nombre_empresa: string;
+  nombre_encargado: string;
+}
+
 export interface Personal {
   id: number;
   nombre: string;
   rut: string;
   cargo: string;
-  id_empresa_contratista?: number | null;
   activo: boolean;
+  empresa_contratista?: EmpresaContratista | null; // 👈 relación completa
 }
+
 
 //  DTOs alineados con backend
 export interface CreatePersonalDto {

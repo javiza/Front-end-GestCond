@@ -18,10 +18,7 @@ export const routes: Routes = [
   },
 
  
-  {
-    path: 'programar',
-    loadComponent: () => import('./pages/programar/programar.page').then( m => m.ProgramarPage)
-  },
+ 
   {
     path: 'gestion-locatarios',
     loadComponent: () => import('./pages/admin/gestion-locatarios/gestion-locatarios.page').then( m => m.GestionLocatariosPage),
@@ -39,6 +36,13 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/guardia/registros-guardia/registros-guardia.page').then( m => m.RegistrosGuardiaPage),
     canActivate: [RoleGuard],
     data: { roles: ['guardia'] },
+  },
+
+  {
+    path: 'locatario',
+    loadComponent: () => import('./pages/locatario/locatario.page').then( m => m.LocatarioPage),
+    canActivate: [RoleGuard],
+    data: { roles: ['locatario'] },
   },
   
  

@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>locatario</ion-title>
+      <ion-buttons slot="end">
+      <ion-button  color="light" (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <app-autorizacion-qr></app-autorizacion-qr>
+</ion-content>
+

@@ -5,12 +5,14 @@ import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { RegistrarEmpresasComponent } from 'src/app/components/administrador/registrar-empresas/registrar-empresas.component';
-import { RegistrarPersonalComponent } from 'src/app/components/administrador/registrar-personal/registrar-personal.component';
+import { LectorQrComponent } from 'src/app/components/guardias/lector-qr/lector-qr.component';
+import { ListaVisitasComponent } from 'src/app/components/guardias/lista-visitas/lista-visitas.component';
+import { RegistroVisitasComponent } from 'src/app/components/guardias/registro-visitas/registro-visitas.component';
+
 @Component({
   selector: 'app-registros-guardia',
   standalone: true,
-  imports: [IonicModule, CommonModule, RegistrarEmpresasComponent, RegistrarPersonalComponent],
+  imports: [IonicModule, CommonModule, LectorQrComponent, ListaVisitasComponent, RegistroVisitasComponent],
   templateUrl: './registros-guardia.page.html',
   styleUrls: ['./registros-guardia.page.scss'],
 })
