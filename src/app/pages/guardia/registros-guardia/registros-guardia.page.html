@@ -93,19 +93,21 @@
 
         <!-- turnos-->
         <div *ngSwitchCase="'registrarTurnos'">
+          <app-turnos-guardias></app-turnos-guardias>
           
         </div>
 
         <div *ngSwitchCase="'listarTurnos'">
-         
+          <app-lista-turnos></app-lista-turnos>
         </div>
+        
          <!-- rondas-->
-        <div *ngSwitchCase="'registrarTurnos'">
-          
+        <div *ngSwitchCase="'registrarRondas'">
+          <app-rondas-guardia></app-rondas-guardia>
         </div>
 
-        <div *ngSwitchCase="'listarTurnos'">
-         
+        <div *ngSwitchCase="'listarRondas'">
+          <app-lista-rondas></app-lista-rondas>
         </div>
        
         

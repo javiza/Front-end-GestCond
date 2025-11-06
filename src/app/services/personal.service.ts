@@ -16,7 +16,7 @@ export interface Personal {
   rut: string;
   cargo: string;
   activo: boolean;
-  empresa_contratista?: EmpresaContratista | null; // 👈 relación completa
+  empresa_contratista?: EmpresaContratista | null; // 
 }
 
 

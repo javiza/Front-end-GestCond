@@ -1,14 +1,14 @@
 <div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
   <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
-    Mis Autorizaciones QR
+    Listado de Turnos de Guardia
   </h3>
 
-  <!-- Barra de búsqueda y filtro -->
+  <!-- 🔍 Filtros -->
   <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
     <div class="flex items-center gap-2 w-full md:w-1/2">
       <ion-input
         type="text"
-        placeholder="Buscar por nombre o motivo..."
+        placeholder="Buscar por observación o guardia..."
         [(ngModel)]="terminoBusqueda"
         (ionInput)="filtrar()"
         class="w-full"
@@ -27,39 +27,39 @@
     </div>
   </div>
 
-  <!-- Tabla -->
-  <div *ngIf="paginadas.length > 0; else noDatos" class="w-full max-w-4xl overflow-x-auto">
+  <!-- 🧾 Tabla -->
+  <div *ngIf="paginados.length > 0; else noDatos" class="w-full max-w-4xl overflow-x-auto">
     <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
       <thead class="bg-[#001b87] text-white">
         <tr>
-          <th>Código QR</th>
-          <th>Nombre de la Visita</th>
-          <th>Motivo</th>
-          <th>Fecha de Creación</th>
+          <th>ID</th>
+          <th>Guardia</th>
+          <th>Inicio</th>
+          <th>Término</th>
+          <th>Obs. Inicio</th>
+          <th>Obs. Término</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let a of paginadas; let i = index"
-          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
-        >
-          <td>{{ a.codigo_qr }}</td>
-          <td>{{ a.nombre_visita }}</td>
-          <td>{{ a.motivo || '—' }}</td>
-          <td>{{ a.fecha_hora | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <tr *ngFor="let t of paginados; let i = index"
+          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
+          <td>{{ t.id }}</td>
+          <td>{{ t.guardia?.nombre || '—' }}</td>
+          <td>{{ t.fecha_hora_inicio | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ t.fecha_hora_termino | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ t.observacion_inicio || '—' }}</td>
+          <td>{{ t.observacion_termino || '—' }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!--  Sin datos -->
+  <!-- Sin datos -->
   <ng-template #noDatos>
-    <p class="text-center text-gray-500 mt-4">
-      No hay autorizaciones QR registradas por este usuario.
-    </p>
+    <p class="text-center text-gray-500 mt-4">No hay turnos registrados.</p>
   </ng-template>
 
-  <!--  Paginación -->
+  <!-- Paginación -->
   <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
     <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
       Anterior
@@ -70,4 +70,5 @@
     </ion-button>
   </div>
 </div>
+
 <div class="espaciador"></div>

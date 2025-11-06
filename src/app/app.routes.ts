@@ -44,6 +44,22 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['locatario'] },
   },
+  {
+    path: 'observaciones',
+    loadComponent: () => import('./pages/admin/observaciones/observaciones.page').then( m => m.ObservacionesPage),
+    canActivate: [RoleGuard],
+    data: { roles: ['administrador'] },
+  },
+  {
+    path: 'registros',
+    loadComponent: () => import('./pages/admin/registros/registros.page').then( m => m.RegistrosPage),
+    canActivate: [RoleGuard],
+    data: { roles: ['administrador'] },
+  },
+  {
+    path: 'informaciones',
+    loadComponent: () => import('./pages/admin/informaciones/informaciones.page').then( m => m.InformacionesPage)
+  },
   
  
   

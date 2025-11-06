@@ -1,0 +1,86 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title >Registros</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon  name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+        <!-- GESTIÓN observaciones turno -->
+        <li>
+          <button (click)="toggleMenu('turnos')" class="menu-item">
+            Observaciones Turnos
+          </button>
+
+          <ul *ngIf="openMenu === 'turnos'" class="submenu">
+
+            <li (click)="mostrarSeccion('listaTurnos')">
+              Listar Observaciones Turnos
+            </li>
+          </ul>
+        </li>
+
+        <!-- observaciones ronda -->
+        <li>
+          <button (click)="toggleMenu('rondas')" class="menu-item">
+            Observaciones de Rondas
+          </button>
+          <ul *ngIf="openMenu === 'rondas'" class="submenu">
+            
+
+            <li (click)="mostrarSeccion('listaRondas')">
+              Listar observaciones Rondas
+            </li>
+          </ul>
+        </li>
+ 
+      
+
+        <!-- OTRAS OPCIONES -->
+        <li><button (click)="irA('gestion-locatarios')" class="menu-item">Gestion Locatarios</button></li>
+        <li><button (click)="irA('registro-personal')" class="menu-item">Registro Personal</button></li>
+        <li><button (click)="irA('informaciones')" class="menu-item">Informaciones</button></li>
+        <li><button (click)="irA('registros')" class="menu-item">Registros</button></li>
+      </ul>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido">
+      <ng-container [ngSwitch]="seccionActiva">
+
+        <!-- turnos -->
+        
+        <div *ngSwitchCase="'listaTurnos'">
+          <app-lista-turnos></app-lista-turnos>
+        </div>
+
+        <!--  rondas -->
+
+        <div *ngSwitchCase="'listaRondas'">
+          <app-lista-rondas></app-lista-rondas>
+        </div>
+       
+
+        <!-- DEFAULT -->
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+
+      </ng-container>
+    </section>
+  </div>
+</ion-content>

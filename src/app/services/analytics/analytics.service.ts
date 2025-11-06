@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-  private apiUrl = `${environment.apiUrl}/sanalytics`; 
+  private apiUrl = `${environment.apiUrl}/analytics`; 
 
   private http = inject(HttpClient);
 

@@ -1,0 +1,45 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
+  <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center">
+    Registro de Turnos de Guardia
+  </h3>
+
+  <!-- Formulario inicio turno -->
+  <form *ngIf="!turnoActivo" (ngSubmit)="iniciarTurno()" class="flex flex-col gap-3 w-full max-w-md">
+    
+    <!-- 👇 NUEVO: selector de guardia -->
+    <ion-item>
+      <ion-label position="floating">Seleccionar Guardia</ion-label>
+      <ion-select [(ngModel)]="id_guardia" name="id_guardia" required>
+        <ion-select-option *ngFor="let g of guardias" [value]="g.id">{{ g.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Observación de inicio</ion-label>
+      <ion-input [(ngModel)]="observacion_inicio" name="observacion_inicio" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="cargando">
+      {{ cargando ? 'Registrando...' : 'Iniciar Turno' }}
+    </ion-button>
+  </form>
+
+  <!-- Formulario cierre turno -->
+  <form *ngIf="turnoActivo" (ngSubmit)="cerrarTurno()" class="flex flex-col gap-3 w-full max-w-md">
+    <ion-item>
+      <ion-label position="floating">Observación de término</ion-label>
+      <ion-input [(ngModel)]="observacion_termino" name="observacion_termino" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" color="danger" type="submit" [disabled]="cargando">
+      {{ cargando ? 'Cerrando...' : 'Cerrar Turno' }}
+    </ion-button>
+  </form>
+
+  <!-- Mensaje -->
+  <div *ngIf="mensaje" class="text-center text-sm text-gray-600 mt-2">
+    {{ mensaje }}
+  </div>
+</div>
+
+<div class="espaciador"></div>

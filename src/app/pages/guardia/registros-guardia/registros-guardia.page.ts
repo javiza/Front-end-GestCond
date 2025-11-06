@@ -8,11 +8,14 @@ import { NavController } from '@ionic/angular';
 import { LectorQrComponent } from 'src/app/components/guardias/lector-qr/lector-qr.component';
 import { ListaVisitasComponent } from 'src/app/components/guardias/lista-visitas/lista-visitas.component';
 import { RegistroVisitasComponent } from 'src/app/components/guardias/registro-visitas/registro-visitas.component';
-
+import { ListaTurnosComponent } from 'src/app/components/guardias/lista-turnos/lista-turnos.component';
+import { TurnosGuardiasComponent } from 'src/app/components/guardias/turnos-guardias/turnos-guardias.component';
+import { RondasGuardiaComponent } from 'src/app/components/guardias/rondas-guardia/rondas-guardia.component';
+import { ListaRondasComponent } from 'src/app/components/guardias/lista-rondas/lista-rondas.component';
 @Component({
   selector: 'app-registros-guardia',
   standalone: true,
-  imports: [IonicModule, CommonModule, LectorQrComponent, ListaVisitasComponent, RegistroVisitasComponent],
+  imports: [IonicModule, CommonModule, LectorQrComponent, ListaVisitasComponent, RegistroVisitasComponent, ListaTurnosComponent, TurnosGuardiasComponent, RondasGuardiaComponent, ListaRondasComponent],
   templateUrl: './registros-guardia.page.html',
   styleUrls: ['./registros-guardia.page.scss'],
 })
