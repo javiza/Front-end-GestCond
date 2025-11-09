@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RondasService } from 'src/app/services/rondas.service';
+import { RondasService } from 'src/app/services/rondas/rondas.service';
 
 @Component({
   selector: 'app-rondas-guardia',

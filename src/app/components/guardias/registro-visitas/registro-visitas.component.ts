@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { RegistroVisitasService } from 'src/app/services/registro-visitas.service';
+import { RegistroVisitasService } from 'src/app/services/registro-visitas/registro-visitas.service';
 import { SharedQrService } from 'src/app/services/shared-qr.service';
 
 @Component({

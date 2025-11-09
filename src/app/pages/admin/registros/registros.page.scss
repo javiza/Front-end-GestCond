@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  min-height: 100vh; /* asegura que cubra toda la altura visible */
+  background: #f8f8f8;
+}
+
+/* MENÚ LATERAL AZUL */
+.sidebar {
+  width: 250px;
+  background-color: #001b87;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: fixed; /* hace que el menú quede fijo */
+  top: 56px; /* evita que se superponga con el ion-header */
+  bottom: 0;
+  left: 0;
+  height: calc(100vh - 56px); /* ajusta altura total menos el header */
+  overflow-y: auto; /* si hay muchos ítems, agrega scroll interno */
+  z-index: 10;
+}
+
+.sidebar h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* MENÚ PRINCIPAL */
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item,
+.menu li button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  text-align: left;
+  width: 100%;
+  padding: 10px 0;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.menu-item:hover,
+.menu li button:hover {
+  color: #61b0ff;
+}
+
+/* SUBMENÚS */
+.submenu {
+  list-style: none;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.submenu li {
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.submenu li:hover {
+  color: #61b0ff;
+}
+
+/* CONTENIDO PRINCIPAL */
+.contenido {
+  flex: 1;
+  margin-left: 250px; /* deja espacio para el sidebar fijo */
+  padding: 40px;
+  background: white;
+  border-left: 2px solid #ccc;
+  min-height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
+/* TOOLBAR SUPERIOR */
+ion-toolbar {
+  --background: #001b87; /* azul principal */
+  --color: white;
+  justify-content: center;
+}
+
+ion-title {
+  color: white;
+  text-align: center;
+  width: 100%;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.icon-right{
+  color: white !important; 
+}

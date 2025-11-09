@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { TurnosService, Turno, Guardia } from 'src/app/services/turnos.service';
+import { TurnosService, Turno, Guardia } from 'src/app/services/turnos/turnos.service';
 
 @Component({
   selector: 'app-turnos-guardias',

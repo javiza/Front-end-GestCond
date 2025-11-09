@@ -16,7 +16,7 @@ import {
 import { addIcons } from 'ionicons';
 import { createOutline, trashOutline, homeOutline, locationOutline } from 'ionicons/icons';
 import { CasasService, Casa } from 'src/app/services/casas/casas.service';
-import { VehiculosService, Vehiculo, CreateVehiculoDto } from 'src/app/services/vehiculos.service';
+import { VehiculosService, Vehiculo, CreateVehiculoDto } from 'src/app/services/vehiculos/vehiculos.service';
 
 @Component({
   selector: 'app-ingreso-vehiculos',
@@ -139,7 +139,7 @@ export class IngresoVehiculosComponent implements OnInit {
 
     // Crear payload con claves esperadas por el backend
     const payload: any = {
-      nombre_dueño: this.nombre_dueno.trim(), // ← se envía con ñ al backend
+      nombre_dueno: this.nombre_dueno.trim(), // ← se envía con ñ al backend
       patente: this.patente.trim(),
       marca: this.marca.trim(),
       modelo: this.modelo.trim(),

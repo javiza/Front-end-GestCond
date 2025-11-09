@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>Registros</ion-title>
+    <ion-title>Registros de Personal</ion-title>
 
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
@@ -71,6 +71,24 @@
             </li>
           </ul>
         </li>
+         <!-- registrar trabajos -->
+        <li>
+          <button (click)="toggleMenu('registroTrabajos')" class="menu-item">
+            Registrar Trabajos
+          </button>
+
+          <ul *ngIf="openMenu === 'registroTrabajos'" class="submenu">
+            <li (click)="mostrarSeccion('registroTrabajos')">
+              Agregar
+              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
+            </li>
+
+            <li (click)="mostrarSeccion('listarTrabajos')">
+              Listar Trabajos
+            </li>
+          </ul>
+        </li>
+
 
 
         <!-- OTRAS OPCIONES -->
@@ -108,6 +126,14 @@
         </div>
 
         <div *ngSwitchCase="'listarGuardias'">
+          <app-registro-guardia></app-registro-guardia>
+        </div>
+         <!-- Trabajos-->
+        <div *ngSwitchCase="'registroTrabajos'">
+          <app-trabajos-personal></app-trabajos-personal>
+        </div>
+
+        <div *ngSwitchCase="'listarTrabajos'">
           <app-registro-guardia></app-registro-guardia>
         </div>
 

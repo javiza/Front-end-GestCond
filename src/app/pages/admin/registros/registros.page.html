@@ -1,13 +1,73 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>registros</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Registros</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">registros</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="container">
+    <!-- MENÚ LATERAL -->
+    <aside class="sidebar">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+        <!-- Lista de visitas -->
+        <li>
+          <button (click)="mostrarSeccion('visitas')" class="menu-item">
+            Lista de Visitas
+          </button>
+        </li>
+
+       
+
+        <!-- Otras opciones -->
+        <li>
+          <button (click)="irA('gestion-locatarios')" class="menu-item">
+            Gestión Locatarios
+          </button>
+        </li>
+        <li>
+          <button (click)="irA('registro-personal')" class="menu-item">
+            Registro Personal
+          </button>
+        </li>
+        <li>
+          <button (click)="irA('observaciones')" class="menu-item">
+            Observaciones
+          </button>
+        </li>
+        <li>
+          <button (click)="irA('informaciones')" class="menu-item">
+            Informaciones
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <section class="contenido">
+      <ng-container [ngSwitch]="seccionActiva">
+        <!-- Visitas -->
+        <div *ngSwitchCase="'visitas'">
+          <app-lista-visitas></app-lista-visitas>
+        </div>
+
+        
+
+        <!-- Default -->
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+      </ng-container>
+    </section>
+  </div>
 </ion-content>

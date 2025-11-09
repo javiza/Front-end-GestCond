@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
-import { AutorizacionQrService, AutorizacionQR } from 'src/app/services/autorizacion-qr.service';
+import { AutorizacionQrService, AutorizacionQR } from 'src/app/services/autorizacion-qr/autorizacion-qr.service';
 import * as QRCode from 'qrcode';
 
 

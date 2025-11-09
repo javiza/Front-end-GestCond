@@ -58,7 +58,9 @@ export const routes: Routes = [
   },
   {
     path: 'informaciones',
-    loadComponent: () => import('./pages/admin/informaciones/informaciones.page').then( m => m.InformacionesPage)
+    loadComponent: () => import('./pages/admin/informaciones/informaciones.page').then( m => m.InformacionesPage),
+    canActivate: [RoleGuard],
+    data: { roles: ['administrador'] },
   },
   
  

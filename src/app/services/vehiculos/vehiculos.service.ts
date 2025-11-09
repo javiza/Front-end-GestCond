@@ -20,7 +20,7 @@ export interface Vehiculo {
 }
 
 export interface CreateVehiculoDto {
-  nombre_dueño: string; // enviado al back
+  nombre_dueno: string; // enviado al back
   patente: string;
   marca: string;
   modelo: string;
@@ -30,7 +30,7 @@ export interface CreateVehiculoDto {
 }
 
 export interface UpdateVehiculoDto {
-  nombre_dueño?: string;
+  nombre_dueno?: string;
   patente?: string;
   marca?: string;
   modelo?: string;
@@ -60,7 +60,7 @@ export class VehiculosService {
       map((vehiculos) =>
         vehiculos.map((v) => ({
           ...v,
-          nombre_dueno: v.nombre_dueño, // convierte al formato del front
+          nombre_dueno: v.nombre_dueno, // convierte al formato del front
         }))
       )
     );
@@ -70,7 +70,7 @@ export class VehiculosService {
     return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() }).pipe(
       map((v) => ({
         ...v,
-        nombre_dueno: v.nombre_dueño,
+        nombre_dueno: v.nombre_dueno,
       }))
     );
   }

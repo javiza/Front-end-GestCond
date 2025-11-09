@@ -16,7 +16,7 @@ import {
 import { addIcons } from 'ionicons';
 import { createOutline, trashOutline, homeOutline, locationOutline } from 'ionicons/icons';
 import { CasasService, Casa } from 'src/app/services/casas/casas.service';
-import { ResidentesService, Residente, CreateResidenteDto } from 'src/app/services/residentes.service';
+import { ResidentesService, Residente, CreateResidenteDto } from 'src/app/services/residentes/residentes.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -52,6 +52,7 @@ export class IngresoResidentesComponent implements OnInit {
   nombre = '';
   rut = '';
   email = '';
+  telefono = ''; 
   id_casa: number | null = null;
   direccionCasaSeleccionada = '';
 
@@ -191,6 +192,7 @@ export class IngresoResidentesComponent implements OnInit {
     nombre: this.nombre.trim(),
     rut: rutLimpio,
     email: this.email.trim(),
+    telefono: this.telefono?.trim() || undefined,
     id_casa: this.id_casa,
     id_usuario,
     activo: true,
@@ -235,6 +237,7 @@ export class IngresoResidentesComponent implements OnInit {
     this.nombre = residente.nombre;
     this.rut = residente.rut;
     this.email = residente.email;
+     this.telefono = residente.telefono || '';
     this.id_casa = residente.casa?.id || null;
     this.direccionCasaSeleccionada = residente.casa?.direccion || '';
   }
@@ -263,6 +266,7 @@ export class IngresoResidentesComponent implements OnInit {
     this.nombre = '';
     this.rut = '';
     this.email = '';
+    this.telefono = ''; 
     this.id_casa = null;
     this.direccionCasaSeleccionada = '';
   }

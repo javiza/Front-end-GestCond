@@ -8,10 +8,12 @@ import { NavController } from '@ionic/angular';
 import { RegistrarEmpresasComponent } from 'src/app/components/administrador/registrar-empresas/registrar-empresas.component';
 import { RegistrarPersonalComponent } from 'src/app/components/administrador/registrar-personal/registrar-personal.component';
 import { RegistroGuardiaComponent } from 'src/app/components/administrador/registro-guardia/registro-guardia.component';
+import { TrabajosPersonalComponent } from 'src/app/components/administrador/trabajos-personal/trabajos-personal.component';
+
 @Component({
   selector: 'app-registro-personal',
   standalone: true,
-  imports: [IonicModule, CommonModule, RegistrarEmpresasComponent, RegistrarPersonalComponent, RegistroGuardiaComponent],
+  imports: [IonicModule, CommonModule, RegistrarEmpresasComponent, RegistrarPersonalComponent, RegistroGuardiaComponent, TrabajosPersonalComponent],
   templateUrl: './registro-personal.page.html',
   styleUrls: ['./registro-personal.page.scss'],
 })
@@ -39,6 +41,7 @@ export class RegistroPersonalPage {
       if (seccion === 'listarPersonal') targetId = 'tablaPersonal';
       if (seccion === 'listarEmpresas') targetId = 'tablaEmpresas';
       if (seccion === 'listarGuardias') targetId = 'tablaGuardias';
+      if (seccion === 'listarTrabajos') targetId = 'tablaTrabajos';
       if (targetId) {
         const target = document.getElementById(targetId);
         if (target) {

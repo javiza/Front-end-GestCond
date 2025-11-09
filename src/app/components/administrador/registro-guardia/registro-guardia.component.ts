@@ -16,7 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { createOutline, trashOutline } from 'ionicons/icons';
-import { GuardiasService, Guardia, CreateGuardiaDto } from 'src/app/services/guardia.service';
+import { GuardiasService, Guardia, CreateGuardiaDto } from 'src/app/services/guardia/guardia.service';
 import { EmpresasContratistasService, EmpresaContratista } from 'src/app/services/empresa-contratista/empresas-contratistas.service';
 
 @Component({

@@ -1,0 +1,115 @@
+<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center">
+  <!-- FORMULARIO -->
+  <div class="formulario w-full max-w-lg">
+    <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center w-full block">
+      Registro de Trabajos del Personal Interno
+    </h3>
+
+    <form (ngSubmit)="ingresarTrabajo()" class="flex flex-col gap-3">
+      <ion-item>
+        <ion-label position="floating">Trabajo Realizado</ion-label>
+        <ion-input [(ngModel)]="trabajo_realizado" name="trabajo_realizado" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fecha Inicio</ion-label>
+        <ion-input [(ngModel)]="fecha_inicio" name="fecha_inicio" type="datetime-local"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Fecha Término</ion-label>
+        <ion-input [(ngModel)]="fecha_termino" name="fecha_termino" type="datetime-local"></ion-input>
+      </ion-item>
+
+      <!--  Selector de Personal Interno -->
+      <ion-item>
+        <ion-icon name="people-outline" slot="start" color="primary"></ion-icon>
+        <ion-label position="stacked">Personal Interno</ion-label>
+        <ion-select
+          [(ngModel)]="id_personal_interno"
+          name="id_personal_interno"
+          interface="popover"
+          placeholder="Selecciona personal"
+        >
+          <ion-select-option *ngFor="let p of personalInterno" [value]="p.id">
+            {{ p.nombre }} — {{ p.cargo }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Botones -->
+      <ion-button expand="block" type="submit" color="primary">
+        {{ id ? 'Actualizar' : 'Registrar' }}
+      </ion-button>
+
+      <ion-button expand="block" color="medium" *ngIf="id" (click)="cancelarEdicion()">
+        Cancelar edición
+      </ion-button>
+    </form>
+  </div>
+
+  <!-- TABLA DE TRABAJOS -->
+  <div id="tablaTrabajos" class="lista w-full flex flex-col items-center mt-8">
+    <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
+      Lista de Trabajos
+    </h3>
+
+    <div *ngIf="paginatedTrabajos.length > 0; else noTrabajos" class="w-full max-w-4xl overflow-x-auto">
+      <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+        <thead class="bg-[#001b87] text-white">
+          <tr>
+            <th class="py-2 px-3 border border-gray-400">Trabajo Realizado</th>
+            <th class="py-2 px-3 border border-gray-400">Fecha Inicio</th>
+            <th class="py-2 px-3 border border-gray-400">Fecha Término</th>
+            <th class="py-2 px-3 border border-gray-400">Personal Interno</th>
+            <th class="py-2 px-3 border border-gray-400">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let trabajo of paginatedTrabajos; let i = index"
+            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+            class="hover:bg-blue-50"
+          >
+            <td class="py-2 px-3 border border-gray-300">{{ trabajo.trabajo_realizado }}</td>
+            <td class="py-2 px-3 border border-gray-300">
+              {{ trabajo.fecha_inicio | date: 'short' }}
+            </td>
+            <td class="py-2 px-3 border border-gray-300">
+              {{ trabajo.fecha_termino ? (trabajo.fecha_termino | date: 'short') : '-' }}
+            </td>
+            <td class="py-2 px-3 border border-gray-300">
+               {{ trabajo.personal_interno?.nombre || 'Sin asignar' }}
+            </td>
+            <td class="py-2 px-3 border border-gray-300 text-center">
+              <ion-button fill="clear" size="small" (click)="editarTrabajo(trabajo)">
+                <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" size="small" (click)="eliminarTrabajo(trabajo)">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #noTrabajos>
+      <p class="text-center text-gray-500 mt-4">No hay trabajos registrados.</p>
+    </ng-template>
+
+    <!-- Paginación -->
+    <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
+      <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+        Anterior
+      </ion-button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Siguiente
+      </ion-button>
+    </div>
+  </div>
+</div>
+
+<div class="espaciador"></div>

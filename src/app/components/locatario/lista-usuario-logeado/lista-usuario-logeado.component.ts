@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { AutorizacionQrService, AutorizacionQR } from 'src/app/services/autorizacion-qr.service';
+import { AutorizacionQrService, AutorizacionQR } from 'src/app/services/autorizacion-qr/autorizacion-qr.service';
 
 @Component({
   selector: 'app-lista-usuario-logeado',

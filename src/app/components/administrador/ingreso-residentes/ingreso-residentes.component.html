@@ -25,8 +25,17 @@
         <ion-label position="floating">Email</ion-label>
         <ion-input [(ngModel)]="email" name="email" type="email" required></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label position="floating">Teléfono</ion-label>
+        <ion-input
+          [(ngModel)]="telefono"
+          name="telefono"
+          placeholder="+56 9 8765 4321"
+          maxlength="20"
+        ></ion-input>
+      </ion-item>
 
-      <!-- 🏠 Selector de Casa -->
+      <!--  Selector de Casa -->
       <ion-item>
         <ion-icon name="home-outline" slot="start" color="primary"></ion-icon>
         <ion-label position="stacked">Casa</ion-label>
@@ -74,6 +83,7 @@
             <th class="py-2 px-3 border border-gray-400">Nombre</th>
             <th class="py-2 px-3 border border-gray-400">RUT</th>
             <th class="py-2 px-3 border border-gray-400">Email</th>
+            <th class="py-2 px-3 border border-gray-400">Teléfono</th>
             <th class="py-2 px-3 border border-gray-400">Casa</th>
             <th class="py-2 px-3 border border-gray-400">Acciones</th>
           </tr>
@@ -88,6 +98,7 @@
             <td class="py-2 px-3 border border-gray-300">{{ residente.nombre }}</td>
             <td class="py-2 px-3 border border-gray-300">{{ residente.rut }}</td>
             <td class="py-2 px-3 border border-gray-300">{{ residente.email }}</td>
+            <td class="py-2 px-3 border border-gray-300">{{ residente.telefono || '-' }}</td>
             <td class="py-2 px-3 border border-gray-300">
               🏠 Nº {{ residente.casa?.numero || '-' }} — {{ residente.casa?.direccion || 'Sin asignar' }}
             </td>

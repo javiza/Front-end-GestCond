@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RondasService, Ronda } from 'src/app/services/rondas.service';
+import { RondasService, Ronda } from 'src/app/services/rondas/rondas.service';
 
 @Component({
   selector: 'app-lista-rondas',

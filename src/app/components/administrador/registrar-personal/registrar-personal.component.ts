@@ -21,7 +21,7 @@ import {
   Personal,
   PersonalService,
   CreatePersonalDto,
-} from 'src/app/services/personal.service';
+} from 'src/app/services/personal/personal.service';
 import { EmpresasContratistasService, EmpresaContratista } from 'src/app/services/empresa-contratista/empresas-contratistas.service';
 
 

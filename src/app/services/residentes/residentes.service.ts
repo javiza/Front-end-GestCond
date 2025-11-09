@@ -8,6 +8,7 @@ export interface Residente {
   nombre: string;
   rut: string;
   email: string;
+  telefono?: string;
   rol: 'locatario';
   activo: boolean;
   fecha_creacion: string;
@@ -22,6 +23,7 @@ export interface CreateResidenteDto {
   nombre: string;
   rut: string;
   email: string;
+  telefono?: string;
   id_casa: number;
   id_usuario: number;
   activo: boolean; 
@@ -31,6 +33,7 @@ export interface UpdateResidenteDto {
    nombre?: string;
   rut?: string;
   email?: string;
+  telefono?: string;
   id_casa?: number;
 }
 @Injectable({

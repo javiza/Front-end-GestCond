@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { BrowserMultiFormatReader, IScannerControls } from '@zxing/browser';
-import { QrValidacionService } from 'src/app/services/qr-validacion.service';
+import { QrValidacionService } from 'src/app/services/qr-validacion/qr-validacion.service';
 import { SharedQrService } from 'src/app/services/shared-qr.service';
 
 @Component({
