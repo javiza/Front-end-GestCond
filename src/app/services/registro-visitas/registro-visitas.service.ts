@@ -16,4 +16,11 @@ export class RegistroVisitasService {
   obtenerRegistros(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+  // Nuevo método: obtener todas las visitas registradas (endpoint /todas)
+  obtenerTodasLasVisitas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/todas`);
+  }
+   marcarSalida(id: number): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${id}/salida`, {});
+  }
 }

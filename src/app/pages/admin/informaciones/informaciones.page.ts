@@ -5,10 +5,13 @@ import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { AnalyticsDashboardComponent } from 'src/app/components/analytics-dashboard/analytics-dashboard.component';
+
+
 @Component({
   selector: 'app-informaciones',
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, AnalyticsDashboardComponent],
   templateUrl: './informaciones.page.html',
   styleUrls: ['./informaciones.page.scss'],
 })

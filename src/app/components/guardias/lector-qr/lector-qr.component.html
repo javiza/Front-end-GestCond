@@ -34,7 +34,19 @@
   </div>
 
   <!-- Resultado -->
-  <div *ngIf="resultado" class="mt-4 text-center">
-    <p class="font-mono text-sm text-gray-700">QR Detectado: {{ resultado }}</p>
+<div *ngIf="resultado" class="mt-4 text-center space-y-2">
+  <p class="font-mono text-sm text-gray-700">
+    QR Detectado: <strong>{{ resultado }}</strong>
+  </p>
+
+  <div *ngIf="nombreVisita">
+    <p class="text-gray-800">
+      <strong>Nombre visita:</strong> {{ nombreVisita }}
+    </p>
+    <p class="text-gray-800">
+      <strong>Motivo:</strong> {{ motivoVisita || 'Sin motivo registrado' }}
+    </p>
   </div>
+</div>
+
 </div>

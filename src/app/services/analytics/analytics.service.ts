@@ -1,27 +1,30 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-  private apiUrl = `${environment.apiUrl}/analytics`; 
+  private apiUrl = `${environment.apiUrl}/analytics`;
 
-  private http = inject(HttpClient);
+  constructor(private http: HttpClient) {}
 
-  getVisitasMayorEstadia(limit = 10): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/visitas-mayor-estadia?limit=${limit}`);
+  obtenerIngresosPorTipo(filtro: any) {
+    return this.http.get<any[]>(`${this.apiUrl}/ingresos-por-tipo`, { params: filtro });
   }
 
-  getGuardiasActividad(mes: number, anio: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/guardias-actividad?mes=${mes}&anio=${anio}`);
+  obtenerPromedioEstadia(filtro: any) {
+    return this.http.get<any[]>(`${this.apiUrl}/promedio-estadia`, { params: filtro });
   }
 
-  getDeliverysExcedidos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/deliverys-excedidos`);
+  obtenerIngresosPorHora(filtro: any) {
+    return this.http.get<any[]>(`${this.apiUrl}/ingresos-por-hora`, { params: filtro });
   }
 
-  getFlujoSemanal(mes: number, anio: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/flujo-semanal?mes=${mes}&anio=${anio}`);
+  obtenerIngresosDiarios(filtro: any) {
+    return this.http.get<any[]>(`${this.apiUrl}/ingresos-diarios`, { params: filtro });
+  }
+
+  refrescarVista() {
+    return this.http.post(`${this.apiUrl}/refrescar`, {});
   }
 }

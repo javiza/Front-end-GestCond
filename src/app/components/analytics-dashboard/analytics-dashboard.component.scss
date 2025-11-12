@@ -1,42 +1,50 @@
-.dashboard-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem;
-  background: #f8f9fa;
+ion-content.dashboard {
+  --background: #f4f6f9;
+  display: block;
+  overflow-y: auto; /* 🔹 permite ver todo sin recorte */
+  min-height: 100vh;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
 }
 
-.card, .chart-card {
+/* Compactar los calendarios */
+.datetime-compact {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
   background: #fff;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  min-height: 2.5rem !important;
+  height: auto !important;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  --height: auto;
 }
 
-h3 {
-  color: #1a237e;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
+/* Inputs */
+.input-wide {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-height: 3rem;
+  font-size: 0.9rem;
+  padding: 0.25rem;
 }
 
-p {
-  margin: 0.25rem 0;
+/* Botones */
+ion-button[color='primary'] {
+  --background: #001b87;
+  --border-radius: 8px;
 }
-
-input, button {
-  margin: 0.5rem 0;
-  padding: 0.3rem 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-button {
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0d47a1;
+.espaciador {
+  height: 200px;
+  background-color: white; /* espacio en blanco */
 }

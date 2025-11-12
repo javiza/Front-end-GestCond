@@ -1,70 +1,80 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { AnalyticsService } from 'src/app/services/analytics/analytics.service';
-import { Chart, registerables } from 'chart.js';
 
-Chart.register(...registerables);
+// Subcomponentes
+import { TipoVisitaChartComponent } from './charts/tipo-visita-chart/tipo-visita-chart.component';
+import { PromedioEstadiaChartComponent } from './charts/promedio-estadia-chart/promedio-estadia-chart.component';
+import { IngresosHoraChartComponent } from './charts/ingresos-hora-chart/ingresos-hora-chart.component';
+import { IngresosDiariosChartComponent } from './charts/ingresos-diarios-chart/ingresos-diarios-chart.component';
 
 @Component({
-  standalone: true,
   selector: 'app-analytics-dashboard',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    TipoVisitaChartComponent,
+    PromedioEstadiaChartComponent,
+    IngresosHoraChartComponent,
+    IngresosDiariosChartComponent,
+  ],
   templateUrl: './analytics-dashboard.component.html',
-  styleUrls: ['./analytics-dashboard.component.css']
+  styleUrls: ['./analytics-dashboard.component.scss'],
 })
 export class AnalyticsDashboardComponent implements OnInit {
-  private analyticsService = inject(AnalyticsService);
+  filtro = { desde: '', hasta: '', tipo_visita: '', tipo_vehiculo: '' };
 
-  visitas: any[] = [];
-  guardias: any[] = [];
-  deliverys: any[] = [];
-  flujo: any[] = [];
+  ingresosPorTipo: any[] = [];
+  promedioEstadia: any[] = [];
+  ingresosPorHora: any[] = [];
+  ingresosDiarios: any[] = [];
 
-  mesSeleccionado = new Date().getMonth() + 1;
-  anioSeleccionado = new Date().getFullYear();
+  cargando = false;
 
-  ngOnInit(): void {
+  constructor(
+    private analyticsService: AnalyticsService,
+    private toastCtrl: ToastController
+  ) {}
+
+  ngOnInit() {
     this.cargarDatos();
   }
 
-  cargarDatos() {
-    this.analyticsService.getVisitasMayorEstadia().subscribe(res => this.visitas = res);
-    this.analyticsService.getGuardiasActividad(this.mesSeleccionado, this.anioSeleccionado).subscribe(res => this.guardias = res);
-    this.analyticsService.getDeliverysExcedidos().subscribe(res => this.deliverys = res);
-    this.analyticsService.getFlujoSemanal(this.mesSeleccionado, this.anioSeleccionado).subscribe(res => {
-      this.flujo = res;
-      this.renderChart();
-    });
+  async cargarDatos() {
+    this.cargando = true;
+    try {
+      const filtro = { ...this.filtro };
+
+      const [tipos, vehiculos, horas, diarios] = await Promise.all([
+        this.analyticsService.obtenerIngresosPorTipo(filtro).toPromise(),
+        this.analyticsService.obtenerPromedioEstadia(filtro).toPromise(),
+        this.analyticsService.obtenerIngresosPorHora(filtro).toPromise(),
+        this.analyticsService.obtenerIngresosDiarios(filtro).toPromise(),
+      ]);
+
+      this.ingresosPorTipo = tipos ?? [];
+      this.promedioEstadia = vehiculos ?? [];
+      this.ingresosPorHora = horas ?? [];
+      this.ingresosDiarios = diarios ?? [];
+    } catch (error) {
+      console.error(error);
+      const toast = await this.toastCtrl.create({
+        message: 'Error al cargar datos analíticos',
+        color: 'danger',
+        duration: 2500,
+      });
+      toast.present();
+    } finally {
+      this.cargando = false;
+    }
   }
 
-  renderChart() {
-    const ctx = document.getElementById('flujoChart') as HTMLCanvasElement;
-    const labels = this.flujo.map(f => f.dia_semana);
-    const data = this.flujo.map(f => f.promedio_diario);
-
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Promedio de ingresos por día',
-          data,
-          backgroundColor: [
-            '#4A148C', '#6A1B9A', '#8E24AA', '#AB47BC',
-            '#BA68C8', '#CE93D8', '#E1BEE7'
-          ],
-        }],
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
+  limpiarFiltros() {
+    this.filtro = { desde: '', hasta: '', tipo_visita: '', tipo_vehiculo: '' };
+    this.cargarDatos();
   }
 }

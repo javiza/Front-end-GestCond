@@ -3,7 +3,7 @@
     Lista de Ingresos Registrados
   </h3>
 
-  <!-- Filtros -->
+  <!-- Barra de búsqueda y filtro -->
   <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
     <div class="flex items-center gap-2 w-full md:w-1/2">
       <ion-input
@@ -11,6 +11,7 @@
         placeholder="Buscar por nombre o patente..."
         [(ngModel)]="terminoBusqueda"
         (ionInput)="filtrarVisitas()"
+        class="w-full"
       ></ion-input>
     </div>
 
@@ -26,7 +27,7 @@
     </div>
   </div>
 
-  <!-- Tabla -->
+  <!--  Tabla -->
   <div *ngIf="paginatedVisitas.length > 0; else noVisitas" class="w-full max-w-4xl overflow-x-auto">
     <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
       <thead class="bg-[#001b87] text-white">
@@ -37,15 +38,15 @@
           <th>Patente</th>
           <th>Autorizado por</th>
           <th>Destino</th>
-          <th>Ingreso</th>
-          <th>Salida</th>
+          <th>Fecha ingreso</th>
           <th>Guardia</th>
-          <th>Acción</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let v of paginatedVisitas; let i = index" [ngClass]="{ 'bg-gray-50': i % 2 === 0 }">
+        <tr *ngFor="let v of paginatedVisitas; let i = index"
+            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
+
           <td>{{ v.nombre || 'Sin nombre' }}</td>
           <td>{{ v.rut || '—' }}</td>
           <td>{{ v.tipoVehiculo || '—' }}</td>
@@ -53,23 +54,7 @@
           <td>{{ v.autorizadoPor }}</td>
           <td>{{ v.lugarDestino }}</td>
           <td>{{ v.fechaHoraIngreso | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td>
-            <span *ngIf="v.fechaHoraSalida; else pendiente">
-              {{ v.fechaHoraSalida | date:'dd/MM/yyyy HH:mm' }}
-            </span>
-            <ng-template #pendiente>—</ng-template>
-          </td>
-          <td>{{ v.guardia?.nombre || v.guardia?.usuario?.nombre || '—' }}</td>
-          <td>
-            <ion-button
-              color="success"
-              size="small"
-              (click)="registrarSalida(v)"
-              [disabled]="v.fechaHoraSalida"
-            >
-              Marcar salida
-            </ion-button>
-          </td>
+          <td>{{ v.guardia?.usuario?.nombre || v.guardia?.nombre || '—' }}</td>
         </tr>
       </tbody>
     </table>
@@ -81,8 +66,14 @@
 
   <!-- Paginación -->
   <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
-    <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</ion-button>
+    <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+      Anterior
+    </ion-button>
+
     <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</ion-button>
+
+    <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Siguiente
+    </ion-button>
   </div>
 </div>

@@ -18,35 +18,13 @@
       <h2>Condominio<br />Los Alerces</h2>
 
       <ul class="menu">
-        <!-- GESTIÓN observaciones turno -->
+        <!-- analytics dashboard -->
         <li>
-          <button (click)="toggleMenu('turnos')" class="menu-item">
-            Observaciones Turnos
-          </button>
-
-          <ul *ngIf="openMenu === 'turnos'" class="submenu">
-
-            <li (click)="mostrarSeccion('listaTurnos')">
-              Listar Observaciones Turnos
-            </li>
-          </ul>
+        <button (click)="mostrarSeccion('analytics')" class="menu-item">
+          Dashboard Analítico
+        </button>
         </li>
 
-        <!-- observaciones ronda -->
-        <li>
-          <button (click)="toggleMenu('rondas')" class="menu-item">
-            Observaciones de Rondas
-          </button>
-          <ul *ngIf="openMenu === 'rondas'" class="submenu">
-            
-
-            <li (click)="mostrarSeccion('listaRondas')">
-              Listar observaciones Rondas
-            </li>
-          </ul>
-        </li>
- 
-      
 
         <!-- OTRAS OPCIONES -->
         <li><button (click)="irA('gestion-locatarios')" class="menu-item">Gestion Locatarios</button></li>
@@ -60,17 +38,13 @@
     <section class="contenido">
       <ng-container [ngSwitch]="seccionActiva">
 
-        <!-- turnos -->
+        <!-- analytics   -->
         
-        <div *ngSwitchCase="'listaTurnos'">
+        <div *ngSwitchCase="'analytics'">
+          <app-analytics-dashboard></app-analytics-dashboard>
          
         </div>
 
-        <!--  rondas -->
-
-        <div *ngSwitchCase="'listaRondas'">
-          
-        </div>
        
 
         <!-- DEFAULT -->

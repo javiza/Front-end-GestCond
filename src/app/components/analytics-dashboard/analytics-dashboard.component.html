@@ -1,60 +1,72 @@
-<div class="dashboard-container">
-  <!-- VISITAS -->
-  <div class="card">
-    <h3>Visitas con mayor estadía en la fecha:</h3>
-    <div *ngIf="visitas.length; else noVisitas">
-      <div *ngFor="let v of visitas">
-        <p><strong>Nombre:</strong> {{ v.nombre }}</p>
-        <p><strong>RUT:</strong> {{ v.rut }}</p>
-        <p><strong>Fecha ingreso:</strong> {{ v.fecha_hora_ingreso | date:'short' }}</p>
-        <p><strong>Fecha salida:</strong> {{ v.fecha_hora_salida | date:'short' }}</p>
-        <p><strong>Tiempo permanencia:</strong> {{ v.minutos_permanencia }} min</p>
-        <hr>
-      </div>
+<ion-content class="ion-no-padding dashboard">
+  <div class="min-h-screen bg-[#f4f6f9] flex flex-col items-stretch">
+    <!-- HEADER -->
+    <div class="bg-white shadow-md py-4 px-6 text-center">
+      <h2 class="text-2xl font-bold text-[#001b87]">📊 Panel Analítico</h2>
     </div>
-    <ng-template #noVisitas><p>No hay registros de visitas.</p></ng-template>
-  </div>
 
-  <!-- GUARDIAS -->
-  <div class="card">
-    <h3>Guardia con mayor actividad en mes de:</h3>
-    <input type="number" [(ngModel)]="mesSeleccionado" min="1" max="12" placeholder="Mes (1-12)" />
-    <button (click)="cargarDatos()">Buscar</button>
-
-    <div *ngIf="guardias.length; else noGuardias">
-      <div *ngFor="let g of guardias">
-        <p><strong>Nombre:</strong> {{ g.nombre_guardia }}</p>
-        <p><strong>RUT:</strong> {{ g.rut_guardia }}</p>
-        <p><strong>Rondas:</strong> {{ g.rondas_totales }}</p>
-        <p><strong>Total de turnos:</strong> {{ g.jornadas_estimadas }}</p>
-        <hr>
+    <!-- FILTROS -->
+    <form
+      class="w-full bg-white shadow-md p-6 mt-4 grid grid-cols-1 md:grid-cols-4 gap-6 border-t border-gray-200"
+      (ngSubmit)="cargarDatos()"
+    >
+      <!-- FECHAS -->
+      <div class="flex flex-col col-span-2">
+        <label class="text-sm font-medium text-[#001b87] mb-1">Desde</label>
+        <ion-datetime
+          presentation="date"
+          [(ngModel)]="filtro.desde"
+          name="desde"
+          class="datetime-compact"
+        ></ion-datetime>
       </div>
-    </div>
-    <ng-template #noGuardias><p>No hay registros para el mes.</p></ng-template>
-  </div>
 
-  <!-- DELIVERY -->
-  <div class="card">
-    <h3>Detección de deliverys con mayor tiempo de permanencias:</h3>
-    <div *ngIf="deliverys.length; else noDelivery">
-      <div *ngFor="let d of deliverys">
-        <p><strong>Nombre:</strong> {{ d.nombre }}</p>
-        <p><strong>RUT:</strong> {{ d.rut }}</p>
-        <p><strong>Empresa:</strong> {{ d.empresa }}</p>
-        <p><strong>Patente:</strong> {{ d.patente }}</p>
-        <p><strong>Tipo vehículo:</strong> {{ d.tipo_vehiculo }}</p>
-        <p><strong>Fecha ingreso:</strong> {{ d.fecha_hora_ingreso | date:'short' }}</p>
-        <p><strong>Fecha salida:</strong> {{ d.fecha_hora_salida | date:'short' }}</p>
-        <p><strong>Tiempo permanencia:</strong> {{ d.minutos_permanencia }} min</p>
-        <hr>
+      <div class="flex flex-col col-span-2">
+        <label class="text-sm font-medium text-[#001b87] mb-1">Hasta</label>
+        <ion-datetime
+          presentation="date"
+          [(ngModel)]="filtro.hasta"
+          name="hasta"
+          class="datetime-compact"
+        ></ion-datetime>
       </div>
-    </div>
-    <ng-template #noDelivery><p>No hay deliverys excedidos.</p></ng-template>
-  </div>
 
-  <!-- GRÁFICO -->
-  <div class="chart-card">
-    <h3>Días de mayor flujo:</h3>
-    <canvas id="flujoChart"></canvas>
+      <!-- CAMPOS DE TEXTO -->
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-[#001b87] mb-1">Tipo de Visita</label>
+        <ion-input
+          [(ngModel)]="filtro.tipo_visita"
+          name="tipo_visita"
+          placeholder="Ej. visita residente"
+          class="input-wide"
+        ></ion-input>
+      </div>
+
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-[#001b87] mb-1">Tipo de Vehículo</label>
+        <ion-input
+          [(ngModel)]="filtro.tipo_vehiculo"
+          name="tipo_vehiculo"
+          placeholder="Ej. auto"
+          class="input-wide"
+        ></ion-input>
+      </div>
+
+      <div class="flex justify-center md:col-span-4 gap-4 mt-3">
+        <ion-button type="submit" color="primary">Filtrar</ion-button>
+        <ion-button color="medium" (click)="limpiarFiltros()">Limpiar</ion-button>
+      </div>
+    </form>
+
+    <!-- GRÁFICOS -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 py-6 w-full flex-1"
+    >
+      <app-tipo-visita-chart [data]="ingresosPorTipo"></app-tipo-visita-chart>
+      <app-promedio-estadia-chart [data]="promedioEstadia"></app-promedio-estadia-chart>
+      <app-ingresos-hora-chart [data]="ingresosPorHora"></app-ingresos-hora-chart>
+      <app-ingresos-diarios-chart [data]="ingresosDiarios"></app-ingresos-diarios-chart>
+    </div>
   </div>
-</div>
+  <div class="espaciador"></div>
+</ion-content>

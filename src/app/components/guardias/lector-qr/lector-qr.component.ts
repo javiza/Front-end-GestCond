@@ -20,6 +20,9 @@ export class LectorQrComponent implements OnDestroy {
   resultado = '';
   escaneando = false;
   camaraActiva = false;
+  nombreVisita: string = '';
+motivoVisita: string = '';
+
 
   constructor(
     private qrService: QrValidacionService,
@@ -49,7 +52,7 @@ export class LectorQrComponent implements OnDestroy {
             this.mensaje = `QR detectado: ${this.resultado}`;
             this.validarQR(this.resultado);
 
-            // ✅ Detiene automáticamente tras leer un código válido
+            // Detiene automáticamente tras leer un código válido
             this.detenerCamara();
           }
         }
@@ -60,22 +63,28 @@ export class LectorQrComponent implements OnDestroy {
     }
   }
 
-  /** 🔹 Valida el QR escaneado en el backend */
-  validarQR(codigo: string) {
-    this.mensaje = 'Validando código QR...';
-    this.qrService.validarQR(codigo).subscribe({
-      next: (res) => {
-        this.sharedQr.setQrData(res);
-        this.mensaje = '✅ Código válido. Datos listos para el registro de ingreso.';
-      },
-      error: (err) => {
-        console.error('Error al validar QR:', err);
-        this.mensaje = '❌ Código inválido o no registrado.';
-      },
-    });
-  }
+  /**Valida el QR escaneado en el backend */
+validarQR(codigo: string) {
+  this.mensaje = 'Validando código QR...';
+  this.qrService.validarQR(codigo).subscribe({
+    next: (res) => {
+      this.sharedQr.setQrData(res);
+      this.mensaje = 'Código válido. Datos listos para el registro de ingreso.';
+      this.resultado = res.codigo_qr;
+      this.nombreVisita = res.nombre_visita;
+      this.motivoVisita = res.motivo;
+    },
+    error: (err) => {
+      console.error('Error al validar QR:', err);
+      this.mensaje = ' Código inválido o no registrado.';
+      this.nombreVisita = '';
+      this.motivoVisita = '';
+    },
+  });
+}
 
-  /** 🔹 Detiene manualmente la cámara */
+
+  /**  Detiene manualmente la cámara */
   detenerCamara() {
     if (this.controls) {
       this.controls.stop();
@@ -86,7 +95,7 @@ export class LectorQrComponent implements OnDestroy {
     }
   }
 
-  /** 🔹 Permite reactivar la cámara manualmente */
+  /** Permite reactivar la cámara manualmente */
   reintentar() {
     this.resultado = '';
     this.mensaje = 'Apunte la cámara hacia el nuevo código QR';

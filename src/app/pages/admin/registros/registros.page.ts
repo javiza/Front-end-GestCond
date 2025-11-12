@@ -5,11 +5,11 @@ import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { ListaVisitasComponent } from 'src/app/components/guardias/lista-visitas/lista-visitas.component';
+import { ListaRegistroGeneralComponent } from 'src/app/components/administrador/lista-registro-general/lista-registro-general.component';
 @Component({
   selector: 'app-registros',
   standalone: true,
-  imports: [IonicModule, CommonModule, ListaVisitasComponent],
+  imports: [IonicModule, CommonModule, ListaRegistroGeneralComponent],
   templateUrl: './registros.page.html',
   styleUrls: ['./registros.page.scss'],
 })
