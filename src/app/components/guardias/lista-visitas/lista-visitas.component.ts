@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { RegistroVisitasService } from 'src/app/services/registro-visitas/registro-visitas.service';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-lista-visitas',
@@ -23,11 +24,15 @@ export class ListaVisitasComponent implements OnInit {
 
   constructor(
     private registroService: RegistroVisitasService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private socketService: SocketService
   ) {}
 
   ngOnInit() {
     this.cargarVisitas();
+    this.socketService.onRegistroActualizado((nuevo) => {
+    this.visitas.unshift(nuevo);
+  });
   }
 
   cargarVisitas() {
@@ -38,7 +43,7 @@ export class ListaVisitasComponent implements OnInit {
         this.visitasFiltradas = res;
         this.actualizarPaginacion();
       },
-      error: (err) => console.error('❌ Error al obtener visitas:', err),
+      error: (err) => console.error(' Error al obtener visitas:', err),
       complete: () => (this.cargando = false),
     });
   }

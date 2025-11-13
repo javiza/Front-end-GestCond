@@ -97,3 +97,36 @@ ion-title {
 .icon-right{
   color: white !important;
 }
+/* ========== RESPONSIVE PARA MÓVILES ========== */
+@media (max-width: 768px) {
+
+  /* Ocultar sidebar por defecto */
+  .sidebar {
+    position: fixed;
+    left: -260px; /* escondido */
+    transition: left 0.3s ease-in-out;
+  }
+
+  /* Mostrar cuando está abierto */
+  .sidebar.open {
+    left: 0;
+  }
+
+  /* El contenido ocupa toda la pantalla */
+  .contenido {
+    margin-left: 0 !important;
+    padding: 20px;
+  }
+
+  /* Ocultar botón hamburguesa en escritorio */
+  .mobile-only {
+    display: block;
+  }
+}
+
+/* En escritorio el botón hamburguesa no se muestra */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none;
+  }
+}

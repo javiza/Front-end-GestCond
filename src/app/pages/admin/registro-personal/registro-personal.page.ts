@@ -22,6 +22,7 @@ export class RegistroPersonalPage {
 
   openMenu: string | null = null;
   seccionActiva: string | null = null;
+  sidebarOpen = false;
 
   constructor(private router: Router, private navCtrl: NavController) {
     addIcons({ addCircleOutline });

@@ -1,5 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
+      <!-- BOTÓN HAMBURGUESA SOLO EN MÓVIL -->
+    <ion-buttons slot="start" class="mobile-only">
+      <ion-button (click)="sidebarOpen = !sidebarOpen">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title >Informaciones</ion-title>
 
     <ion-buttons slot="end">
@@ -14,7 +20,7 @@
 <ion-content>
   <div class="container">
     <!-- MENÚ LATERAL -->
-    <aside class="sidebar">
+<aside class="sidebar" [class.open]="sidebarOpen">
       <h2>Condominio<br />Los Alerces</h2>
 
       <ul class="menu">

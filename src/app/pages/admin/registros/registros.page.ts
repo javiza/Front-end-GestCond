@@ -18,6 +18,7 @@ export class RegistrosPage {
 
   openMenu: string | null = null;
   seccionActiva: string | null = null;
+  sidebarOpen = false;
 
   constructor(private router: Router, private navCtrl: NavController) {
     addIcons({ addCircleOutline });
