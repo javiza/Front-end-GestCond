@@ -126,6 +126,7 @@ ion-title {
 }
 
 /* En escritorio el botón hamburguesa no se muestra */
+
 @media (min-width: 769px) {
   .mobile-only {
     display: none;
