@@ -3,65 +3,93 @@
     Lista de Ingresos Registrados
   </h3>
 
-  <!-- Barra de búsqueda y filtro -->
-  <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
-    <div class="flex items-center gap-2 w-full md:w-1/2">
-      <ion-input
-        type="text"
-        placeholder="Buscar por nombre o patente..."
-        [(ngModel)]="terminoBusqueda"
-        (ionInput)="filtrarVisitas()"
-        class="w-full"
-      ></ion-input>
-    </div>
+  <!-- Filtros -->
+  <div class="w-full max-w-5xl flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+    <ion-input
+      type="text"
+      placeholder="Buscar por nombre o patente..."
+      [(ngModel)]="terminoBusqueda"
+      (ionInput)="filtrarVisitas()"
+      class="w-full md:w-1/2"
+    ></ion-input>
 
     <div class="flex items-center gap-2 w-full md:w-1/3">
-      <ion-label>Filtrar por fecha:</ion-label>
+      <ion-label>Fecha:</ion-label>
       <input
         type="date"
         [(ngModel)]="filtroFecha"
         (change)="filtrarVisitas()"
         class="border rounded px-2 py-1 text-sm w-full"
       />
-      <ion-button color="medium" size="small" (click)="limpiarFiltros()">Limpiar</ion-button>
+      <ion-button fill="outline" size="small" (click)="limpiarFiltros()">Limpiar</ion-button>
     </div>
   </div>
 
-  <!--  Tabla -->
-  <div *ngIf="paginatedVisitas.length > 0; else noVisitas" class="w-full max-w-4xl overflow-x-auto">
-    <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
-      <thead class="bg-[#001b87] text-white">
+  <!-- Tabla -->
+  <div *ngIf="paginatedVisitas.length > 0; else noVisitas" class="w-full max-w-6xl overflow-x-auto">
+    <table class="min-w-full border border-gray-300 rounded-lg shadow-sm text-sm text-center">
+      <thead class="color text-white">
         <tr>
-          <th>Nombre</th>
-          <th>RUT</th>
-          <th>Vehículo</th>
-          <th>Patente</th>
-          <th>Autorizado por</th>
-          <th>Destino</th>
-          <th>Fecha ingreso</th>
-          <th>Guardia</th>
+          <th class="px-2 py-2">Nombre</th>
+          <th class="px-2 py-2">RUT</th>
+          <th class="px-2 py-2">Vehículo</th>
+          <th class="px-2 py-2">Patente</th>
+          <th class="px-2 py-2">Tipo visita</th>
+          <th class="px-2 py-2">Autorizado por</th>
+          <th class="px-2 py-2">Destino</th>
+          <th class="px-2 py-2">Ingreso</th>
+          <th class="px-2 py-2">Salida</th>
+          <th class="px-2 py-2">Guardia</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let v of paginatedVisitas; let i = index"
-            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
+        <tr
+          *ngFor="let v of paginatedVisitas; let i = index"
+          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+          class="border-b"
+        >
+          <td class="px-2 py-2">{{ v.nombre || 'Sin nombre' }}</td>
+          <td class="px-2 py-2">{{ v.rut || '—' }}</td>
+          <td class="px-2 py-2">{{ v.tipoVehiculo || '—' }}</td>
+          <td class="px-2 py-2">{{ v.patente || '—' }}</td>
 
-          <td>{{ v.nombre || 'Sin nombre' }}</td>
-          <td>{{ v.rut || '—' }}</td>
-          <td>{{ v.tipoVehiculo || '—' }}</td>
-          <td>{{ v.patente || '—' }}</td>
-          <td>{{ v.autorizadoPor }}</td>
-          <td>{{ v.lugarDestino }}</td>
-          <td>{{ v.fechaHoraIngreso | date:'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ v.guardia?.usuario?.nombre || v.guardia?.nombre || '—' }}</td>
+          
+          <td class="px-2 py-2">
+            <span
+              class="px-2 py-1 rounded text-white text-xs font-semibold"
+              [ngClass]="{
+                'bg-blue-600': v.tipoVisita === 'visita',
+                'bg-green-600': v.tipoVisita === 'delivery',
+                'bg-yellow-600': v.tipoVisita === 'trabajador'
+              }"
+            >
+              {{ v.tipoVisita }}
+            </span>
+          </td>
+
+          <td class="px-2 py-2">{{ v.autorizadoPor }}</td>
+          <td class="px-2 py-2">{{ v.lugarDestino }}</td>
+
+          <!-- Fechas formateadas -->
+          <td class="px-2 py-2">
+            {{ v.fechaHoraIngreso | date:'dd/MM/yyyy HH:mm' }}
+          </td>
+
+          <td class="px-2 py-2">
+            {{ v.fechaHoraSalida ? (v.fechaHoraSalida | date:'dd/MM/yyyy HH:mm') : '—' }}
+          </td>
+
+          <td class="px-2 py-2">
+            {{ v.guardia?.usuario?.nombre || v.guardia?.nombre || '—' }}
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <ng-template #noVisitas>
-    <p class="text-center text-gray-500 mt-4">No hay registros de ingresos.</p>
+    <p class="text-center text-gray-500 mt-4">No hay registros para mostrar.</p>
   </ng-template>
 
   <!-- Paginación -->
@@ -70,7 +98,7 @@
       Anterior
     </ion-button>
 
-    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <span class="text-sm font-medium">Página {{ currentPage }} de {{ totalPages }}</span>
 
     <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
       Siguiente

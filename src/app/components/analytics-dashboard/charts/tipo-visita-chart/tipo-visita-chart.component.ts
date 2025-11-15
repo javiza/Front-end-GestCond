@@ -1,7 +1,18 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnChanges,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+Chart.register(...registerables, ChartDataLabels);
 
 @Component({
   selector: 'app-tipo-visita-chart',
@@ -10,30 +21,62 @@ Chart.register(...registerables);
   templateUrl: './tipo-visita-chart.component.html',
   styleUrls: ['./tipo-visita-chart.component.scss'],
 })
-export class TipoVisitaChartComponent implements OnChanges {
+export class TipoVisitaChartComponent implements OnChanges, AfterViewInit {
   @Input() data: any[] = [];
+  @ViewChild('graficoTipo') canvasRef!: ElementRef<HTMLCanvasElement>;
   chart?: Chart;
+  domReady = false;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      setTimeout(() => this.renderChart(), 200);
-    }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngAfterViewInit() {
+    this.domReady = true;
+    this.render();
   }
 
-  renderChart() {
-    const ctx = document.getElementById('graficoTipo') as HTMLCanvasElement | null;
-    if (!ctx) return;
+  ngOnChanges() {
+    this.render();
+  }
+
+  private render() {
+    if (!this.domReady || !this.data.length || !isPlatformBrowser(this.platformId)) return;
+
+    const canvas = this.canvasRef.nativeElement;
 
     this.chart?.destroy();
-    this.chart = new Chart(ctx, {
-      type: 'pie',
+
+    const sorted = [...this.data].sort((a, b) => b.total - a.total);
+
+    this.chart = new Chart(canvas, {
+      type: 'doughnut',
       data: {
-        labels: this.data.map(i => i.tipo_visita),
-        datasets: [{
-          label: 'Visitas',
-          data: this.data.map(i => i.total),
-          backgroundColor: ['#3b82f6', '#22c55e', '#f97316', '#ef4444', '#6366f1'],
-        }],
+        labels: sorted.map(i => i.tipo_visita),
+        datasets: [
+          {
+            data: sorted.map(i => i.total),
+            backgroundColor: ['#2563eb', '#16a34a', '#f97316', '#dc2626', '#7e22ce'],
+            borderWidth: 0,
+            hoverOffset: 12,
+          },
+        ],
+      },
+      options: {
+        cutout: '55%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: { font: { size: 14 }, color: '#1e293b' },
+          },
+          datalabels: {
+            color: '#fff',
+            font: { size: 13, weight: 'bold' },
+            formatter: (value, ctx) => {
+              const dataset = ctx.chart.data.datasets[0].data as number[];
+              const total = dataset.reduce((a, b) => a + b, 0);
+              return ((value / total) * 100).toFixed(1) + '%';
+            },
+          },
+        },
       },
     });
   }

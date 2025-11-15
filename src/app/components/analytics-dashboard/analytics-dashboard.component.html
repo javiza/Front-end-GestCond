@@ -1,72 +1,92 @@
 <ion-content class="ion-no-padding dashboard">
   <div class="min-h-screen bg-[#f4f6f9] flex flex-col items-stretch">
-    <!-- HEADER -->
     <div class="bg-white shadow-md py-4 px-6 text-center">
-      <h2 class="text-2xl font-bold text-[#001b87]"> Panel Analítico</h2>
+      <h2 class="text-2xl font-bold text-[#001b87]">Panel Analítico</h2>
     </div>
 
-    <!-- FILTROS -->
+    <!-- FORMULARIO DE FILTROS -->
     <form
       class="w-full bg-white shadow-md p-6 mt-4 grid grid-cols-1 md:grid-cols-4 gap-6 border-t border-gray-200"
-      (ngSubmit)="cargarDatos()"
+      (ngSubmit)="aplicarFiltros()"
     >
-      <!-- FECHAS -->
+      <!-- Desde -->
       <div class="flex flex-col col-span-2">
         <label class="text-sm font-medium text-[#001b87] mb-1">Desde</label>
         <ion-datetime
-          presentation="date"
           [(ngModel)]="filtro.desde"
           name="desde"
-          class="datetime-compact"
+          presentation="date"
+          locale="es-CL"
+          formatOptions="{
+    'date': { 'day': '2-digit', 'month': '2-digit', 'year': 'numeric' }
+  }"
         ></ion-datetime>
       </div>
 
+      <!-- Hasta -->
       <div class="flex flex-col col-span-2">
         <label class="text-sm font-medium text-[#001b87] mb-1">Hasta</label>
         <ion-datetime
-          presentation="date"
           [(ngModel)]="filtro.hasta"
           name="hasta"
-          class="datetime-compact"
+          presentation="date"
+          locale="es-CL"
+          formatOptions="{
+    'date': { 'day': '2-digit', 'month': '2-digit', 'year': 'numeric' }
+  }"
         ></ion-datetime>
       </div>
 
-      <!-- CAMPOS DE TEXTO -->
+      <!-- Tipo visita -->
       <div class="flex flex-col">
-        <label class="text-sm font-medium text-[#001b87] mb-1">Tipo de Visita</label>
+        <label class="text-sm font-medium text-[#001b87] mb-1"
+          >Tipo de Visita</label
+        >
         <ion-input
           [(ngModel)]="filtro.tipo_visita"
           name="tipo_visita"
-          placeholder="Ej. visita residente"
-          class="input-wide"
+          placeholder="Ej: visita"
         ></ion-input>
       </div>
 
+      <!-- Tipo vehículo -->
       <div class="flex flex-col">
-        <label class="text-sm font-medium text-[#001b87] mb-1">Tipo de Vehículo</label>
+        <label class="text-sm font-medium text-[#001b87] mb-1"
+          >Tipo de Vehículo</label
+        >
         <ion-input
           [(ngModel)]="filtro.tipo_vehiculo"
           name="tipo_vehiculo"
-          placeholder="Ej. auto"
-          class="input-wide"
+          placeholder="Ej: auto"
         ></ion-input>
       </div>
 
+      <!-- Botones -->
       <div class="flex justify-center md:col-span-4 gap-4 mt-3">
         <ion-button type="submit" color="primary">Filtrar</ion-button>
-        <ion-button color="medium" (click)="limpiarFiltros()">Limpiar</ion-button>
+        <ion-button color="medium" (click)="limpiarFiltros()"
+          >Limpiar</ion-button
+        >
       </div>
     </form>
 
     <!-- GRÁFICOS -->
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 py-6 w-full flex-1"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-6 py-6 w-full flex-1">
       <app-tipo-visita-chart [data]="ingresosPorTipo"></app-tipo-visita-chart>
-      <app-promedio-estadia-chart [data]="promedioEstadia"></app-promedio-estadia-chart>
-      <app-ingresos-hora-chart [data]="ingresosPorHora"></app-ingresos-hora-chart>
-      <app-ingresos-diarios-chart [data]="ingresosDiarios"></app-ingresos-diarios-chart>
+
+      <app-promedio-estadia-chart
+        [data]="promedioEstadia"
+      ></app-promedio-estadia-chart>
+
+      <app-ingresos-hora-chart
+        [data]="ingresosPorHora"
+      ></app-ingresos-hora-chart>
+
+      <app-ingresos-diarios-chart
+        [data]="ingresosDiarios"
+      ></app-ingresos-diarios-chart>
     </div>
   </div>
+
   <div class="espaciador"></div>
 </ion-content>

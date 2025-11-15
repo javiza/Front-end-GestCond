@@ -1,10 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { logOutOutline } from 'ionicons/icons';
+
+import {
+  IonContent,
+  IonButton,
+  IonDatetime,
+  IonInput,
+  IonItem,
+  IonLabel
+} from '@ionic/angular/standalone';
+
+import { ToastController } from '@ionic/angular';
 import { AnalyticsService } from 'src/app/services/analytics/analytics.service';
 
-// Subcomponentes
 import { TipoVisitaChartComponent } from './charts/tipo-visita-chart/tipo-visita-chart.component';
 import { PromedioEstadiaChartComponent } from './charts/promedio-estadia-chart/promedio-estadia-chart.component';
 import { IngresosHoraChartComponent } from './charts/ingresos-hora-chart/ingresos-hora-chart.component';
@@ -16,7 +27,12 @@ import { IngresosDiariosChartComponent } from './charts/ingresos-diarios-chart/i
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
+    IonContent,
+    IonButton,
+    IonDatetime,
+    IonInput,
+    IonItem,
+    IonLabel,
     TipoVisitaChartComponent,
     PromedioEstadiaChartComponent,
     IngresosHoraChartComponent,
@@ -26,7 +42,13 @@ import { IngresosDiariosChartComponent } from './charts/ingresos-diarios-chart/i
   styleUrls: ['./analytics-dashboard.component.scss'],
 })
 export class AnalyticsDashboardComponent implements OnInit {
-  filtro = { desde: '', hasta: '', tipo_visita: '', tipo_vehiculo: '' };
+
+  filtro = { 
+    desde: '',
+    hasta: '',
+    tipo_visita: '',
+    tipo_vehiculo: ''
+  };
 
   ingresosPorTipo: any[] = [];
   promedioEstadia: any[] = [];
@@ -38,43 +60,78 @@ export class AnalyticsDashboardComponent implements OnInit {
   constructor(
     private analyticsService: AnalyticsService,
     private toastCtrl: ToastController
-  ) {}
+  ) {
+    addIcons({ logOutOutline });
+  }
 
   ngOnInit() {
-    this.cargarDatos();
+    // Carga cada gráfico por separado para que no bloquee todo
+    this.cargarIngresosPorTipo();
+    this.cargarPromedioEstadia();
+    this.cargarIngresosHora();
+    this.cargarIngresosDiarios();
   }
 
-  async cargarDatos() {
-    this.cargando = true;
+  formatearFechaISO(fecha: string) {
+    if (!fecha || fecha.trim() === '') return '';
+    return fecha.split('T')[0];
+  }
+
+  getFiltro() {
+    return {
+      desde: this.formatearFechaISO(this.filtro.desde),
+      hasta: this.formatearFechaISO(this.filtro.hasta),
+      tipo_visita: this.filtro.tipo_visita,
+      tipo_vehiculo: this.filtro.tipo_vehiculo,
+    };
+  }
+
+  async cargarIngresosPorTipo() {
     try {
-      const filtro = { ...this.filtro };
-
-      const [tipos, vehiculos, horas, diarios] = await Promise.all([
-        this.analyticsService.obtenerIngresosPorTipo(filtro).toPromise(),
-        this.analyticsService.obtenerPromedioEstadia(filtro).toPromise(),
-        this.analyticsService.obtenerIngresosPorHora(filtro).toPromise(),
-        this.analyticsService.obtenerIngresosDiarios(filtro).toPromise(),
-      ]);
-
-      this.ingresosPorTipo = tipos ?? [];
-      this.promedioEstadia = vehiculos ?? [];
-      this.ingresosPorHora = horas ?? [];
-      this.ingresosDiarios = diarios ?? [];
-    } catch (error) {
-      console.error(error);
-      const toast = await this.toastCtrl.create({
-        message: 'Error al cargar datos analíticos',
-        color: 'danger',
-        duration: 2500,
-      });
-      toast.present();
-    } finally {
-      this.cargando = false;
-    }
+      this.ingresosPorTipo = await this.analyticsService
+        .obtenerIngresosPorTipo(this.getFiltro())
+        .toPromise() ?? [];
+    } catch {}
   }
 
-  limpiarFiltros() {
+  async cargarPromedioEstadia() {
+    try {
+      this.promedioEstadia = await this.analyticsService
+        .obtenerPromedioEstadia(this.getFiltro())
+        .toPromise() ?? [];
+    } catch {}
+  }
+
+  async cargarIngresosHora() {
+    try {
+      this.ingresosPorHora = await this.analyticsService
+        .obtenerIngresosPorHora(this.getFiltro())
+        .toPromise() ?? [];
+    } catch {}
+  }
+
+  async cargarIngresosDiarios() {
+    try {
+      this.ingresosDiarios = await this.analyticsService
+        .obtenerIngresosDiarios(this.getFiltro())
+        .toPromise() ?? [];
+    } catch {}
+  }
+
+    limpiarFiltros() {
     this.filtro = { desde: '', hasta: '', tipo_visita: '', tipo_vehiculo: '' };
-    this.cargarDatos();
+
+    this.cargarIngresosPorTipo();
+    this.cargarPromedioEstadia();
+    this.cargarIngresosHora();
+    this.cargarIngresosDiarios();
   }
+
+  aplicarFiltros() {
+    this.cargarIngresosPorTipo();
+    this.cargarPromedioEstadia();
+    this.cargarIngresosHora();
+    this.cargarIngresosDiarios();
+  }
+
 }

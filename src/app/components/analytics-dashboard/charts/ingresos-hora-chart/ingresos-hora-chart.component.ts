@@ -1,6 +1,16 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  OnChanges,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  Inject,
+  PLATFORM_ID
+} from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+
 Chart.register(...registerables);
 
 @Component({
@@ -10,32 +20,55 @@ Chart.register(...registerables);
   templateUrl: './ingresos-hora-chart.component.html',
   styleUrls: ['./ingresos-hora-chart.component.scss'],
 })
-export class IngresosHoraChartComponent implements OnChanges {
+export class IngresosHoraChartComponent implements OnChanges, AfterViewInit {
   @Input() data: any[] = [];
+  @ViewChild('graficoHora') canvasRef!: ElementRef<HTMLCanvasElement>;
+  domReady = false;
   chart?: Chart;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      setTimeout(() => this.renderChart(), 200);
-    }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngAfterViewInit() {
+    this.domReady = true;
+    this.render();
   }
 
-  renderChart() {
-    const ctx = document.getElementById('graficoHora') as HTMLCanvasElement | null;
-    if (!ctx) return;
+  ngOnChanges() {
+    this.render();
+  }
+
+  private render() {
+    if (!this.domReady || !this.data.length || !isPlatformBrowser(this.platformId)) return;
+
+    const canvas = this.canvasRef.nativeElement;
 
     this.chart?.destroy();
-    this.chart = new Chart(ctx, {
+
+    const sorted = [...this.data].sort((a, b) => a.hora_ingreso - b.hora_ingreso);
+
+    this.chart = new Chart(canvas, {
       type: 'line',
       data: {
-        labels: this.data.map(h => h.hora_ingreso),
-        datasets: [{
-          label: 'Ingresos por hora',
-          data: this.data.map(h => h.total),
-          borderColor: '#22c55e',
-          tension: 0.3,
-          fill: false,
-        }],
+        labels: sorted.map(h => `${h.hora_ingreso}:00`),
+        datasets: [
+          {
+            data: sorted.map(h => h.total),
+            borderColor: '#16A34A',
+            backgroundColor: 'rgba(22,163,74,0.25)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 6,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: { stepSize: 1, callback: v => v },
+          },
+        },
+        plugins: { legend: { display: false } },
       },
     });
   }
