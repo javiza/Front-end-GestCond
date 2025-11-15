@@ -7,8 +7,8 @@ export interface LoginResponse {
   access_token: string;
   user: {
     id: number;
-    id_guardia?: number | null; // 👈 AGREGADO
-    nombre: string;             // 👈 CAMBIADO de nombre_usuario → nombre
+    id_guardia?: number | null; 
+    nombre: string;             
     email: string;
     rol: 'administrador' | 'guardia' | 'locatario';
   };
