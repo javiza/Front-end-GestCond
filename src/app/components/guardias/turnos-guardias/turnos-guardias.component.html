@@ -6,7 +6,7 @@
   <!-- Formulario inicio turno -->
   <form *ngIf="!turnoActivo" (ngSubmit)="iniciarTurno()" class="flex flex-col gap-3 w-full max-w-md">
     
-    <!-- 👇 NUEVO: selector de guardia -->
+   
     <ion-item>
       <ion-label position="floating">Seleccionar Guardia</ion-label>
       <ion-select [(ngModel)]="id_guardia" name="id_guardia" required>

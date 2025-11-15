@@ -12,6 +12,7 @@ import { RondasService, Ronda } from 'src/app/services/rondas/rondas.service';
   styleUrls: ['./lista-rondas.component.scss'],
 })
 export class ListaRondasComponent implements OnInit {
+
   rondas: Ronda[] = [];
   filtradas: Ronda[] = [];
   terminoBusqueda = '';
@@ -29,18 +30,21 @@ export class ListaRondasComponent implements OnInit {
         this.rondas = data;
         this.filtradas = [...data];
       },
-      error: (err) => console.error('Error al cargar rondas:', err),
+      error: () => {}
     });
   }
 
   filtrar() {
     const term = this.terminoBusqueda.toLowerCase().trim();
+
     this.filtradas = this.rondas.filter((r) => {
       const coincideObs = r.observacion_ronda?.toLowerCase().includes(term);
       const coincideGuardia = r.turno?.guardia?.nombre?.toLowerCase().includes(term);
+
       const coincideFecha = this.filtroFecha
         ? r.fecha_hora_inicio?.startsWith(this.filtroFecha)
         : true;
+
       return (coincideObs || coincideGuardia) && coincideFecha;
     });
   }

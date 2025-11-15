@@ -1,24 +1,41 @@
 <div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
   <h3 class="text-xl font-semibold text-[#001b87] mb-4 text-center">
-    Registrar Ronda de Guardia
+    Registro de Rondas de Guardia
   </h3>
 
-  <form (ngSubmit)="registrarRonda()" class="flex flex-col gap-3 w-full max-w-md">
+  <form *ngIf="!rondaActiva"
+        (ngSubmit)="iniciarRonda()"
+        class="flex flex-col gap-3 w-full max-w-md">
+
     <ion-item>
-      <ion-label position="floating">Observación de la ronda</ion-label>
-      <ion-input
-        [(ngModel)]="observacion_ronda"
-        name="observacion_ronda"
-        required
-      ></ion-input>
+      <ion-label position="floating">Observación de Rondas</ion-label>
+      <ion-input [(ngModel)]="observacion_inicio" name="observacion_inicio" required></ion-input>
     </ion-item>
 
     <ion-button expand="block" type="submit" color="primary" [disabled]="cargando">
-      {{ cargando ? 'Registrando...' : 'Registrar Ronda' }}
+      {{ cargando ? 'Registrando...' : 'Registrar' }}
     </ion-button>
+  </form>
+
+  <form *ngIf="rondaActiva"
+        (ngSubmit)="cerrarRonda()"
+        class="flex flex-col gap-3 w-full max-w-md">
+
+    <!-- <ion-item>
+      <ion-label position="floating">Observación de término</ion-label>
+      <ion-input [(ngModel)]="observacion_termino" name="observacion_termino" required></ion-input>
+    </ion-item> -->
+
+    <!--
+    <ion-button expand="block" color="danger" type="submit" [disabled]="cargando">
+      {{ cargando ? 'Cerrando...' : 'Cerrar Ronda' }}
+    </ion-button>
+    -->
   </form>
 
   <div *ngIf="mensaje" class="text-center text-sm text-gray-600 mt-2">
     {{ mensaje }}
   </div>
 </div>
+
+<div class="espaciador"></div>

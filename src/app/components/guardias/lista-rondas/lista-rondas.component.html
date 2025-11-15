@@ -3,8 +3,8 @@
     Listado de Rondas de Guardia
   </h3>
 
-  <!-- Filtros -->
   <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+
     <ion-input
       placeholder="Buscar por observación o guardia..."
       [(ngModel)]="terminoBusqueda"
@@ -13,7 +13,7 @@
     ></ion-input>
 
     <div class="flex items-center gap-2 w-full md:w-1/3">
-      <ion-label>Filtrar por fecha:</ion-label>
+      <ion-label>Filtrar fecha:</ion-label>
       <input
         type="date"
         [(ngModel)]="filtroFecha"
@@ -22,30 +22,47 @@
       />
       <ion-button color="medium" size="small" (click)="limpiarFiltros()">Limpiar</ion-button>
     </div>
+
   </div>
 
-  <!-- Tabla -->
   <div class="w-full max-w-4xl overflow-x-auto">
-    <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+    <table class="min-w-full border border-gray-300 border-collapse text-sm text-center shadow-sm">
       <thead class="color text-white">
         <tr>
-          <th>ID</th>
-          <th>Guardia</th>
-          <th>Inicio</th>
-          <th>Término</th>
-          <th>Observación</th>
+          <th class="px-2 py-2">ID</th>
+          <th class="px-2 py-2">Guardia</th>
+          <th class="px-2 py-2">Hora y fecha ronda</th>
+          <!-- <th class="px-2 py-2">Término Ronda</th> -->
+          <th class="px-2 py-2">Observación</th>
         </tr>
       </thead>
+
       <tbody>
         <tr *ngFor="let r of filtradas; let i = index"
-          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
-          <td>{{ r.id }}</td>
-          <td>{{ r.turno?.guardia?.nombre || '—' }}</td>
-          <td>{{ r.fecha_hora_inicio | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ r.fecha_hora_termino | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ r.observacion_ronda }}</td>
+            [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+            class="hover:bg-gray-100 transition">
+
+          <td class="px-2 py-2 font-medium text-gray-700">{{ r.id }}</td>
+
+          <td class="px-2 py-2">
+            {{ r.turno?.guardia?.nombre || '—' }}
+          </td>
+
+          <td class="px-2 py-2">
+            {{ r.fecha_hora_inicio | date:'dd/MM/yyyy HH:mm' }}
+          </td>
+
+          <!-- <td class="px-2 py-2">
+            {{ r.fecha_hora_termino | date:'dd/MM/yyyy HH:mm' }}
+          </td> -->
+
+          <td class="px-3 py-2 text-center align-middle max-w-xs break-words">
+  {{ r.observacion_ronda }}
+</td>
+
         </tr>
       </tbody>
+
     </table>
   </div>
 

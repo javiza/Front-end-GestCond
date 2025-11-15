@@ -44,7 +44,7 @@ export class TurnosService {
     return this.http.get<Turno[]>(this.apiUrl);
   }
 
-  /** 🔹 Obtener lista de guardias */
+  /** Obtener lista de guardias */
   getGuardias(): Observable<Guardia[]> {
     return this.http.get<Guardia[]>(this.guardiasUrl);
   }

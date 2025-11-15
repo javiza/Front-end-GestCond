@@ -31,17 +31,18 @@ export class RondasService {
 
   constructor(private http: HttpClient) {}
 
-  /** 🔹 Crear nueva ronda */
   crearRonda(data: { observacion_ronda: string }): Observable<Ronda> {
     return this.http.post<Ronda>(this.apiUrl, data);
   }
 
-  /** 🔹 Listar todas las rondas */
+  actualizarRonda(id: number, data: { observacion_ronda: string }): Observable<Ronda> {
+    return this.http.put<Ronda>(`${this.apiUrl}/${id}`, data);
+  }
+
   getRondas(): Observable<Ronda[]> {
     return this.http.get<Ronda[]>(this.apiUrl);
   }
 
-  /** 🔹 Eliminar ronda (opcional, solo admin) */
   eliminarRonda(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
