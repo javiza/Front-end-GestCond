@@ -1,10 +1,14 @@
-<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center">
+<div
+  class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-8 items-center"
+>
   <!-- FORMULARIO -->
   <div class="formulario w-full max-w-lg">
-   <h3 class="text-xl font-semibold text-[#001b87] mb-4 w-full text-center block">
-  Registro de Usuarios
-</h3>
-     <div class="divider-gradient"></div>
+    <h3
+      class="text-xl font-semibold text-[#001b87] mb-4 w-full text-center block"
+    >
+      Registro de Usuarios
+    </h3>
+    <div class="divider-gradient"></div>
     <form (ngSubmit)="ingresarUsuario()" class="flex flex-col gap-3">
       <ion-item>
         <ion-label position="floating">Nombre de Usuario</ion-label>
@@ -34,6 +38,9 @@
           name="password"
           required
         ></ion-input>
+        <small class="text-gray-500 text-xs">
+          La contraseña debe tener 8 caracteres, incluir 1 mayúscula y 1 número.
+        </small>
         <ion-icon
           slot="end"
           [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
@@ -44,14 +51,16 @@
       <ion-item>
         <ion-label>Rol</ion-label>
         <ion-select [(ngModel)]="rol" name="rol" interface="popover" required>
-          <ion-select-option value="administrador">Administrador</ion-select-option>
+          <ion-select-option value="administrador"
+            >Administrador</ion-select-option
+          >
           <ion-select-option value="guardia">Guardia</ion-select-option>
           <ion-select-option value="locatario">Locatario</ion-select-option>
         </ion-select>
       </ion-item>
 
       <ion-button expand="block" type="submit" color="primary">
-        {{ id ? 'Actualizar' : 'Registrar' }}
+        {{ id ? "Actualizar" : "Registrar" }}
       </ion-button>
 
       <ion-button
@@ -98,17 +107,25 @@
             }"
             class="hover:bg-blue-50"
           >
-            <td class="py-2 px-3 border border-gray-300">{{ usuario.nombre }}</td>
+            <td class="py-2 px-3 border border-gray-300">
+              {{ usuario.nombre }}
+            </td>
             <td class="py-2 px-3 border border-gray-300">{{ usuario.rut }}</td>
-            <td class="py-2 px-3 border border-gray-300">{{ usuario.email }}</td>
+            <td class="py-2 px-3 border border-gray-300">
+              {{ usuario.email }}
+            </td>
             <td class="py-2 px-3 border border-gray-300 capitalize">
               {{ usuario.rol }}
             </td>
             <td class="py-2 px-3 border border-gray-300">
-              {{ usuario.fecha_creacion | date : 'short' }}
+              {{ usuario.fecha_creacion | date : "short" }}
             </td>
             <td class="py-2 px-3 border border-gray-300 text-center">
-              <ion-button fill="clear" size="small" (click)="editarUsuario(usuario)">
+              <ion-button
+                fill="clear"
+                size="small"
+                (click)="editarUsuario(usuario)"
+              >
                 <ion-icon slot="icon-only" name="create-outline"></ion-icon>
               </ion-button>
               <ion-button
@@ -142,7 +159,7 @@
         Anterior
       </ion-button>
       <span>Página {{ currentPage }} de {{ totalPages }}</span>
-      <ion-button 
+      <ion-button
         fill="outline"
         (click)="nextPage()"
         [disabled]="currentPage === totalPages"

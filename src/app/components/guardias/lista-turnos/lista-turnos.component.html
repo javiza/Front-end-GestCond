@@ -1,10 +1,14 @@
-<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center">
+<div
+  class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6 items-center"
+>
   <h3 class="text-lg font-semibold text-[#001b87] mb-4 text-center">
     Listado de Turnos de Guardia
   </h3>
 
   <!-- 🔍 Filtros -->
-  <div class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+  <div
+    class="w-full max-w-4xl flex flex-col md:flex-row justify-between items-center gap-4 mb-4"
+  >
     <div class="flex items-center gap-2 w-full md:w-1/2">
       <ion-input
         type="text"
@@ -23,13 +27,20 @@
         (change)="filtrar()"
         class="border rounded px-2 py-1 text-sm w-full"
       />
-      <ion-button color="medium" size="small" (click)="limpiarFiltros()">Limpiar</ion-button>
+      <ion-button color="medium" size="small" (click)="limpiarFiltros()"
+        >Limpiar</ion-button
+      >
     </div>
   </div>
 
   <!--  Tabla -->
-  <div *ngIf="paginados.length > 0; else noDatos" class="w-full max-w-4xl overflow-x-auto">
-    <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
+  <div
+    *ngIf="paginados.length > 0; else noDatos"
+    class="w-full max-w-4xl overflow-x-auto"
+  >
+    <table
+      class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm"
+    >
       <thead class="color text-white">
         <tr>
           <th>ID</th>
@@ -41,14 +52,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let t of paginados; let i = index"
-          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }">
+        <tr
+          *ngFor="let t of paginados; let i = index"
+          [ngClass]="{ 'bg-gray-50': i % 2 === 0, 'bg-white': i % 2 !== 0 }"
+        >
           <td>{{ t.id }}</td>
-          <td>{{ t.guardia?.nombre || '—' }}</td>
-          <td>{{ t.fecha_hora_inicio | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ t.fecha_hora_termino | date: 'dd/MM/yyyy HH:mm' }}</td>
-          <td>{{ t.observacion_inicio || '—' }}</td>
-          <td>{{ t.observacion_termino || '—' }}</td>
+          <td>{{ t.guardia?.nombre || "—" }}</td>
+          <td>{{ t.fecha_hora_inicio | date : "dd/MM/yyyy HH:mm" }}</td>
+          <td>
+            {{
+              t.fecha_hora_termino
+                ? (t.fecha_hora_termino | date : "dd/MM/yyyy HH:mm")
+                : "—"
+            }}
+          </td>
+          <td>{{ t.observacion_inicio || "—" }}</td>
+          <td>{{ t.observacion_termino || "—" }}</td>
         </tr>
       </tbody>
     </table>
@@ -60,12 +79,23 @@
   </ng-template>
 
   <!-- Paginación -->
-  <div *ngIf="totalPages > 1" class="flex items-center justify-center gap-4 mt-6">
-    <ion-button fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">
+  <div
+    *ngIf="totalPages > 1"
+    class="flex items-center justify-center gap-4 mt-6"
+  >
+    <ion-button
+      fill="outline"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
       Anterior
     </ion-button>
     <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <ion-button fill="outline" (click)="nextPage()" [disabled]="currentPage === totalPages">
+    <ion-button
+      fill="outline"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
       Siguiente
     </ion-button>
   </div>

@@ -19,7 +19,7 @@ export class ListaVisitasComponent implements OnInit {
   cargando = true;
   terminoBusqueda = '';
   filtroFecha: string = '';
-  pageSize = 20;
+  pageSize = 10;
   currentPage = 1;
 
   constructor(
@@ -61,7 +61,7 @@ export class ListaVisitasComponent implements OnInit {
         this.mostrarToast('Salida registrada correctamente.', 'success');
       },
       error: (err) => {
-        console.error('❌ Error al registrar salida:', err);
+        console.error(' Error al registrar salida:', err);
         this.mostrarToast('Error al registrar salida.', 'danger');
       },
     });

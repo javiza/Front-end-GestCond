@@ -19,7 +19,7 @@ export class ListaRegistroGeneralComponent implements OnInit {
   terminoBusqueda = '';
   filtroFecha: string = '';
 
-  pageSize = 20;
+  pageSize = 10;
   currentPage = 1;
 
   constructor(private registroAdminService: RegistroAdminService) {}

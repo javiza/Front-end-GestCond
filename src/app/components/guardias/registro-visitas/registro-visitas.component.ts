@@ -17,7 +17,7 @@ export class RegistroVisitasComponent {
   nombre = '';
   rut = '';
   patente = '';
-  tipo_vehiculo = ''; 
+  tipo_vehiculo = '';
   autorizado_por = '';
   lugar_destino = '';
   tipo_visita: 'visita' | 'delivery' | 'trabajador' | '' = '';
@@ -30,13 +30,13 @@ export class RegistroVisitasComponent {
     private sharedQr: SharedQrService
   ) {}
 
-  /** 🔹 Formatea el RUT automáticamente al escribir */
+  /**  Formatea el RUT automáticamente al escribir */
   onRutInput(event: any) {
     const value = (event.target as HTMLInputElement).value ?? '';
     this.rut = this.formatearRut(value.toString());
   }
 
-  /** 🔹 Formatear RUT con puntos y guion */
+  /**  Formatear RUT con puntos y guion */
   formatearRut(rut: string): string {
     if (!rut) return '';
     let limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
@@ -48,7 +48,7 @@ export class RegistroVisitasComponent {
     return `${cuerpo}-${dv}`;
   }
 
-  /** 🔹 Valida el formato y dígito verificador */
+  /**  Valida el formato y dígito verificador */
   validarRut(rut: string): boolean {
     if (!rut) return false;
     const rutLimpio = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
@@ -70,38 +70,31 @@ export class RegistroVisitasComponent {
     return dv === dvFinal;
   }
 
- registrarIngreso() {
+  registrarIngreso() {
   this.mensaje = '';
   this.cargando = true;
 
-  // ✅ Obtiene el usuario logeado desde localStorage
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const id_guardia = user?.id_guardia;
-
-  if (!id_guardia) {
-    this.mensaje = 'No se pudo identificar al usuario autenticado.';
-    this.cargando = false;
-    return;
-  }
-
-  // Si hay QR válido, se obtiene desde SharedQrService
+  // QR si existe
   const qrData = this.sharedQr.getQrData();
   const id_autorizacion_qr = qrData?.id ?? undefined;
 
+  // Validar RUT
   if (this.rut && !this.validarRut(this.rut)) {
-    this.mensaje = '⚠️ RUT inválido. Corrígelo antes de registrar.';
+    this.mensaje = 'RUT inválido. Corrígelo antes de registrar.';
     this.cargando = false;
     return;
   }
 
-  // ✅ Aquí se incluye id_guardia en el body
+  // Hora local de Chile (sin UTC)
+  const now = new Date();
+const fechaLocal = now.toLocaleString('sv-SE', { hour12: false }).replace(' ', 'T');
+
+  // Body enviado al backend
   const registro: any = {
-    id_guardia, // 👈 MÁGICO 🔥
-    autorizado_por: this.autorizado_por.trim(),
-    lugar_destino: this.lugar_destino.trim(),
-    tipo_visita: this.tipo_visita,
-    fecha_hora_ingreso: new Date().toISOString(),
-  };
+  autorizado_por: this.autorizado_por.trim(),
+  lugar_destino: this.lugar_destino.trim(),
+  tipo_visita: this.tipo_visita,
+};
 
   if (id_autorizacion_qr) registro.id_autorizacion_qr = id_autorizacion_qr;
   if (this.nombre) registro.nombre = this.nombre.trim();
@@ -111,16 +104,17 @@ export class RegistroVisitasComponent {
 
   this.registroService.crearRegistro(registro).subscribe({
     next: () => {
-      this.mensaje = '✅ Ingreso registrado correctamente.';
+      this.mensaje = 'Ingreso registrado correctamente.';
       this.resetFormulario();
     },
     error: (err) => {
       console.error('Error al registrar ingreso:', err);
-      this.mensaje = '❌ Error al registrar el ingreso.';
+      this.mensaje = ' Error al registrar el ingreso.';
     },
     complete: () => (this.cargando = false),
   });
 }
+
 
   resetFormulario() {
     this.nombre = '';

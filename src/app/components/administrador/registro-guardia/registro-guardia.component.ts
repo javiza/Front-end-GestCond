@@ -16,8 +16,16 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { createOutline, trashOutline } from 'ionicons/icons';
-import { GuardiasService, Guardia, CreateGuardiaDto } from 'src/app/services/guardia/guardia.service';
-import { EmpresasContratistasService, EmpresaContratista } from 'src/app/services/empresa-contratista/empresas-contratistas.service';
+import {
+  GuardiasService,
+  Guardia,
+  CreateGuardiaDto,
+} from 'src/app/services/guardia/guardia.service';
+import {
+  EmpresasContratistasService,
+  EmpresaContratista,
+} from 'src/app/services/empresa-contratista/empresas-contratistas.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-registro-guardia',
@@ -44,7 +52,7 @@ export class RegistroGuardiaComponent implements OnInit {
   paginatedGuardias: Guardia[] = [];
   empresas: EmpresaContratista[] = [];
 
-  pageSize = 3;
+  pageSize = 10;
   currentPage = 1;
 
   id: number | null = null;
@@ -54,16 +62,18 @@ export class RegistroGuardiaComponent implements OnInit {
   email = '';
   id_empresa_contratista: number | null = null;
   activo = true;
-
+  id_usuario: number | null = null;
   constructor(
     private guardiasService: GuardiasService,
     private empresasService: EmpresasContratistasService,
+    private authService: AuthService,
     private toast: ToastController
   ) {
     addIcons({ createOutline, trashOutline });
   }
 
   ngOnInit() {
+    this.id_usuario = this.authService.getUser()?.id ?? null;
     this.cargarGuardias();
     this.cargarEmpresas();
   }
@@ -111,13 +121,20 @@ export class RegistroGuardiaComponent implements OnInit {
 
   validarRut(rut: string): boolean {
     if (!rut) return false;
+
+    // Elimina puntos y guion
     const rutLimpio = rut.replace(/\./g, '').replace(/-/g, '').toUpperCase();
+
     const cuerpo = rutLimpio.slice(0, -1);
-    let dv = rutLimpio.slice(-1);
+    const dv = rutLimpio.slice(-1);
+
+    // Validar que el cuerpo sea numérico
     if (!/^\d+$/.test(cuerpo)) return false;
 
     let suma = 0;
     let multiplo = 2;
+
+    // Cálculo del dígito verificador
     for (let i = cuerpo.length - 1; i >= 0; i--) {
       suma += parseInt(cuerpo.charAt(i), 10) * multiplo;
       multiplo = multiplo < 7 ? multiplo + 1 : 2;
@@ -131,20 +148,29 @@ export class RegistroGuardiaComponent implements OnInit {
   }
 
   onRutInput(event: any) {
-    const value = (event.target as HTMLInputElement).value ?? '';
-    this.rut = this.formatearRut(value.toString());
-  }
+  const value = (event.target as HTMLInputElement).value ?? '';
+  this.rut = this.formatearRut(value);
+}
 
-  formatearRut(rut: string): string {
-    if (!rut) return '';
-    let limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
-    if (limpio.length <= 1) return limpio;
+formatearRut(rut: string): string {
+  if (!rut) return '';
 
-    let cuerpo = limpio.slice(0, -1);
-    let dv = limpio.slice(-1);
-    cuerpo = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    return cuerpo + '-' + dv;
-  }
+  // Eliminar todo excepto números y K
+  let limpio = rut.replace(/[^0-9kK]/g, '').toUpperCase();
+
+  // Si tiene 1 caracter, no formateamos aún
+  if (limpio.length <= 1) return limpio;
+
+  // Separar cuerpo y dígito verificador
+  const cuerpo = limpio.slice(0, -1);
+  const dv = limpio.slice(-1);
+
+  // Insertar puntos cada 3 dígitos hacia atrás
+  const cuerpoFormateado = cuerpo.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  return `${cuerpoFormateado}-${dv}`;
+}
+
 
   async ingresarGuardia() {
     if (!this.nombre || !this.rut) {
@@ -163,6 +189,7 @@ export class RegistroGuardiaComponent implements OnInit {
       telefono: this.telefono?.trim(),
       email: this.email?.trim(),
       id_empresa_contratista: this.id_empresa_contratista ?? undefined,
+      id_usuario: this.id_usuario ?? undefined,
       activo: this.activo,
     };
 
@@ -233,7 +260,11 @@ export class RegistroGuardiaComponent implements OnInit {
   }
 
   private async presentToast(msg: string) {
-    const t = await this.toast.create({ message: msg, duration: 2500, position: 'bottom' });
+    const t = await this.toast.create({
+      message: msg,
+      duration: 2500,
+      position: 'bottom',
+    });
     await t.present();
   }
 }

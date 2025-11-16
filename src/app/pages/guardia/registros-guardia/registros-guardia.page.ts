@@ -12,10 +12,11 @@ import { ListaTurnosComponent } from 'src/app/components/guardias/lista-turnos/l
 import { TurnosGuardiasComponent } from 'src/app/components/guardias/turnos-guardias/turnos-guardias.component';
 import { RondasGuardiaComponent } from 'src/app/components/guardias/rondas-guardia/rondas-guardia.component';
 import { ListaRondasComponent } from 'src/app/components/guardias/lista-rondas/lista-rondas.component';
+import { DeliveryAlertasComponent } from 'src/app/components/guardias/delivery-alertas/delivery-alertas.component';
 @Component({
   selector: 'app-registros-guardia',
   standalone: true,
-  imports: [IonicModule, CommonModule, LectorQrComponent, ListaVisitasComponent, RegistroVisitasComponent, ListaTurnosComponent, TurnosGuardiasComponent, RondasGuardiaComponent, ListaRondasComponent],
+  imports: [IonicModule, CommonModule, LectorQrComponent, ListaVisitasComponent, RegistroVisitasComponent, ListaTurnosComponent, TurnosGuardiasComponent, RondasGuardiaComponent, ListaRondasComponent, DeliveryAlertasComponent],
   templateUrl: './registros-guardia.page.html',
   styleUrls: ['./registros-guardia.page.scss'],
 })

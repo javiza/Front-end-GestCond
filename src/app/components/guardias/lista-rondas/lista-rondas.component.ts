@@ -15,8 +15,14 @@ export class ListaRondasComponent implements OnInit {
 
   rondas: Ronda[] = [];
   filtradas: Ronda[] = [];
+  rondasPaginadas: Ronda[] = [];
+
   terminoBusqueda = '';
   filtroFecha = '';
+
+  // 🔹 PAGINACIÓN
+  pageSize = 10;
+  currentPage = 1;
 
   constructor(private rondasService: RondasService) {}
 
@@ -29,6 +35,7 @@ export class ListaRondasComponent implements OnInit {
       next: (data) => {
         this.rondas = data;
         this.filtradas = [...data];
+        this.actualizarPaginacion();
       },
       error: () => {}
     });
@@ -38,8 +45,11 @@ export class ListaRondasComponent implements OnInit {
     const term = this.terminoBusqueda.toLowerCase().trim();
 
     this.filtradas = this.rondas.filter((r) => {
-      const coincideObs = r.observacion_ronda?.toLowerCase().includes(term);
-      const coincideGuardia = r.turno?.guardia?.nombre?.toLowerCase().includes(term);
+      const coincideObs =
+        r.observacion_ronda?.toLowerCase().includes(term);
+
+      const coincideGuardia =
+        r.turno?.guardia?.nombre?.toLowerCase().includes(term);
 
       const coincideFecha = this.filtroFecha
         ? r.fecha_hora_inicio?.startsWith(this.filtroFecha)
@@ -47,11 +57,41 @@ export class ListaRondasComponent implements OnInit {
 
       return (coincideObs || coincideGuardia) && coincideFecha;
     });
+
+    this.currentPage = 1;
+    this.actualizarPaginacion();
   }
 
   limpiarFiltros() {
     this.terminoBusqueda = '';
     this.filtroFecha = '';
     this.filtradas = [...this.rondas];
+    this.currentPage = 1;
+    this.actualizarPaginacion();
+  }
+
+  // 🔹 PAGINACIÓN -----------------------
+  actualizarPaginacion() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.rondasPaginadas = this.filtradas.slice(start, end);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.actualizarPaginacion();
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.actualizarPaginacion();
+    }
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filtradas.length / this.pageSize);
   }
 }

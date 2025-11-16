@@ -83,6 +83,7 @@
         <thead class="bg-[#001b87] text-white">
           <tr>
             <th class="py-2 px-3 border border-gray-400">Nombre Empresa</th>
+            <th class="py-2 px-3 border border-gray-400">RUT</th>
             <th class="py-2 px-3 border border-gray-400">Encargado</th>
             <th class="py-2 px-3 border border-gray-400">Rubro</th>
             <th class="py-2 px-3 border border-gray-400">Teléfono</th>
@@ -100,6 +101,10 @@
             <td class="py-2 px-3 border border-gray-300">
               {{ e.nombre_empresa }}
             </td>
+            <td class="py-2 px-3 border border-gray-300">
+              {{ e.rut || "-" }}
+            </td>
+
             <td class="py-2 px-3 border border-gray-300">
               {{ e.nombre_encargado }}
             </td>

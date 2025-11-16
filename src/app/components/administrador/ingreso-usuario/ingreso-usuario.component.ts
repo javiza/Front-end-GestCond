@@ -119,7 +119,17 @@ export class IngresoUsuarioComponent implements OnInit {
       alert('RUT inválido. Verifica el formato.');
       return;
     }
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
 
+    if (this.password && !passwordRegex.test(this.password)) {
+      alert(
+        'La contraseña debe tener:\n' +
+          '- Al menos 1 letra mayúscula\n' +
+          '- Al menos 1 número\n' +
+          '- Minimo 8 caracteres'
+      );
+      return;
+    }
     const payload: CreateUsuario = {
       nombre: this.nombre,
       email: this.email,
