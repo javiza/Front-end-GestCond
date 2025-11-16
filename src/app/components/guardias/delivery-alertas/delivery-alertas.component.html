@@ -1,5 +1,6 @@
-<div class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6">
-
+<div
+  class="container mx-auto bg-white p-6 rounded-lg shadow-md flex flex-col gap-6"
+>
   <h2 class="text-xl font-semibold text-[#001b87] text-center">
     Deliveries con más de 20 minutos
   </h2>
@@ -21,12 +22,17 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let v of visitasPaginadas; let i = index"
-            class="hover:bg-red-100 transition bg-red-50 border-b border-red-300">
-
+        <tr
+          *ngFor="let v of visitasPaginadas; let i = index"
+          class="hover:bg-red-100 transition bg-red-50 border-b border-red-300"
+        >
           <td class="px-2 py-2 font-bold">{{ v.nombre }}</td>
-          <td class="px-2 py-2">{{ v.patente || '—' }}</td>
-          <td class="px-2 py-2">{{ v.fecha_hora_ingreso | date:'dd/MM HH:mm' }}</td>
+          <td class="px-2 py-2">{{ v.patente || "—" }}</td>
+          <td class="px-2 py-2">
+            {{
+              v.fecha_hora_ingreso || v.fechaHoraIngreso | date : "dd/MM HH:mm"
+            }}
+          </td>
           <td class="px-2 py-2 font-bold text-red-600">
             {{ calcularMinutos(v) }} min
           </td>
@@ -39,19 +45,25 @@
               Marcar leído
             </button>
           </td>
-
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div *ngIf="!cargando && visitas.length === 0" class="text-center text-gray-500">
+  <div
+    *ngIf="!cargando && visitas.length === 0"
+    class="text-center text-gray-500"
+  >
     No hay alertas activas.
   </div>
 
   <!-- Paginación -->
   <div *ngIf="totalPages > 1" class="flex justify-center gap-4 mt-4">
-    <button class="px-4 py-2 bg-gray-300 rounded" (click)="prevPage()" [disabled]="currentPage === 1">
+    <button
+      class="px-4 py-2 bg-gray-300 rounded"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+    >
       Anterior
     </button>
 
@@ -59,11 +71,14 @@
       Página {{ currentPage }} / {{ totalPages }}
     </span>
 
-    <button class="px-4 py-2 bg-gray-300 rounded" (click)="nextPage()" [disabled]="currentPage === totalPages">
+    <button
+      class="px-4 py-2 bg-gray-300 rounded"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+    >
       Siguiente
     </button>
   </div>
-
 </div>
 
 <div class="espaciador"></div>

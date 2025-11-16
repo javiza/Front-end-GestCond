@@ -2,7 +2,10 @@ import { Component, Input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { addIcons } from 'ionicons';
-import { addCircleOutline } from 'ionicons/icons';
+import { addCircleOutline, menuOutline, 
+  logOutOutline  } from 'ionicons/icons';
+
+
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { LectorQrComponent } from 'src/app/components/guardias/lector-qr/lector-qr.component';
@@ -28,7 +31,8 @@ export class RegistrosGuardiaPage {
   sidebarOpen = false;
 
   constructor(private router: Router, private navCtrl: NavController) {
-    addIcons({ addCircleOutline });
+    addIcons({ addCircleOutline, menuOutline,
+    logOutOutline });
   }
 
   toggleMenu(menu: string) {
