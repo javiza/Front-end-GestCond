@@ -1,6 +1,5 @@
 <div *ngIf="paginatedVisitas.length > 0; else noVisitas" class="w-full max-w-4xl overflow-x-auto">
-  <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm">
-    <thead class="bg-[#001b87] text-white">
+<table class="tabla-visitas min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm !text-gray-700">    <thead class="bg-[#001b87] !text-white">
       <tr>
         <th>Nombre</th>
         <th>RUT</th>
@@ -18,12 +17,12 @@
 
     <tbody>
       <tr *ngFor="let v of paginatedVisitas; let i = index" [ngClass]="{ 'bg-gray-50': i % 2 === 0 }">
-        <td>{{ v.nombre || 'Sin nombre' }}</td>
-        <td>{{ v.rut || '—' }}</td>
-        <td>{{ v.tipoVehiculo || '—' }}</td>
-        <td>{{ v.patente || '—' }}</td>
+        <td class="!text-gray-700">{{ v.nombre || 'Sin nombre' }}</td>
+        <td class="!text-gray-700">{{ v.rut || '—' }}</td>
+        <td class="!text-gray-700">{{ v.tipoVehiculo || '—' }}</td>
+        <td class="!text-gray-700">{{ v.patente || '—' }}</td>
 
-        <td>
+        <td class="!text-gray-700">
           <span
             class="px-2 py-1 rounded text-white text-xs font-semibold"
             [ngClass]="{
@@ -36,21 +35,21 @@
           </span>
         </td>
 
-        <td>{{ v.autorizadoPor }}</td>
-        <td>{{ v.lugarDestino }}</td>
+        <td class="!text-gray-700">{{ v.autorizadoPor }}</td>
+        <td class="!text-gray-700">{{ v.lugarDestino }}</td>
 
-        <td>{{ v.fechaHoraIngreso | date:'dd/MM/yyyy HH:mm' }}</td>
+        <td class="!text-gray-700">{{ v.fechaHoraIngreso | date:'dd/MM/yyyy HH:mm' }}</td>
 
-        <td>
+        <td class="!text-gray-700">
           <span *ngIf="v.fechaHoraSalida; else pendiente">
             {{ v.fechaHoraSalida | date:'dd/MM/yyyy HH:mm' }}
           </span>
           <ng-template #pendiente>—</ng-template>
         </td>
 
-        <td>{{ v.guardia?.nombre || v.guardia?.usuario?.nombre || '—' }}</td>
+        <td class="!text-gray-700">{{ v.guardia?.nombre || v.guardia?.usuario?.nombre || '—' }}</td>
 
-        <td>
+        <td class="!text-gray-700">
           <ion-button
             color="success"
             size="small"

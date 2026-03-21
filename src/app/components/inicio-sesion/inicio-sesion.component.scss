@@ -1,8 +1,9 @@
 .form-container {
-  //background-color: #2e2e2e; // gris oscuro
-//   padding: 20px;
-  border-radius: 10px;
-//   margin: 20px; // separación externa
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .titulo {
@@ -19,20 +20,34 @@
 .custom-item {
   margin-bottom: 20px; // más separación entre campos
 }
-
-ion-label {
-  color: #007bff !important; // azul para el texto del label
-}
-ion-input {
-  color: #38393a !important; // azul para el texto del input
-}
 ion-item.custom-item {
-  ion-icon {
-    font-size: 20px;
-    color: #007bff; // azul
-    cursor: pointer;
-  }
+  --background: #ffffff;
+  --color: #000;
+  --border-color: #ccc;
 }
+
+ion-item.custom-item ion-label {
+  --color: #007bff;
+}
+
+ion-item.custom-item ion-input {
+  --color: #000;
+  --placeholder-color: #888;
+}
+
+// ion-label {
+//   color: #007bff !important; // azul para el texto del label
+// }
+// ion-input {
+//   color: #38393a !important; // azul para el texto del input
+// }
+// ion-item.custom-item {
+//   ion-icon {
+//     font-size: 20px;
+//     color: #007bff; // azul
+//     cursor: pointer;
+//   }
+// }
 .divider-gradient {
   height: 1px; /* más elegante que 1px */
   width: 100%;
@@ -41,16 +56,16 @@ ion-item.custom-item {
 }
 .center-content {
   display: flex;
-  flex-direction: column;
-  justify-content: center; /* centra verticalmente */
-  align-items: center;     /* centra horizontalmente */
-  height: 100%;
-  overflow: hidden;        /* evita scroll */
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh;
 }
 .boton{
   color: #fafbfc !important;
 }
 
-
+ion-content {
+  --background: #f4f5f8; /* gris claro limpio */
+}
 
 

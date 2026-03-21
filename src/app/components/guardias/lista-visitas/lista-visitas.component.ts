@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
@@ -11,6 +11,7 @@ import { SocketService } from 'src/app/services/socket.service';
   imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './lista-visitas.component.html',
   styleUrls: ['./lista-visitas.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ListaVisitasComponent implements OnInit {
   visitas: any[] = [];

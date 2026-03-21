@@ -48,3 +48,21 @@ ion-button {
   --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
+body {
+  --ion-background-color: #ffffff !important;
+  --ion-text-color: #6d6c6c !important;
+}
+/* texto de las opciones */
+ion-alert .alert-radio-label {
+  color: #333 !important;
+}
+
+/* opción seleccionada */
+ion-alert .alert-radio-icon {
+  border-color: #001b87 !important;
+}
+
+/* fondo del alert */
+ion-alert .alert-wrapper {
+  background: #ffffff !important;
+}
