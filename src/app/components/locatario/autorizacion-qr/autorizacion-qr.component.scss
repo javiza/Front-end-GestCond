@@ -2,3 +2,17 @@
   height: 100px;
   background-color: white; /* espacio en blanco */
 }
+ion-item {
+  --background: #ffffff;
+  --color: #333;
+  --border-color: #ddd;
+}
+
+ion-input {
+  --color: #333;
+  --placeholder-color: #888;
+}
+
+ion-label {
+  --color: #666;
+}
