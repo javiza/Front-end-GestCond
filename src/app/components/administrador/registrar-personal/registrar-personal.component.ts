@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {
@@ -47,6 +47,7 @@ import { EmpresasContratistasService, EmpresaContratista } from 'src/app/service
 ],
 })
 export class RegistrarPersonalComponent implements OnInit {
+  @Input() modo: 'registrar' | 'listar' = 'registrar';
   personalList: Personal[] = [];
   paginatedPersonal: Personal[] = [];
   empresas: EmpresaContratista[] = [];

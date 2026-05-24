@@ -1,21 +1,57 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>HOME</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen="true" class="home-content">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">HOME</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="main-layout">
 
-  <div class="home-container">
-    <app-info-banner></app-info-banner>
+    <!-- PANEL IZQUIERDO -->
+    <div class="branding-panel">
 
-    <div class="login-container">
-      <app-inicio-sesion></app-inicio-sesion>
+      <div class="overlay"></div>
+
+      <div class="branding-content">
+
+        <img
+          src="assets/img/logo1.png"
+          class="condominio"
+          alt="Condominio"
+        />
+
+        <h1>
+          Condominio <br />
+          Los Alerces
+        </h1>
+
+        <p>
+          Plataforma inteligente para administración,
+          seguridad y gestión de comunidades.
+        </p>
+
+        <div class="feature-list">
+
+          <div class="feature-card">
+            🔐 Seguridad avanzada
+          </div>
+
+          <div class="feature-card">
+            📱 Acceso desde cualquier dispositivo
+          </div>
+
+          <div class="feature-card">
+            📊 Gestión moderna y eficiente
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
+
+    <!-- LOGIN -->
+    <div class="login-panel">
+
+      <app-inicio-sesion></app-inicio-sesion>
+
+    </div>
+
   </div>
+
 </ion-content>

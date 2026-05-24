@@ -1,0 +1,40 @@
+
+  <div class="container">
+
+    <!-- MENÚ -->
+    <aside class="sidebar" [class.open]="sidebarOpen">
+      <h2>Condominio<br />Los Alerces</h2>
+
+      <ul class="menu">
+        <li>
+          <button
+            (click)="mostrarSeccion('analytics')"
+            class="menu-item"
+          >
+            Dashboard Analítico
+          </button>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <section class="contenido">
+
+      <ng-container [ngSwitch]="seccionActiva">
+
+        <div *ngSwitchCase="'analytics'">
+          <app-analytics-dashboard></app-analytics-dashboard>
+          
+        </div>
+
+        <div *ngSwitchDefault>
+          <p class="text-center text-gray-600 mt-10">
+            Seleccione una opción del menú para comenzar.
+          </p>
+        </div>
+
+      </ng-container>
+
+    </section>
+
+  </div>

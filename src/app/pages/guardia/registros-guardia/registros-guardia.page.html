@@ -1,133 +1,248 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-        <!-- BOTÓN HAMBURGUESA SOLO EN MÓVIL -->
-    <ion-buttons slot="start" class="mobile-only">
-      <ion-button (click)="sidebarOpen = !sidebarOpen">
-        <ion-icon name="menu-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Registros</ion-title>
+<ion-content fullscreen class="dashboard-content">
+  <!-- OVERLAY MOBILE -->
+  <div
+    class="mobile-overlay"
+    *ngIf="sidebarOpen"
+    (click)="sidebarOpen = false"
+  ></div>
 
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        Salir
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" [class.open]="sidebarOpen">
+      <!-- BODY -->
+      <div class="sidebar-body">
+        <!-- HEADER -->
+        <div class="sidebar-header">
+          <img src="assets/img/logo1.png" />
+        </div>
 
-<ion-content>
-  <div class="container">
-    <!-- MENÚ LATERAL -->
-<aside class="sidebar" [class.open]="sidebarOpen">
-      <h2>Condominio<br />Los Alerces</h2>
+        <!-- MENU -->
+        <div class="sidebar-menu">
 
-      <ul class="menu">
+          <!-- VISITAS -->
+          <div class="menu-group">
+            <button
+              class="menu-button"
+              (click)="toggleMenu('registrarVisitas')"
+            >
+              <span>📋 Gestión Visitas</span>
 
-   <!-- registrar visitas -->
-        <li>
-          <button (click)="toggleMenu('registrarVisitas')" class="menu-item">
-            Registrar Visitas
-          </button>
-          <ul *ngIf="openMenu === 'registrarVisitas'" class="submenu">
-            <li (click)="mostrarSeccion('registrarVisitas')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'registrarVisitas'"
+              >
+              </ion-icon>
+            </button>
 
-            <li (click)="mostrarSeccion('listarVisitas')">
-              Listar Visitas
-            </li>
-          </ul>
-        </li>
+            <div
+              class="submenu"
+              *ngIf="openMenu === 'registrarVisitas'"
+            >
+              <button
+                (click)="mostrarSeccion('registrarVisitas'); sidebarOpen=false"
+              >
+                Registrar visita
+              </button>
 
-        <!-- registrar turnos -->
-        <li>
-          <button (click)="toggleMenu('registrarTurnos')" class="menu-item">
-            Registrar Turnos
-          </button>
+              <button
+                (click)="mostrarSeccion('listarVisitas'); sidebarOpen=false"
+              >
+                Lista visitas
+              </button>
+            </div>
+          </div>
 
-          <ul *ngIf="openMenu === 'registrarTurnos'" class="submenu">
-            <li (click)="mostrarSeccion('registrarTurnos')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+          <!-- TURNOS -->
+          <div class="menu-group">
+            <button
+              class="menu-button"
+              (click)="toggleMenu('registrarTurnos')"
+            >
+              <span>🕒 Gestión Turnos</span>
 
-            <li (click)="mostrarSeccion('listarTurnos')">
-              Listar Turnos
-            </li>
-          </ul>
-        </li>
-         <!-- registrar rondas -->
-        <li>
-          <button (click)="toggleMenu('registrarRondas')" class="menu-item">
-            Registrar Rondas
-          </button>
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'registrarTurnos'"
+              >
+              </ion-icon>
+            </button>
 
-          <ul *ngIf="openMenu === 'registrarRondas'" class="submenu">
-            <li (click)="mostrarSeccion('registrarRondas')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+            <div
+              class="submenu"
+              *ngIf="openMenu === 'registrarTurnos'"
+            >
+              <button
+                (click)="mostrarSeccion('registrarTurnos'); sidebarOpen=false"
+              >
+                Registrar turno
+              </button>
 
-            <li (click)="mostrarSeccion('listarRondas')">
-              Listar Rondas
-            </li>
-          </ul>
-        </li>
+              <button
+                (click)="mostrarSeccion('listarTurnos'); sidebarOpen=false"
+              >
+                Lista turnos
+              </button>
+            </div>
+          </div>
 
-      </ul>
-        
+          <!-- RONDAS -->
+          <div class="menu-group">
+            <button
+              class="menu-button"
+              (click)="toggleMenu('registrarRondas')"
+            >
+              <span>🔍 Gestión Rondas</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'registrarRondas'"
+              >
+              </ion-icon>
+            </button>
+
+            <div
+              class="submenu"
+              *ngIf="openMenu === 'registrarRondas'"
+            >
+              <button
+                (click)="mostrarSeccion('registrarRondas'); sidebarOpen=false"
+              >
+                Registrar ronda
+              </button>
+
+              <button
+                (click)="mostrarSeccion('listarRondas'); sidebarOpen=false"
+              >
+                Lista rondas
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="sidebar-footer">
+        <button class="logout-btn" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Cerrar sesión
+        </button>
+      </div>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <section class="contenido">
-      <ng-container [ngSwitch]="seccionActiva">
+    <!-- MAIN -->
+    <main class="main-content">
 
-         <!--  VISITAS -->
-        <div *ngSwitchCase="'registrarVisitas'">
-          <app-registro-visitas></app-registro-visitas>
-          <app-lector-qr></app-lector-qr>
-          
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button
+            class="mobile-menu-btn"
+            (click)="sidebarOpen = !sidebarOpen"
+          >
+            ☰
+          </button>
+
+          <div>
+            <h1>Dashboard</h1>
+            <p>Bienvenido guardia</p>
+          </div>
         </div>
 
-        <div *ngSwitchCase="'listarVisitas'">
-          <app-delivery-alertas> </app-delivery-alertas>
-          <app-lista-visitas></app-lista-visitas>
-          
+        <div class="user-badge">
+          Guardia
         </div>
+      </header>
 
-        <!-- turnos-->
-        <div *ngSwitchCase="'registrarTurnos'">
-          <app-turnos-guardias></app-turnos-guardias>
-          
-        </div>
+      <!-- CONTENT -->
+      <section class="content-wrapper">
 
-        <div *ngSwitchCase="'listarTurnos'">
-          <app-lista-turnos></app-lista-turnos>
-        </div>
-        
-         <!-- rondas-->
-        <div *ngSwitchCase="'registrarRondas'">
-          <app-rondas-guardia></app-rondas-guardia>
-        </div>
+        <ng-container [ngSwitch]="seccionActiva">
 
-        <div *ngSwitchCase="'listarRondas'">
-          <app-lista-rondas></app-lista-rondas>
-        </div>
-       
-        
+          <!-- REGISTRAR VISITAS -->
+          <div
+            *ngSwitchCase="'registrarVisitas'"
+            class="content-card"
+          >
+            <app-registro-visitas></app-registro-visitas>
 
-        <!-- DEFAULT -->
-        <div *ngSwitchDefault>
-          <p class="text-center text-gray-600 mt-10">
-            Seleccione una opción del menú para comenzar.
-          </p>
-        </div>
+            <div class="mt-6">
+              <app-lector-qr></app-lector-qr>
+            </div>
+          </div>
 
-      </ng-container>
-    </section>
+          <!-- LISTAR VISITAS -->
+          <div
+            *ngSwitchCase="'listarVisitas'"
+            class="content-card"
+          >
+            <app-delivery-alertas></app-delivery-alertas>
+
+            <div class="mt-6">
+              <app-lista-visitas></app-lista-visitas>
+            </div>
+          </div>
+
+          <!-- REGISTRAR TURNOS -->
+          <div
+            *ngSwitchCase="'registrarTurnos'"
+            class="content-card"
+          >
+            <app-turnos-guardias></app-turnos-guardias>
+          </div>
+
+          <!-- LISTAR TURNOS -->
+          <div
+            *ngSwitchCase="'listarTurnos'"
+            class="content-card"
+          >
+            <app-lista-turnos></app-lista-turnos>
+          </div>
+
+          <!-- REGISTRAR RONDAS -->
+          <div
+            *ngSwitchCase="'registrarRondas'"
+            class="content-card"
+          >
+            <app-rondas-guardia></app-rondas-guardia>
+          </div>
+
+          <!-- LISTAR RONDAS -->
+          <div
+            *ngSwitchCase="'listarRondas'"
+            class="content-card"
+          >
+            <app-lista-rondas></app-lista-rondas>
+          </div>
+
+          <!-- DEFAULT -->
+          <div *ngSwitchDefault class="welcome-card">
+            <h2>Bienvenido a SENTRI</h2>
+
+            <p>
+              Plataforma moderna para administración y control de accesos.
+            </p>
+          </div>
+
+        </ng-container>
+
+      </section>
+
+    </main>
   </div>
-</ion-content>
 
+  <!-- FOOTER -->
+  <ion-footer class="sticky-footer">
+    <ion-toolbar color="dark">
+      <div
+        class="footer"
+        style="text-align: center; font-size: 12px;"
+      >
+        © 2025 Jonathan Bustos Ramos TODOS LOS DERECHOS RESERVADOS
+        <br />
+        Sistema de Gestión de Condominios - Versión 1.0
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>

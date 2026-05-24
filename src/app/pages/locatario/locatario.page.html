@@ -1,20 +1,68 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-title>locatario</ion-title>
-      <ion-buttons slot="end">
-      <ion-button  color="light" (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start"></ion-icon>
-        Salir
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen class="dashboard-content">
 
-<ion-content [fullscreen]="true">
-   <app-autorizacion-qr></app-autorizacion-qr> 
-<!-- <app-autorizacion-qr (autorizacionCreada)="recargarLista()"></app-autorizacion-qr> -->
+  <!-- MAIN -->
+  <main class="main-content">
 
+    <!-- TOPBAR -->
+    <header class="topbar">
 
+      <div class="topbar-left">
+
+        <div>
+          <h1>Dashboard</h1>
+          <p>Bienvenido locatario</p>
+        </div>
+
+      </div>
+
+      <div class="topbar-right">
+
+        <div class="user-badge">
+          Locatario
+        </div>
+
+        <button
+          class="logout-btn"
+          (click)="logout()"
+        >
+          <ion-icon name="log-out-outline"></ion-icon>
+          Salir
+        </button>
+
+      </div>
+
+    </header>
+
+    <!-- CONTENT -->
+    <section class="content-wrapper">
+
+      <div class="content-card">
+
+        <app-autorizacion-qr>
+        </app-autorizacion-qr>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <ion-footer class="sticky-footer">
+
+    <ion-toolbar color="dark">
+
+      <div
+        class="footer"
+        style="text-align:center;font-size:12px;"
+      >
+        © 2025 Jonathan Bustos Ramos TODOS LOS DERECHOS RESERVADOS
+        <br>
+        Sistema de Gestión de Condominios - Versión 1.0
+      </div>
+
+    </ion-toolbar>
+
+  </ion-footer>
 
 </ion-content>
-

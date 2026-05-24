@@ -25,8 +25,7 @@ import {
   createOutline,
   trashOutline,
   eyeOutline,
-  eyeOffOutline,
-} from 'ionicons/icons';
+  eyeOffOutline, personOutline, cardOutline, mailOutline, lockClosedOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-ingreso-usuario',
@@ -68,7 +67,7 @@ export class IngresoUsuarioComponent implements OnInit {
   showPassword = false;
 
   constructor(private usuariosService: UsuariosService) {
-    addIcons({ createOutline, trashOutline, eyeOutline, eyeOffOutline });
+    addIcons({personOutline,cardOutline,mailOutline,lockClosedOutline,shieldCheckmarkOutline,createOutline,trashOutline,eyeOutline,eyeOffOutline});
   }
 
   ngOnInit() {

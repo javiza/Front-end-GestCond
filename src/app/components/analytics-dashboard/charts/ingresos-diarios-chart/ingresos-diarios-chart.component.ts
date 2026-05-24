@@ -38,10 +38,12 @@ export class IngresosDiariosChartComponent implements OnChanges, AfterViewInit {
   }
 
   private render() {
+    console.log('DATA INGRESOS DIARIOS:', this.data);
     if (!this.domReady || !this.data.length || !isPlatformBrowser(this.platformId)) return;
 
     const canvas = this.canvasRef.nativeElement;
     const ctx = canvas.getContext('2d')!;
+    if (!ctx) return;
 
     this.chart?.destroy();
 
@@ -63,7 +65,7 @@ export class IngresosDiariosChartComponent implements OnChanges, AfterViewInit {
     gradient.addColorStop(0, 'rgba(59,130,246,.5)');
     gradient.addColorStop(1, 'rgba(59,130,246,0)');
 
-    this.chart = new Chart(canvas, {
+    this.chart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: fechas,
@@ -86,6 +88,8 @@ export class IngresosDiariosChartComponent implements OnChanges, AfterViewInit {
             ticks: { stepSize: 1, callback: v => v },
           },
         },
+         responsive: true,
+  maintainAspectRatio: false,
         plugins: { legend: { display: false } },
       },
     });

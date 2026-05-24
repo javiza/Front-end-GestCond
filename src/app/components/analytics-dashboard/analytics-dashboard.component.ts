@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { addIcons } from 'ionicons';
-import { logOutOutline } from 'ionicons/icons';
+
+
 
 import {
   IonContent,
@@ -43,12 +43,17 @@ import { IngresosDiariosChartComponent } from './charts/ingresos-diarios-chart/i
 })
 export class AnalyticsDashboardComponent implements OnInit {
 
-  filtro = { 
-    desde: '',
-    hasta: '',
-    tipo_visita: '',
-    tipo_vehiculo: ''
-  };
+  filtro: {
+  desde: string | null;
+  hasta: string | null;
+  tipo_visita: string;
+  tipo_vehiculo: string;
+} = {
+  desde: null,
+  hasta: null,
+  tipo_visita: '',
+  tipo_vehiculo: ''
+};
 
   ingresosPorTipo: any[] = [];
   promedioEstadia: any[] = [];
@@ -61,7 +66,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     private analyticsService: AnalyticsService,
     private toastCtrl: ToastController
   ) {
-    addIcons({ logOutOutline });
+   
   }
 
   ngOnInit() {
@@ -72,7 +77,7 @@ export class AnalyticsDashboardComponent implements OnInit {
     this.cargarIngresosDiarios();
   }
 
-  formatearFechaISO(fecha: string) {
+  formatearFechaISO(fecha: string | null) {
     if (!fecha || fecha.trim() === '') return '';
     return fecha.split('T')[0];
   }
@@ -91,7 +96,11 @@ export class AnalyticsDashboardComponent implements OnInit {
       this.ingresosPorTipo = await this.analyticsService
         .obtenerIngresosPorTipo(this.getFiltro())
         .toPromise() ?? [];
-    } catch {}
+    } catch (error) {
+
+    console.error('Error ingresos tipo:', error);
+
+  }
   }
 
   async cargarPromedioEstadia() {
@@ -99,7 +108,11 @@ export class AnalyticsDashboardComponent implements OnInit {
       this.promedioEstadia = await this.analyticsService
         .obtenerPromedioEstadia(this.getFiltro())
         .toPromise() ?? [];
-    } catch {}
+    } catch(error) {
+
+    console.error('Error ingresos tipo:', error);
+
+  }
   }
 
   async cargarIngresosHora() {
@@ -107,7 +120,9 @@ export class AnalyticsDashboardComponent implements OnInit {
       this.ingresosPorHora = await this.analyticsService
         .obtenerIngresosPorHora(this.getFiltro())
         .toPromise() ?? [];
-    } catch {}
+    } catch (error) {
+      console.error('Error ingresos por hora:', error);
+    }
   }
 
   async cargarIngresosDiarios() {
@@ -115,11 +130,13 @@ export class AnalyticsDashboardComponent implements OnInit {
       this.ingresosDiarios = await this.analyticsService
         .obtenerIngresosDiarios(this.getFiltro())
         .toPromise() ?? [];
-    } catch {}
+    } catch (error) {
+      console.error('Error ingresos diarios:', error);
+    }
   }
 
     limpiarFiltros() {
-    this.filtro = { desde: '', hasta: '', tipo_visita: '', tipo_vehiculo: '' };
+    this.filtro = { desde: null , hasta: null, tipo_visita: '', tipo_vehiculo: '' };
 
     this.cargarIngresosPorTipo();
     this.cargarPromedioEstadia();

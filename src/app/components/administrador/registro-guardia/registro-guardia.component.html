@@ -26,14 +26,21 @@
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Empresa Contratista</ion-label>
-        <ion-select [(ngModel)]="id_empresa_contratista" name="id_empresa_contratista" interface="popover">
-         <ion-select-option [value]="null">Sin empresa</ion-select-option>
-          <ion-select-option *ngFor="let e of empresas" [value]="e.id">
-            {{ e.nombre_empresa }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+  <ion-label position="stacked">Empresa Contratista</ion-label>
+  <ion-select
+    [(ngModel)]="id_empresa_contratista"
+    name="id_empresa_contratista"
+    interface="popover"
+  >
+    <ion-select-option [value]="null">
+      Sin empresa
+    </ion-select-option>
+
+    <ion-select-option *ngFor="let e of empresas" [value]="e.id">
+      {{ e.nombre_empresa }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
 
       <ion-item>
         <ion-label>Activo</ion-label>
@@ -57,7 +64,7 @@
     </h3>
 
     <div *ngIf="paginatedGuardias.length > 0; else noGuardias" class="w-full max-w-4xl overflow-x-auto">
-     <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm text-gray-700">      >
+     <table class="min-w-full border border-gray-400 border-collapse text-sm text-center shadow-sm text-gray-700">      
         <thead class="bg-[#001b87] text-white">
           <tr>
             <th>Nombre</th>

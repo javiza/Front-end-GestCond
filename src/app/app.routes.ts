@@ -26,12 +26,6 @@ export const routes: Routes = [
     data: { roles: ['administrador'] },
   },
   {
-    path: 'registro-personal',
-    loadComponent: () => import('./pages/admin/registro-personal/registro-personal.page').then( m => m.RegistroPersonalPage),
-    canActivate: [RoleGuard],
-    data: { roles: ['administrador'] },
-  },
-  {
     path: 'registros-guardia',
     loadComponent: () => import('./pages/guardia/registros-guardia/registros-guardia.page').then( m => m.RegistrosGuardiaPage),
     canActivate: [RoleGuard],
@@ -55,13 +49,7 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/admin/registros/registros.page').then( m => m.RegistrosPage),
     canActivate: [RoleGuard],
     data: { roles: ['administrador'] },
-  },
-  {
-    path: 'informaciones',
-    loadComponent: () => import('./pages/admin/informaciones/informaciones.page').then( m => m.InformacionesPage),
-    canActivate: [RoleGuard],
-    data: { roles: ['administrador'] },
-  },
+  }
   
  
   

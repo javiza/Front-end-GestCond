@@ -31,11 +31,7 @@ ion-toolbar,
 ion-title,
 
 
-ion-icon {
-  color: #030303 !important;
-  fill: #030303 !important;
-  
-}
+
 
 ion-title{
     color: #faf3f3 !important;
@@ -51,6 +47,7 @@ ion-button {
 body {
   --ion-background-color: #ffffff !important;
   --ion-text-color: #6d6c6c !important;
+  background: #f8fafc;
 }
 /* texto de las opciones */
 ion-alert .alert-radio-label {
@@ -65,4 +62,11 @@ ion-alert .alert-radio-icon {
 /* fondo del alert */
 ion-alert .alert-wrapper {
   background: #ffffff !important;
+
+  * {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+
 }

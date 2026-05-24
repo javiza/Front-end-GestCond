@@ -1,14 +1,248 @@
-ion-item {
-  --background: #ffffff;
-  --color: #333;
-  --border-color: #ddd;
+.usuarios-page {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
 }
 
-ion-input {
-  --color: #333;
-  --placeholder-color: #888;
+/* =========================
+   CARDS
+========================= */
+
+.form-card,
+.table-card {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  box-shadow:
+    0 10px 35px rgba(15,23,42,.05);
 }
 
-ion-label {
-  --color: #666;
+.card-header {
+
+  margin-bottom: 24px;
+}
+
+.card-header h2 {
+
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.card-header p {
+
+  margin-top: 6px;
+
+  color: #64748b;
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.custom-item {
+
+  --background: #f8fafc;
+
+  --border-radius: 16px;
+
+  --padding-start: 14px;
+
+  --min-height: 58px;
+
+  border: 1px solid #e2e8f0;
+}
+
+.custom-item ion-icon {
+  color: #2563eb;
+}
+
+.password-info {
+
+  color: #64748b;
+
+  margin-top: -10px;
+
+  font-size: 13px;
+}
+
+.button-group {
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+
+  margin-top: 12px;
+}
+
+.primary-btn {
+  --background: #2563eb;
+  --border-radius: 14px;
+  height: 52px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.desktop-table {
+  overflow-x: auto;
+}
+
+table {
+
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+thead {
+
+  background: #0f172a;
+
+  color: white;
+}
+
+th,
+td {
+
+  padding: 16px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+.rol-badge {
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-transform: capitalize;
+}
+
+.actions {
+
+  display: flex;
+
+  gap: 8px;
+}
+
+/* =========================
+   MOBILE CARDS
+========================= */
+
+.mobile-cards {
+  display: none;
+}
+
+.user-card {
+
+  background: #f8fafc;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  border: 1px solid #e2e8f0;
+
+  margin-bottom: 16px;
+}
+
+.user-top {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 14px;
+}
+
+.user-top h3 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+  color: #0f172a;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+
+.pagination {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  margin-top: 24px;
+
+  flex-wrap: wrap;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .form-card,
+  .table-card {
+
+    padding: 18px;
+
+    border-radius: 20px;
+  }
+
+  .card-header h2 {
+    font-size: 22px;
+  }
+
+  .desktop-table {
+    display: none;
+  }
+
+  .mobile-cards {
+    display: block;
+  }
+
+  .pagination {
+
+    flex-direction: column;
+  }
+
 }

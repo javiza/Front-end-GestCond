@@ -23,12 +23,12 @@ ion-content {
 ion-footer.sticky-footer {
   position: fixed; /* 🔹 se mantiene visible */
   bottom: 0;
-  left: 250px; /* 🔹 ajusta al sidebar en escritorio */
+  left: 300px; /* 🔹 ajusta al sidebar en escritorio */
   right: 0;
   height: 60px;
-  background: var(--ion-color-primary);
+  background: var(--ion-color-black);
   color: white;
-  z-index: 1000;
+  z-index: 9999;
   box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.15);
 }
 

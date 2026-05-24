@@ -1,6 +1,204 @@
-ion-title {
-  text-align: center;
-  width: 100%;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+.dashboard-content {
+
+  --background: #f1f5f9;
+
+}
+
+/* MAIN */
+
+.main-content {
+
+  min-height: 100vh;
+
+  display:flex;
+
+  flex-direction:column;
+}
+
+/* TOPBAR */
+
+.topbar {
+
+  height:72px;
+
+  background:white;
+
+  border-bottom:
+    1px solid #e2e8f0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  padding:0 24px;
+
+  position:sticky;
+
+  top:0;
+
+  z-index:100;
+}
+
+.topbar-left {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+}
+
+.topbar-left h1 {
+
+  margin:0;
+
+  font-size:24px;
+
+  color:#0f172a;
+}
+
+.topbar-left p {
+
+  margin:0;
+
+  color:#64748b;
+
+  font-size:13px;
+}
+
+.topbar-right {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:14px;
+}
+
+/* USER */
+
+.user-badge {
+
+  background:#eff6ff;
+
+  color:#2563eb;
+
+  padding:10px 16px;
+
+  border-radius:12px;
+
+  font-size:14px;
+
+  font-weight:600;
+}
+
+/* LOGOUT */
+
+.logout-btn {
+
+  border:none;
+
+  height:46px;
+
+  padding:0 18px;
+
+  border-radius:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0f1f3f,
+      #08162e
+    );
+
+  color:white;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  cursor:pointer;
+
+  font-weight:700;
+
+  transition:.25s;
+}
+
+.logout-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #173873,
+      #11274d
+    );
+
+  box-shadow:
+    0 8px 22px rgba(37,99,235,.28);
+}
+
+/* CONTENT */
+
+.content-wrapper {
+
+  padding:24px;
+
+  flex:1;
+}
+
+.content-card {
+
+  background:white;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,.05);
+}
+
+/* MOBILE */
+
+@media (max-width:768px) {
+
+  .topbar {
+
+    flex-direction:column;
+
+    height:auto;
+
+    gap:16px;
+
+    padding:16px;
+  }
+
+  .topbar-right {
+
+    width:100%;
+
+    justify-content:space-between;
+  }
+
+  .content-wrapper {
+
+    padding:16px;
+  }
+
+}
+
+/* FOOTER */
+
+.footer {
+
+  padding:12px;
+
+  color:white;
 }

@@ -1,150 +1,529 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-      <!-- BOTÓN HAMBURGUESA SOLO EN MÓVIL -->
-    <ion-buttons slot="start" class="mobile-only">
-      <ion-button (click)="sidebarOpen = !sidebarOpen">
-        <ion-icon name="menu-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title >Registros locatarios y usuarios operadores de la aplicacion</ion-title>
+<ion-content fullscreen class="dashboard-content">
+  <!-- OVERLAY MOBILE -->
+  <div
+    class="mobile-overlay"
+    *ngIf="sidebarOpen"
+    (click)="sidebarOpen = false"
+  ></div>
 
-    <ion-buttons slot="end">
-      <ion-button (click)="logout()">
-        <ion-icon  name="log-out-outline" slot="start"></ion-icon>
-        Salir
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+  <div class="dashboard-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" [class.open]="sidebarOpen">
+      <!-- HEADER -->
+      <div class="sidebar-body">
+        <div class="sidebar-header">
+          <img src="assets/img/logo1.png" />
+        </div>
 
-<ion-content>
-  <div class="container">
-    <!-- MENÚ LATERAL -->
-<aside class="sidebar" [class.open]="sidebarOpen">
-      <h2>Condominio<br />Los Alerces</h2>
+        <!-- MENU -->
+        <div class="sidebar-menu">
+          <!-- USUARIOS -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('usuarios')">
+              <span>👥 Gestión Usuarios</span>
 
-      <ul class="menu">
-        <!-- GESTIÓN USUARIOS -->
-        <li>
-          <button (click)="toggleMenu('usuarios')" class="menu-item">
-            Gestión Usuarios
-          </button>
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'usuarios'"
+              ></ion-icon>
+            </button>
 
-          <ul *ngIf="openMenu === 'usuarios'" class="submenu">
-            <li (click)="mostrarSeccion('registrarUsuarios')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+            <div class="submenu" *ngIf="openMenu === 'usuarios'">
+              <button
+                (click)="mostrarSeccion('registrarUsuarios'); sidebarOpen=false"
+              >
+                Agregar usuario
+              </button>
 
-            <li (click)="mostrarSeccion('listarUsuarios')">
-              Listar usuarios
-            </li>
-          </ul>
-        </li>
+              <button
+                (click)="mostrarSeccion('listarUsuarios'); sidebarOpen=false"
+              >
+                Lista usuarios
+              </button>
+            </div>
+          </div>
 
-        <!-- GESTIÓN CASAS -->
-        <li>
-          <button (click)="toggleMenu('casas')" class="menu-item">
-            Gestión Casas
-          </button>
-          <ul *ngIf="openMenu === 'casas'" class="submenu">
-            <li (click)="mostrarSeccion('registrarCasa')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+          <!-- CASAS -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('casas')">
+              <span>🏠 Gestión Casas</span>
 
-            <li (click)="mostrarSeccion('listarCasas')">
-              Listar casas
-            </li>
-          </ul>
-        </li>
- <!-- GESTIÓN Residentes -->
-        <li>
-          <button (click)="toggleMenu('residentes')" class="menu-item">
-            Gestión Residentes
-          </button>
-          <ul *ngIf="openMenu === 'residentes'" class="submenu">
-            <li (click)="mostrarSeccion('registrarResidente')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'casas'"
+              ></ion-icon>
+            </button>
 
-            <li (click)="mostrarSeccion('listarResidentes')">
-              Listar residentes
-            </li>
-          </ul>
-        </li>
-        <!-- GESTIÓN Vehiculos -->
-        <li>
-          <button (click)="toggleMenu('vehiculos')" class="menu-item">
-            Gestión Vehículos
-          </button>
-          <ul *ngIf="openMenu === 'vehiculos'" class="submenu">
-            <li (click)="mostrarSeccion('registrarVehiculo')">
-              Agregar
-              <ion-icon name="add-circle-outline" class="icon-right"></ion-icon>
-            </li>
+            <div class="submenu" *ngIf="openMenu === 'casas'">
+              <button
+                (click)="mostrarSeccion('registrarCasa'); sidebarOpen=false"
+              >
+                Agregar casa
+              </button>
 
-            <li (click)="mostrarSeccion('listarVehiculos')">
-              Listar vehículos
-            </li>
-          </ul>
-        </li>
+              <button
+                (click)="mostrarSeccion('listarCasas'); sidebarOpen=false"
+              >
+                Lista casas
+              </button>
+            </div>
+          </div>
 
-        <!-- OTRAS OPCIONES -->
-        <li><button (click)="irA('registro-personal')" class="menu-item">Registro Personal</button></li>
-        <li><button (click)="irA('observaciones')" class="menu-item">Observaciones</button></li>
-        <li><button (click)="irA('informaciones')" class="menu-item">Informaciones</button></li>
-        <li><button (click)="irA('registros')" class="menu-item">Registros</button></li>
-      </ul>
+          <!-- RESIDENTES -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('residentes')">
+              <span>👨‍👩‍👧 Residentes</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'residentes'"
+              ></ion-icon>
+            </button>
+
+            <div class="submenu" *ngIf="openMenu === 'residentes'">
+              <button
+                (click)="mostrarSeccion('registrarResidente'); sidebarOpen=false"
+              >
+                Agregar residente
+              </button>
+
+              <button
+                (click)="mostrarSeccion('listarResidentes'); sidebarOpen=false"
+              >
+                Lista residentes
+              </button>
+            </div>
+          </div>
+
+          <!-- VEHICULOS -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('vehiculos')">
+              <span>🚗 Vehículos</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'vehiculos'"
+              ></ion-icon>
+            </button>
+
+            <div class="submenu" *ngIf="openMenu === 'vehiculos'">
+              <button
+                (click)="mostrarSeccion('registrarVehiculo'); sidebarOpen=false"
+              >
+                Agregar vehículo
+              </button>
+
+              <button
+                (click)="mostrarSeccion('listarVehiculos'); sidebarOpen=false"
+              >
+                Lista vehículos
+              </button>
+            </div>
+          </div>
+
+          <!-- INFORMACIONES -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('informaciones')">
+              <span>📄 Informaciones</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'informaciones'"
+              ></ion-icon>
+            </button>
+
+            <div class="submenu" *ngIf="openMenu === 'informaciones'">
+              <button
+                (click)="mostrarSeccion('listarInformaciones'); sidebarOpen=false"
+              >
+                Informaciones
+              </button>
+            </div>
+          </div>
+
+          <!-- TRABAJADORES -->
+          <div class="menu-group">
+            <button class="menu-button" (click)="toggleMenu('trabajadores')">
+              <span>🧑‍💼 Trabajadores</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'trabajadores'"
+              ></ion-icon>
+            </button>
+
+            <!-- SUBMENU TRABAJADORES -->
+            <div class="submenu" *ngIf="openMenu === 'trabajadores'">
+              <!-- PERSONAL -->
+              <button class="submenu-title" (click)="toggleSubMenu('personal')">
+                👷 Personal
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'personal'"
+                ></ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'personal'"
+              >
+                <button
+                  (click)="mostrarSeccion('registrarPersonal'); sidebarOpen=false"
+                >
+                  Agregar personal
+                </button>
+
+                <button
+                  (click)="mostrarSeccion('listarPersonal'); sidebarOpen=false"
+                >
+                  Listado personal
+                </button>
+              </div>
+
+              <!-- GUARDIAS -->
+
+              <button class="submenu-title" (click)="toggleSubMenu('guardias')">
+                🛡️ Guardias
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'guardias'"
+                >
+                </ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'guardias'"
+              >
+                <button
+                  (click)="mostrarSeccion('registrarGuardia'); sidebarOpen=false"
+                >
+                  Agregar guardia
+                </button>
+
+                <button
+                  (click)="mostrarSeccion('listarGuardias'); sidebarOpen=false"
+                >
+                  Lista guardias
+                </button>
+              </div>
+
+              <!-- EMPRESAS -->
+              <button class="submenu-title" (click)="toggleSubMenu('empresas')">
+                🏢 Empresas
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'empresas'"
+                ></ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'empresas'"
+              >
+                <button
+                  (click)="mostrarSeccion('registrarEmpresas'); sidebarOpen=false"
+                >
+                  Agregar empresa
+                </button>
+
+                <button
+                  (click)="mostrarSeccion('listarEmpresas'); sidebarOpen=false"
+                >
+                  Lista empresas
+                </button>
+              </div>
+              <!-- TRABAJOS -->
+
+              <button class="submenu-title" (click)="toggleSubMenu('trabajos')">
+                🛠️ Trabajos
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'trabajos'"
+                >
+                </ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'trabajos'"
+              >
+                <button
+                  (click)="mostrarSeccion('registrarTrabajos'); sidebarOpen=false"
+                >
+                  Agregar trabajo
+                </button>
+
+                <button
+                  (click)="mostrarSeccion('listarTrabajos'); sidebarOpen=false"
+                >
+                  Lista trabajos
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- REGISTROS DE INGRESOS -->
+
+          <div class="menu-group">
+            <button
+              class="menu-button"
+              (click)="toggleMenu('registrosIngresos')"
+            >
+              <span>📋 Registros ingresos</span>
+
+              <ion-icon
+                name="chevron-down-outline"
+                [class.rotate]="openMenu === 'registrosIngresos'"
+              >
+              </ion-icon>
+            </button>
+
+            <div class="submenu" *ngIf="openMenu === 'registrosIngresos'">
+              <!-- OBSERVACIONES TURNO -->
+
+              <button
+                class="submenu-title"
+                (click)="toggleSubMenu('observacionesTurno')"
+              >
+                📝 Observaciones turno
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'observacionesTurno'"
+                >
+                </ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'observacionesTurno'"
+              >
+                <button
+                  (click)="mostrarSeccion('listarTurnos'); sidebarOpen=false"
+                >
+                  Ver observaciones turno
+                </button>
+              </div>
+
+              <!-- OBSERVACIONES RONDAS -->
+
+              <button
+                class="submenu-title"
+                (click)="toggleSubMenu('observacionesRondas')"
+              >
+                🔍 Observaciones rondas
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openSubMenu === 'observacionesRondas'"
+                >
+                </ion-icon>
+              </button>
+
+              <div
+                class="submenu nested-submenu"
+                *ngIf="openSubMenu === 'observacionesRondas'"
+              >
+                <button
+                  (click)="mostrarSeccion('listarRondas'); sidebarOpen=false"
+                >
+                  Ver observaciones rondas
+                </button>
+              </div>
+            </div>
+            <!-- REGISTROS -->
+
+            <div class="menu-group">
+              <button class="menu-button" (click)="toggleMenu('registros')">
+                <span>📁 Registros</span>
+
+                <ion-icon
+                  name="chevron-down-outline"
+                  [class.rotate]="openMenu === 'registros'"
+                >
+                </ion-icon>
+              </button>
+
+              <div class="submenu" *ngIf="openMenu === 'registros'">
+                <!-- LISTA VISITAS -->
+
+                <button
+                  class="submenu-title"
+                  (click)="toggleSubMenu('listaVisitas')"
+                >
+                  📋 Lista visitas
+
+                  <ion-icon
+                    name="chevron-down-outline"
+                    [class.rotate]="openSubMenu === 'listaVisitas'"
+                  >
+                  </ion-icon>
+                </button>
+
+                <div
+                  class="submenu nested-submenu"
+                  *ngIf="openSubMenu === 'listaVisitas'"
+                >
+                  <button
+                    (click)="mostrarSeccion('listarVisitas'); sidebarOpen=false"
+                  >
+                    Ver registros visitas
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="sidebar-footer">
+        <button class="logout-btn" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Cerrar sesión
+        </button>
+      </div>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <section class="contenido">
-      <ng-container [ngSwitch]="seccionActiva">
+    <!-- MAIN -->
+    <main class="main-content">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-btn" (click)="sidebarOpen = !sidebarOpen">
+            ☰
+          </button>
 
-        <!-- Usuarios -->
-        <div *ngSwitchCase="'registrarUsuarios'">
-          <app-ingreso-usuario></app-ingreso-usuario>
-        </div>
-
-        <div *ngSwitchCase="'listarUsuarios'">
-          <app-ingreso-usuario></app-ingreso-usuario>
-        </div>
-
-        <!--  CASAS -->
-        <div *ngSwitchCase="'registrarCasa'">
-          <app-ingreso-casas></app-ingreso-casas>
+          <div>
+            <h1>Dashboard</h1>
+            <p>Bienvenido administrador</p>
+          </div>
         </div>
 
-        <div *ngSwitchCase="'listarCasas'">
-          <app-ingreso-casas></app-ingreso-casas>
-        </div>
-           <!--  RESIDENTES -->
-        <div *ngSwitchCase="'registrarResidente'">
-          <app-ingreso-residentes></app-ingreso-residentes>
-        </div>
+        <div class="user-badge">Admin</div>
+      </header>
 
-        <div *ngSwitchCase="'listarResidentes'">
-          <app-ingreso-residentes></app-ingreso-residentes>
-        </div>
-            <!-- Vehiculos -->
-        <div *ngSwitchCase="'registrarVehiculo'">
-          <app-ingreso-vehiculos></app-ingreso-vehiculos>
-        </div>
+      <!-- CONTENT -->
+      <section class="content-wrapper">
+        <ng-container [ngSwitch]="seccionActiva">
+          <!-- USUARIOS -->
+          <div *ngSwitchCase="'registrarUsuarios'" class="content-card">
+            <app-ingreso-usuario></app-ingreso-usuario>
+          </div>
 
-        <div *ngSwitchCase="'listarVehiculos'">
-          <app-ingreso-vehiculos></app-ingreso-vehiculos>
-        </div>
+          <div *ngSwitchCase="'listarUsuarios'" class="content-card">
+            <app-ingreso-usuario></app-ingreso-usuario>
+          </div>
 
-        <!-- DEFAULT -->
-        <div *ngSwitchDefault>
-          <p class="text-center text-gray-600 mt-10">
-            Seleccione una opción del menú para comenzar.
-          </p>
-        </div>
+          <!-- INFORMACIONES -->
+          <div *ngSwitchCase="'listarInformaciones'" class="content-card">
+            <app-infomaciones></app-infomaciones>
+          </div>
 
-      </ng-container>
-    </section>
+          <!-- CASAS -->
+          <div *ngSwitchCase="'registrarCasa'" class="content-card">
+            <app-ingreso-casas></app-ingreso-casas>
+          </div>
+
+          <div *ngSwitchCase="'listarCasas'" class="content-card">
+            <app-ingreso-casas></app-ingreso-casas>
+          </div>
+
+          <!-- RESIDENTES -->
+          <div *ngSwitchCase="'registrarResidente'" class="content-card">
+            <app-ingreso-residentes></app-ingreso-residentes>
+          </div>
+
+          <div *ngSwitchCase="'listarResidentes'" class="content-card">
+            <app-ingreso-residentes></app-ingreso-residentes>
+          </div>
+
+          <!-- VEHICULOS -->
+          <div *ngSwitchCase="'registrarVehiculo'" class="content-card">
+            <app-ingreso-vehiculos></app-ingreso-vehiculos>
+          </div>
+
+          <div *ngSwitchCase="'listarVehiculos'" class="content-card">
+            <app-ingreso-vehiculos></app-ingreso-vehiculos>
+          </div>
+
+          <!-- PERSONAL -->
+          <div *ngSwitchCase="'registrarPersonal'" class="content-card">
+            <app-registrar-personal [modo]="'registrar'">
+            </app-registrar-personal>
+          </div>
+
+          <div *ngSwitchCase="'listarPersonal'" class="content-card">
+            <app-registrar-personal [modo]="'listar'"> </app-registrar-personal>
+          </div>
+
+          <!-- GUARDIAS -->
+          <div *ngSwitchCase="'registrarGuardia'" class="content-card">
+            <app-registro-guardia> </app-registro-guardia>
+          </div>
+
+          <div *ngSwitchCase="'listarGuardias'" class="content-card">
+            <app-registro-guardia> </app-registro-guardia>
+          </div>
+          <!-- Empresas -->
+          <div *ngSwitchCase="'registrarEmpresas'" class="content-card">
+            <app-registrar-empresas> </app-registrar-empresas>
+          </div>
+
+          <div *ngSwitchCase="'listarEmpresas'" class="content-card">
+            <app-registrar-empresas> </app-registrar-empresas>
+          </div>
+          <!-- TRABAJOS -->
+
+          <div *ngSwitchCase="'registrarTrabajos'" class="content-card">
+            <app-trabajos-personal> </app-trabajos-personal>
+          </div>
+
+          <div *ngSwitchCase="'listarTrabajos'" class="content-card">
+            <app-trabajos-personal> </app-trabajos-personal>
+          </div>
+
+          <!-- OBSERVACIONES TURNO -->
+
+          <div *ngSwitchCase="'listarTurnos'" class="content-card">
+            <app-lista-turnos> </app-lista-turnos>
+          </div>
+
+          <!-- OBSERVACIONES RONDAS -->
+
+          <div *ngSwitchCase="'listarRondas'" class="content-card">
+            <app-lista-rondas> </app-lista-rondas>
+          </div>
+
+          <!-- LISTA VISITAS -->
+
+          <div *ngSwitchCase="'listarVisitas'" class="content-card">
+            <app-lista-visitas> </app-lista-visitas>
+          </div>
+
+          <!-- DEFAULT -->
+          <div *ngSwitchDefault class="welcome-card">
+            <h2>Bienvenido a SENTRI</h2>
+
+            <p>Plataforma moderna para administración y control de accesos.</p>
+          </div>
+        </ng-container>
+      </section>
+    </main>
   </div>
+  <!-- Footer global -->
+  <ion-footer class="sticky-footer">
+    <ion-toolbar color="dark">
+      <div class="footer" style="text-align: center; font-size: 12px;">
+        © 2025 Jonathan Bustos Ramos TODOS LOS DERECHOS RESERVADOS <br>
+        Sistema de Gestión de Condominios - Versión 1.0
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+  
+
 </ion-content>
